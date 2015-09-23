@@ -156,6 +156,7 @@
 		BD12479F1B90083000C54C5D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = Pramudita;
 				TargetAttributes = {
@@ -411,6 +412,7 @@
 				BD1247C81B90083000C54C5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BD1247C91B90083000C54C5D /* Build configuration list for PBXNativeTarget "comp90018Tests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +421,7 @@
 				BD1247CB1B90083000C54C5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
