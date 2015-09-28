@@ -19,7 +19,14 @@ class Home: UIViewController {
     }
     
     @IBAction func cancelButton(sender: UIBarButtonItem) {
-        // close current view controller
-        self.dismissViewControllerAnimated(true, completion: nil)
+        //clear cookies
+        NSURLCache.sharedURLCache().removeAllCachedResponses()
+        if let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
+            for cookie in cookies {
+                NSHTTPCookieStorage.sharedHTTPCookieStorage().deleteCookie(cookie)
+            }
+        }
+        // exit
+        exit(0)
     }
 }

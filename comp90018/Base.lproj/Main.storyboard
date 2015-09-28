@@ -5,6 +5,43 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
+        <!--Profile-->
+        <scene sceneID="xl2-5O-4Vf">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qcb-TH-3NZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController title="Profile" id="80Z-bL-h94" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="q6i-g3-Gup"/>
+                        <viewControllerLayoutGuide type="bottom" id="BdI-Sa-egf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="d0s-u8-BE5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" badgeValue="Profile" systemItem="contacts" id="NGf-mF-tns"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-91.5" y="-88.5"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="CCa-Xb-OWC">
+            <objects>
+                <tabBarController id="eX5-Df-2jo" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Jcg-pe-MjT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="qR5-37-aYS" kind="relationship" relationship="viewControllers" id="gJV-AM-Lpo"/>
+                        <segue destination="80Z-bL-h94" kind="relationship" relationship="viewControllers" id="aDX-Wr-ssO"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UpS-4D-EeP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-654.5" y="704.5"/>
+        </scene>
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -17,40 +54,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zmw-6i-qzL">
-                                <rect key="frame" x="20" y="515" width="200" height="144"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rh3-0k-aXS">
-                                <rect key="frame" x="223" y="515" width="132" height="139"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="qR5-37-aYS" kind="presentation" id="oAF-tI-Ao0"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w5X-tk-QHN">
-                                <rect key="frame" x="62" y="20" width="240" height="128"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="lblName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQc-lQ-uCB">
-                                <rect key="frame" x="50" y="269" width="252" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="lblName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQc-lQ-uCB">
+                                <rect key="frame" x="61" y="214" width="252" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w5X-tk-QHN">
+                                <rect key="frame" x="67" y="270" width="240" height="128"/>
+                            </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wwb-9C-k6J">
+                                <rect key="frame" x="112" y="58" width="150" height="2"/>
+                            </progressView>
+                            <webView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zmw-6i-qzL">
+                                <rect key="frame" x="23" y="196" width="328" height="276"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="w5X-tk-QHN" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GRa-mQ-clB"/>
+                            <constraint firstItem="Wwb-9C-k6J" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="38" id="HHs-RC-pfz"/>
+                            <constraint firstItem="Zmw-6i-qzL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="IfQ-dc-e4w"/>
+                            <constraint firstItem="w5X-tk-QHN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="c3n-in-fmU"/>
+                            <constraint firstItem="Zmw-6i-qzL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mpO-r4-xOv"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="ivProfPict" destination="w5X-tk-QHN" id="ApM-3K-ID0"/>
                         <outlet property="lblName" destination="HQc-lQ-uCB" id="qPS-re-rwd"/>
+                        <outlet property="pvLoad" destination="Wwb-9C-k6J" id="czt-h6-Cnf"/>
                         <outlet property="webView" destination="Zmw-6i-qzL" id="OAN-6y-FAj"/>
+                        <segue destination="eX5-Df-2jo" kind="presentation" identifier="goHome" id="Gdq-qH-AlN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-634.5" y="344.5"/>
+            <point key="canvasLocation" x="-1255.5" y="704.5"/>
         </scene>
         <!--Home-->
         <scene sceneID="SFo-jd-q5B">
@@ -66,7 +107,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="d6r-QX-J0E">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="cL1-N7-zji">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="cL1-N7-zji">
                             <connections>
                                 <action selector="cancelButton:" destination="4YG-bV-bx9" id="dHA-Na-6Cf"/>
                             </connections>
@@ -76,12 +117,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qk-m3-Lcw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="469.5" y="344.5"/>
+            <point key="canvasLocation" x="493.5" y="704.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Logout Navigation-->
         <scene sceneID="3kR-0F-rkW">
             <objects>
-                <navigationController id="qR5-37-aYS" sceneMemberID="viewController">
+                <navigationController title="Logout Navigation" id="qR5-37-aYS" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" badgeValue="Act Feed" systemItem="mostRecent" id="bh6-Ug-lKX"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hlk-es-XUs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -92,7 +135,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51a-p6-gTg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-63.5" y="344.5"/>
+            <point key="canvasLocation" x="-85.5" y="704.5"/>
         </scene>
     </scenes>
 </document>
