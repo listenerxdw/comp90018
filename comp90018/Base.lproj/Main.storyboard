@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login-->
@@ -18,42 +17,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zmw-6i-qzL">
-                                <rect key="frame" x="10" y="23" width="355" height="622"/>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zmw-6i-qzL">
+                                <rect key="frame" x="20" y="515" width="200" height="144"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBT-c7-eqL">
-                                <rect key="frame" x="29" y="0.0" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rh3-0k-aXS">
-                                <rect key="frame" x="189" y="0.0" width="161" height="176"/>
+                                <rect key="frame" x="223" y="515" width="132" height="139"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <segue destination="qR5-37-aYS" kind="presentation" id="oAF-tI-Ao0"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w5X-tk-QHN">
+                                <rect key="frame" x="62" y="20" width="240" height="128"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="lblName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQc-lQ-uCB">
+                                <rect key="frame" x="50" y="269" width="252" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Zmw-6i-qzL" secondAttribute="bottom" constant="25" id="BYP-1a-O2G"/>
-                            <constraint firstItem="Zmw-6i-qzL" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Crn-ml-osu"/>
-                            <constraint firstItem="Zmw-6i-qzL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-10" id="ZNT-MM-Zzx"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Zmw-6i-qzL" secondAttribute="trailing" constant="-10" id="hFl-6Z-ffP"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="lblTest" destination="TBT-c7-eqL" id="cXP-Wh-IhW"/>
+                        <outlet property="ivProfPict" destination="w5X-tk-QHN" id="ApM-3K-ID0"/>
+                        <outlet property="lblName" destination="HQc-lQ-uCB" id="qPS-re-rwd"/>
                         <outlet property="webView" destination="Zmw-6i-qzL" id="OAN-6y-FAj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-629.5" y="344.5"/>
+            <point key="canvasLocation" x="-634.5" y="344.5"/>
         </scene>
         <!--Home-->
         <scene sceneID="SFo-jd-q5B">
