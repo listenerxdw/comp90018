@@ -17,7 +17,6 @@ class Login: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var ivProfPict: UIImageView!
     @IBOutlet weak var pvLoad: UIProgressView!
     var lib: Libraries!
-    var user: User!
     var loading: NSTimer!
     
     override func viewDidLoad() {
@@ -61,7 +60,7 @@ class Login: UIViewController, UIWebViewDelegate {
             //print(token)
             //getUser and the details
             webView.hidden=true
-            let user = User()
+            let user = User.sharedInstance
             user.getProfile(token,nm: lblName,img: ivProfPict)
             NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "goHome", userInfo: nil, repeats: false)
         }else{

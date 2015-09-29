@@ -9,33 +9,51 @@
 import Foundation
 import SwiftyJSON
 
-class User{
-    
+//This class is static, which means only 1 instance per user
+// to get the user property just simply do : User.sharedInstance.<property_name> ex : User.sharedInstance.name ->for username
+class User {
+    //properties/attributes
     var profPict: String = ""
-    var name : String = ""
+    var username: String = ""
+    var fullname: String = ""
+    var post: Int = 0
+    var follower: Int = 0
+    var following: Int = 0
+    var bio: String = ""
+    var id: String = ""
     
+    //an instance to make it static/singleton
+    class var sharedInstance: User{
+        struct Static{
+            static let instance: User = User()
+        }
+        return Static.instance
+    }
+    
+    //function to populate the user details
     func getProfile(token:String,nm:UILabel,img:UIImageView) -> Void {
         let url = "https://api.instagram.com/v1/users/self?access_token=\(token)"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            //print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            /*//print json format
-            for (key,subJson):(String, JSON) in json {
-            print(key)
-            print(subJson)
-            }*/
             let json = JSON(data: data!)
-            self.name = json["data"]["username"].string!
+            self.username = json["data"]["username"].string!
             self.profPict = json["data"]["profile_picture"].string!
+            self.fullname = json["data"]["full_name"].string!
+            self.post = json["data"]["counts"]["media"].intValue
+            self.follower = json["data"]["counts"]["followed_by"].intValue
+            self.following = json["data"]["counts"]["follows"].intValue
+            self.bio = json["data"]["bio"].string!
+            self.id = json["data"]["id"].string!
             
+            //in order to quick show the name and profpict
             let url = NSURL(string: self.profPict)
-            let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+            let data = NSData(contentsOfURL: url!)
             img.image = UIImage(data: data!)
             img.hidden = false
-            nm.text = self.name
+            nm.text = self.username
             nm.hidden = false
         }
     }
-}
 
+}

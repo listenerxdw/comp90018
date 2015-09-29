@@ -14,6 +14,7 @@
 		BD1247B71B90083000C54C5D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD1247B51B90083000C54C5D /* LaunchScreen.xib */; };
 		BD1247C31B90083000C54C5D /* comp90018Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1247C21B90083000C54C5D /* comp90018Tests.swift */; };
 		BD6895271BB91A6F006E9D71 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6895261BB91A6F006E9D71 /* User.swift */; settings = {ASSET_TAGS = (); }; };
+		BDE852471BBABFFF0098997E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE852461BBABFFF0098997E /* Profile.swift */; settings = {ASSET_TAGS = (); }; };
 		BDF2321C1BB8C9ED00B1D986 /* Libraries.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2321B1BB8C9ED00B1D986 /* Libraries.swift */; settings = {ASSET_TAGS = (); }; };
 		BDF232261BB8DF7800B1D986 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF232251BB8DF7800B1D986 /* Login.swift */; settings = {ASSET_TAGS = (); }; };
 		BDF232281BB8DF8900B1D986 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF232271BB8DF8900B1D986 /* Home.swift */; settings = {ASSET_TAGS = (); }; };
@@ -56,6 +57,7 @@
 		BD1247C21B90083000C54C5D /* comp90018Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comp90018Tests.swift; sourceTree = "<group>"; };
 		BD6895261BB91A6F006E9D71 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BD88B4EB6B414FC76CF4BD50 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		BDE852461BBABFFF0098997E /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		BDF2321B1BB8C9ED00B1D986 /* Libraries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Libraries.swift; sourceTree = "<group>"; };
 		BDF232251BB8DF7800B1D986 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		BDF232271BB8DF8900B1D986 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				BD1247AC1B90083000C54C5D /* AppDelegate.swift */,
 				BDF232251BB8DF7800B1D986 /* Login.swift */,
 				BDF232271BB8DF8900B1D986 /* Home.swift */,
+				BDE852461BBABFFF0098997E /* Profile.swift */,
 				BD1247B01B90083000C54C5D /* Main.storyboard */,
 				BDF2321B1BB8C9ED00B1D986 /* Libraries.swift */,
 				BD6895261BB91A6F006E9D71 /* User.swift */,
@@ -312,6 +315,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDF232261BB8DF7800B1D986 /* Login.swift in Sources */,
+				BDE852471BBABFFF0098997E /* Profile.swift in Sources */,
 				BDF2321C1BB8C9ED00B1D986 /* Libraries.swift in Sources */,
 				BDF232281BB8DF8900B1D986 /* Home.swift in Sources */,
 				BD6895271BB91A6F006E9D71 /* User.swift in Sources */,
@@ -393,7 +397,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -432,7 +436,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

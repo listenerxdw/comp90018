@@ -10,7 +10,7 @@ import Foundation
 
 class Libraries{
     func login(clientId: String, redirectUri: String) -> NSURLRequest {
-        let url = "https://instagram.com/oauth/authorize/?client_id=\(clientId)&redirect_uri=\(redirectUri)&response_type=token"
+        let url = "https://instagram.com/oauth/authorize/?client_id=\(clientId)&redirect_uri=\(redirectUri)&response_type=token&scope=basic+likes+comments+relationships"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         return request
