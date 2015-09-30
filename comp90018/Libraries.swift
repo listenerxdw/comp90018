@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Libraries{
     func login(clientId: String, redirectUri: String) -> NSURLRequest {
@@ -16,4 +17,18 @@ class Libraries{
         return request
     }
     
+    func fetchGallery(token: String, count:Int) -> Void {
+        let url = "https://api.instagram.com/v1/users/self/media/recent?access_token=\(token)&count=\(count)"
+        let requestURL = NSURL(string:url)
+        let request = NSURLRequest(URL: requestURL!)
+        var json: JSON!
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            json = JSON(data: data!)
+            println(json["pagination"]["next_url"])
+            for (key,subJson):(String, JSON) in json["data"] {
+                println(subJson["images","thumbnail","url"].rawString())
+            }
+        }
+        //return json
+    }
 }

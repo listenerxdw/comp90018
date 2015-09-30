@@ -6,7 +6,7 @@
 //  Copyright © 2015 Pramudita. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SwiftyJSON
 
 //This class is static, which means only 1 instance per user
@@ -21,6 +21,7 @@ class User {
     var following: Int = 0
     var bio: String = ""
     var id: String = ""
+    var token: String = ""
     
     //an instance to make it static/singleton
     class var sharedInstance: User{
@@ -31,7 +32,7 @@ class User {
     }
     
     //function to populate the user details
-    func getProfile(token:String,nm:UILabel,img:UIImageView) -> Void {
+    func getProfile(token:String,nm:UILabel,img:UIImageView,tkn:String) -> Void {
         let url = "https://api.instagram.com/v1/users/self?access_token=\(token)"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
@@ -45,7 +46,7 @@ class User {
             self.following = json["data"]["counts"]["follows"].intValue
             self.bio = json["data"]["bio"].string!
             self.id = json["data"]["id"].string!
-            
+            self.token = tkn
             //in order to quick show the name and profpict
             let url = NSURL(string: self.profPict)
             let data = NSData(contentsOfURL: url!)

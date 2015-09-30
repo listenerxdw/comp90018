@@ -23,7 +23,7 @@ class Home: UIViewController {
         NSURLCache.sharedURLCache().removeAllCachedResponses()
         if let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
             for cookie in cookies {
-                NSHTTPCookieStorage.sharedHTTPCookieStorage().deleteCookie(cookie)
+                NSHTTPCookieStorage.sharedHTTPCookieStorage().deleteCookie(cookie as! NSHTTPCookie)
             }
         }
         // exit

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 let clientId = "085bfe1ee3c54cc886077ba51a5b8d7b"
 let redirectUri = "http://backendlife.com"
@@ -47,21 +46,21 @@ class Login: UIViewController, UIWebViewDelegate {
     
     func webViewDidFinishLoad(webView: UIWebView) {
         let url = webView.request?.URL!.absoluteString
-        let x = url!.characters.count
-        //print(url)
+        let x = count(url!)
+        //println(url)
         let key: Character = "#"
         let ln = "#access_token=".length
         finish()
-        if let idx = url!.characters.indexOf(key) { //if token can be obtained
-            let pos: Int = url!.startIndex.distanceTo(idx)
-            let range = url!.startIndex..<url!.endIndex.advancedBy((x - pos - ln) * -1)
+        if let idx = find(url!,key) { //if token can be obtained
+            let start: Int = distance(url!.startIndex,advance(idx,ln))
+            let range = advance(url!.startIndex,start)..<url!.endIndex
             var token: String = url!
-            token.removeRange(range)
+            token = token[range]
             //print(token)
             //getUser and the details
             webView.hidden=true
             let user = User.sharedInstance
-            user.getProfile(token,nm: lblName,img: ivProfPict)
+            user.getProfile(token,nm: lblName,img: ivProfPict,tkn: token)
             NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "goHome", userInfo: nil, repeats: false)
         }else{
             webView.hidden = false
