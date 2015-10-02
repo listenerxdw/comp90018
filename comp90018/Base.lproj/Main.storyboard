@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Profile-->
@@ -256,7 +257,39 @@
                     <view key="view" contentMode="scaleToFill" id="BlB-Ht-ghe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vqr-Tw-ZVP">
+                                <rect key="frame" x="242" y="521" width="67" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Library">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dsu-lZ-Qdo">
+                                <rect key="frame" x="27" y="70" width="320" height="320"/>
+                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="Wju-Cx-dep"/>
+                                    <constraint firstAttribute="height" constant="320" id="qhx-f7-mhC"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwL-db-Soi">
+                                <rect key="frame" x="66" y="521" width="58" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Photo">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sNn-hv-dlp" firstAttribute="top" secondItem="uwL-db-Soi" secondAttribute="bottom" constant="58" id="EQ2-0H-GfN"/>
+                            <constraint firstItem="Dsu-lZ-Qdo" firstAttribute="top" secondItem="oYo-ru-IUZ" secondAttribute="bottom" constant="50" id="QV1-1b-1vA"/>
+                            <constraint firstItem="sNn-hv-dlp" firstAttribute="top" secondItem="Vqr-Tw-ZVP" secondAttribute="bottom" constant="58" id="T3F-jJ-Eah"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Vqr-Tw-ZVP" secondAttribute="trailing" constant="50" id="bTW-zP-Udz"/>
+                            <constraint firstItem="uwL-db-Soi" firstAttribute="leading" secondItem="BlB-Ht-ghe" secondAttribute="leadingMargin" constant="50" id="bwi-nN-asg"/>
+                            <constraint firstAttribute="centerX" secondItem="Dsu-lZ-Qdo" secondAttribute="centerX" constant="0.5" id="nNV-lH-pZZ"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Photo" image="camera-bar-icon" selectedImage="camera-bar-icon" id="EgV-oG-bSB"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
