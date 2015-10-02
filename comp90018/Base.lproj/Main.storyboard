@@ -118,10 +118,10 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="qR5-37-aYS" kind="relationship" relationship="viewControllers" id="gJV-AM-Lpo"/>
+                        <segue destination="SO8-mQ-4Y1" kind="relationship" relationship="viewControllers" id="W8f-BN-4xQ"/>
                         <segue destination="GRc-RN-pK2" kind="relationship" relationship="viewControllers" id="EER-Da-jp1"/>
                         <segue destination="Mwz-Kq-cnV" kind="relationship" relationship="viewControllers" id="Kc1-iG-xJE"/>
-                        <segue destination="SO8-mQ-4Y1" kind="relationship" relationship="viewControllers" id="W8f-BN-4xQ"/>
+                        <segue destination="qR5-37-aYS" kind="relationship" relationship="viewControllers" id="gJV-AM-Lpo"/>
                         <segue destination="80Z-bL-h94" kind="relationship" relationship="viewControllers" id="aDX-Wr-ssO"/>
                     </connections>
                 </tabBarController>
@@ -210,7 +210,7 @@
         <scene sceneID="3kR-0F-rkW">
             <objects>
                 <navigationController title="Logout Navigation" id="qR5-37-aYS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Activity Feed" image="cabnet-bar-icon" id="bh6-Ug-lKX"/>
+                    <tabBarItem key="tabBarItem" title="Activity Feed" image="chat-bar-icon" id="bh6-Ug-lKX"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hlk-es-XUs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -279,7 +279,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="User Feed" image="chat-bar-icon" id="Ul8-xw-Yh9"/>
+                    <tabBarItem key="tabBarItem" title="User Feed" image="cabnet-bar-icon" id="Ul8-xw-Yh9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
