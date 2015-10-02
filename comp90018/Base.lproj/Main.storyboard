@@ -267,7 +267,6 @@
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dsu-lZ-Qdo">
                                 <rect key="frame" x="27" y="70" width="320" height="320"/>
-                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="Wju-Cx-dep"/>
                                     <constraint firstAttribute="height" constant="320" id="qhx-f7-mhC"/>
@@ -291,7 +290,7 @@
                             <constraint firstAttribute="centerX" secondItem="Dsu-lZ-Qdo" secondAttribute="centerX" constant="0.5" id="nNV-lH-pZZ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Photo" image="camera-bar-icon" selectedImage="camera-bar-icon" id="EgV-oG-bSB"/>
+                    <tabBarItem key="tabBarItem" title="Photo" image="camera-bar-icon" id="EgV-oG-bSB"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
