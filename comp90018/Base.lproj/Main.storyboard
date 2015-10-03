@@ -299,7 +299,7 @@
                     <navigationItem key="navigationItem" id="h1W-Bb-0XL">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="R91-im-kSA">
                             <connections>
-                                <segue destination="WfV-ix-baC" kind="show" identifier="push" id="DOe-5k-keq"/>
+                                <segue destination="WfV-ix-baC" kind="show" identifier="pushToCrop" id="DOe-5k-keq"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -354,7 +354,7 @@
                     <navigationItem key="navigationItem" id="w6a-5q-ipW">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="HoW-60-gWs">
                             <connections>
-                                <segue destination="jfO-SO-Jf4" kind="show" identifier="push" id="Qov-wD-jme"/>
+                                <segue destination="jfO-SO-Jf4" kind="show" identifier="pushToFilter" id="Qov-wD-jme"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -456,7 +456,7 @@
                     <navigationItem key="navigationItem" id="z0g-qo-iOb">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="5aF-4z-gBc">
                             <connections>
-                                <segue destination="HLt-Mx-QtE" kind="show" identifier="push" id="yNi-t1-ojQ"/>
+                                <segue destination="HLt-Mx-QtE" kind="show" identifier="pushToPost" id="yNi-t1-ojQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -603,7 +603,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gr1-Ib-Iwq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-85.5" y="2162.5"/>
+            <point key="canvasLocation" x="-85.5" y="2161.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CcQ-75-D59">
