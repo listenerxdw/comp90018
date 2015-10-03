@@ -6,4 +6,8 @@
 //  Copyright (c) 2015 Pramudita. All rights reserved.
 //
 
+import UIKit
 
+class PhotoAdjustAndPostViewController: UIViewController {
+    
+}

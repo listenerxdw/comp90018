@@ -6,4 +6,8 @@
 //  Copyright (c) 2015 Huabin Liu. All rights reserved.
 //
 
+import UIKit
 
+class PhotoCropViewController: UIViewController {
+    
+}
