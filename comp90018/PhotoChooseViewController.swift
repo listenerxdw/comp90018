@@ -13,16 +13,12 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var imageView: UIImageView!
     
     var picker = UIImagePickerController()
-    
     var didLoadImage: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         didLoadImage = false
-        
         imageView.image = UIImage(named: "add-picture")
-        
         picker.delegate = self
     }
     
@@ -81,5 +77,18 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (didLoadImage == true) {
+            if(segue.identifier == "push") {
+                let navController = segue.destinationViewController as! UINavigationController
+                let cropController = navController.topViewController as! PhotoCropViewController
+                cropController.image = imageView.image
+            }
+        } else {
+            let alert = UIAlertController(title: "No Image Choosen", message: "Please choose an image first!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
     
 }

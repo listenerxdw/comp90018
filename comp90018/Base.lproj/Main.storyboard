@@ -338,6 +338,9 @@
                                 <state key="normal" title="Crop and Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="cropAndSave:" destination="fkx-9g-UZ2" eventType="touchUpInside" id="pPA-Bu-8rT"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -356,6 +359,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="scrollView" destination="KEE-Ra-iWG" id="GUb-Vq-xD2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zuR-Xe-Mob" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -388,31 +394,47 @@
                             </imageView>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UXL-jp-9Lm">
                                 <rect key="frame" x="94" y="436" width="70" height="70"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="NU0-N0-1GZ"/>
                                     <constraint firstAttribute="height" constant="70" id="gRb-nc-tYd"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="qHh-Xx-ed5" appends="YES" id="q9C-jF-rSD"/>
+                                </connections>
                             </imageView>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ves-pG-pYh">
                                 <rect key="frame" x="94" y="532" width="70" height="70"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="Mlj-EJ-Vff"/>
                                     <constraint firstAttribute="width" constant="70" id="OGb-OE-ClP"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ZP7-1O-bnj" appends="YES" id="CQn-7w-d22"/>
+                                </connections>
                             </imageView>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vI5-eK-OEp">
                                 <rect key="frame" x="210" y="532" width="70" height="70"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="1pH-8d-Kav"/>
                                     <constraint firstAttribute="width" constant="70" id="JbT-tH-luu"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Hxy-Kz-1xs" appends="YES" id="p1i-3a-fLk"/>
+                                </connections>
                             </imageView>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p6i-LN-vnx">
                                 <rect key="frame" x="210" y="436" width="70" height="70"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="ceL-1I-ee1"/>
                                     <constraint firstAttribute="width" constant="70" id="lIO-aH-Mq4"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="DBE-vz-Rhd" appends="YES" id="sXs-4a-yfd"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -439,8 +461,23 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="filter1View" destination="p6i-LN-vnx" id="2oG-Kw-C1B"/>
+                        <outlet property="filter2View" destination="Ves-pG-pYh" id="Tt2-52-SbA"/>
+                        <outlet property="filter3View" destination="vI5-eK-OEp" id="9Jz-hJ-6Yg"/>
+                        <outlet property="imageView" destination="pvW-wo-aK4" id="mk6-Bm-MLC"/>
+                        <outlet property="originalView" destination="UXL-jp-9Lm" id="gjx-FL-iN1"/>
+                        <outlet property="tapFilter1View" destination="DBE-vz-Rhd" id="g69-zM-IWc"/>
+                        <outlet property="tapFilter2View" destination="ZP7-1O-bnj" id="5Vv-nh-pgV"/>
+                        <outlet property="tapFilter3View" destination="Hxy-Kz-1xs" id="5fG-iJ-y3b"/>
+                        <outlet property="tapOriginalView" destination="qHh-Xx-ed5" id="aTf-YW-hhQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WfB-nR-YYx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="qHh-Xx-ed5"/>
+                <tapGestureRecognizer id="DBE-vz-Rhd"/>
+                <tapGestureRecognizer id="ZP7-1O-bnj"/>
+                <tapGestureRecognizer id="Hxy-Kz-1xs"/>
             </objects>
             <point key="canvasLocation" x="2901.5" y="2162.5"/>
         </scene>
@@ -458,9 +495,15 @@
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oQx-RA-SuD">
                                 <rect key="frame" x="25" y="443" width="324" height="31"/>
+                                <connections>
+                                    <action selector="brightnessChanged:" destination="aUw-m9-SoP" eventType="valueChanged" id="ckj-8x-VD1"/>
+                                </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ram-G9-fdJ">
                                 <rect key="frame" x="25" y="508" width="324" height="31"/>
+                                <connections>
+                                    <action selector="contrastChanged:" destination="aUw-m9-SoP" eventType="valueChanged" id="MeJ-vD-ZMJ"/>
+                                </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brightness" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6J8-9c-We0">
                                 <rect key="frame" x="16" y="408" width="103" height="27"/>
@@ -487,6 +530,9 @@
                                 <state key="normal" title="Post">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="post:" destination="aUw-m9-SoP" eventType="touchUpInside" id="okt-AU-Ynn"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -509,6 +555,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="JMJ-ef-ELn"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="imageView" destination="NBZ-SX-0u2" id="e5E-e2-cmA"/>
+                        <outlet property="sliderBrightness" destination="oQx-RA-SuD" id="D2H-Xc-iXk"/>
+                        <outlet property="sliderContrast" destination="Ram-G9-fdJ" id="IDA-kA-awE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbv-yo-iK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
