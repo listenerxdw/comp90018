@@ -36,9 +36,6 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
         scrollView.zoomScale = minScale
         
         centerScrollViewContents()
-        
-        //this causes error
-        //dismissViewControllerAnimated(true, completion: nil)
     }
     
     func centerScrollViewContents() {
