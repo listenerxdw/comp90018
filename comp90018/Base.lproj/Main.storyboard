@@ -299,7 +299,9 @@
                     <navigationItem key="navigationItem" id="h1W-Bb-0XL">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="R91-im-kSA">
                             <connections>
-                                <segue destination="WfV-ix-baC" kind="show" identifier="pushToCrop" id="DOe-5k-keq"/>
+                                <segue destination="WfV-ix-baC" kind="popoverPresentation" identifier="pushToCrop" popoverAnchorBarButtonItem="R91-im-kSA" id="DOe-5k-keq">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -332,7 +334,7 @@
                                     <constraint firstAttribute="height" constant="320" id="CVb-XR-ZeS"/>
                                 </constraints>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IE0-IY-yNX">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IE0-IY-yNX">
                                 <rect key="frame" x="115" y="521" width="144" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="Crop and Save">
@@ -354,7 +356,7 @@
                     <navigationItem key="navigationItem" id="w6a-5q-ipW">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="HoW-60-gWs">
                             <connections>
-                                <segue destination="jfO-SO-Jf4" kind="show" identifier="pushToFilter" id="Qov-wD-jme"/>
+                                <segue destination="jfO-SO-Jf4" kind="presentation" identifier="pushToFilter" id="Qov-wD-jme"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -500,7 +502,7 @@
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ram-G9-fdJ">
-                                <rect key="frame" x="25" y="508" width="324" height="31"/>
+                                <rect key="frame" x="25" y="516" width="324" height="31"/>
                                 <connections>
                                     <action selector="contrastChanged:" destination="aUw-m9-SoP" eventType="valueChanged" id="MeJ-vD-ZMJ"/>
                                 </connections>
@@ -543,7 +545,7 @@
                             <constraint firstItem="fcj-eT-lYC" firstAttribute="top" secondItem="oQx-RA-SuD" secondAttribute="bottom" constant="8" id="7zO-YA-pab"/>
                             <constraint firstAttribute="centerX" secondItem="NBZ-SX-0u2" secondAttribute="centerX" constant="0.5" id="Fdf-x2-xZW"/>
                             <constraint firstItem="NBZ-SX-0u2" firstAttribute="top" secondItem="DzQ-vd-Ipc" secondAttribute="bottom" constant="16" id="P65-AX-Lre"/>
-                            <constraint firstItem="Ram-G9-fdJ" firstAttribute="top" secondItem="fcj-eT-lYC" secondAttribute="bottom" id="Sh9-2X-HhM"/>
+                            <constraint firstItem="Ram-G9-fdJ" firstAttribute="top" secondItem="fcj-eT-lYC" secondAttribute="bottom" constant="8" id="Sh9-2X-HhM"/>
                             <constraint firstItem="oQx-RA-SuD" firstAttribute="leading" secondItem="TF3-bM-aaj" secondAttribute="leadingMargin" constant="11" id="UFZ-fF-yit"/>
                             <constraint firstAttribute="centerX" secondItem="3PF-Fr-GIy" secondAttribute="centerX" constant="0.5" id="bqz-51-8Yp"/>
                             <constraint firstItem="fcj-eT-lYC" firstAttribute="leading" secondItem="TF3-bM-aaj" secondAttribute="leadingMargin" id="hJu-37-RxA"/>
@@ -603,7 +605,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gr1-Ib-Iwq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-85.5" y="2161.5"/>
+            <point key="canvasLocation" x="-415.5" y="2107.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CcQ-75-D59">

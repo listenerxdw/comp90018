@@ -17,7 +17,6 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         scrollView.delegate = self
         
         imageView.image = image
@@ -38,7 +37,8 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
         
         centerScrollViewContents()
         
-        dismissViewControllerAnimated(true, completion: nil)
+        //this causes error
+        //dismissViewControllerAnimated(true, completion: nil)
     }
     
     func centerScrollViewContents() {
