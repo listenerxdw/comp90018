@@ -299,9 +299,7 @@
                     <navigationItem key="navigationItem" id="h1W-Bb-0XL">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="R91-im-kSA">
                             <connections>
-                                <segue destination="WfV-ix-baC" kind="popoverPresentation" identifier="pushToCrop" popoverAnchorBarButtonItem="R91-im-kSA" id="DOe-5k-keq">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
+                                <segue destination="WfV-ix-baC" kind="show" identifier="pushToCrop" id="DOe-5k-keq"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -334,7 +332,7 @@
                                     <constraint firstAttribute="height" constant="320" id="CVb-XR-ZeS"/>
                                 </constraints>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IE0-IY-yNX">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IE0-IY-yNX">
                                 <rect key="frame" x="115" y="521" width="144" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="Crop and Save">
@@ -356,7 +354,7 @@
                     <navigationItem key="navigationItem" id="w6a-5q-ipW">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="HoW-60-gWs">
                             <connections>
-                                <segue destination="jfO-SO-Jf4" kind="presentation" identifier="pushToFilter" id="Qov-wD-jme"/>
+                                <segue destination="jfO-SO-Jf4" kind="show" identifier="pushToFilter" id="Qov-wD-jme"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -526,7 +524,7 @@
                                     <constraint firstAttribute="width" constant="320" id="chx-uQ-tZ9"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3PF-Fr-GIy">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3PF-Fr-GIy">
                                 <rect key="frame" x="165" y="571" width="44" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="Post">
