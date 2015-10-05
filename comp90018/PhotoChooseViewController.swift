@@ -8,12 +8,14 @@
 
 import UIKit
 
-class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     
     var picker = UIImagePickerController()
     var didLoadImage: Bool!
+    var hasChangedCamera: Bool?
+    var hasTurnedOnFlash: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,15 +31,111 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func chooseFromCamera(sender: UIButton) {
         picker.sourceType = .Camera
         
-        let pickerFrame = CGRectMake(0, picker.navigationBar.bounds.size.height, picker.view.bounds.width, picker.view.bounds.height - picker.navigationBar.bounds.size.height - picker.toolbar.bounds.size.height * 2.8)
-        let size = pickerFrame.size
-        let overlayView = UIImageView(frame: pickerFrame)
-        overlayView.image = drawGridView(size)
-        picker.cameraOverlayView = overlayView
+        picker.showsCameraControls = false
+        picker.cameraOverlayView = buildOverlayView()
         
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    func buildOverlayView() -> UIView {
+        let overlayView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
+        
+        let gridView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height * 0.75))
+        let size = gridView.frame.size
+        gridView.image = drawGridView(size)
+        overlayView.addSubview(gridView)
+        
+        let snapButton = UIView(frame: CGRectMake((self.view.frame.width - self.view.frame.width / 4.5) / 2 , self.view.frame.height - self.view.frame.width / 4, self.view.frame.width / 4.5, self.view.frame.width / 4.5))
+        snapButton.layer.cornerRadius = self.view.frame.width / 9
+        snapButton.userInteractionEnabled = true
+        snapButton.backgroundColor = UIColor.greenColor()
+        overlayView.addSubview(snapButton)
+        overlayView.bringSubviewToFront(snapButton)
+        let recognizer = UITapGestureRecognizer(target: self, action:Selector("tapSnap:"))
+        recognizer.delegate = self
+        snapButton.addGestureRecognizer(recognizer)
+        
+        let cancelButton = UIView(frame: CGRectMake(self.view.frame.width / 9, self.view.frame.height - self.view.frame.width / 5, self.view.frame.width / 9, self.view.frame.width / 9))
+        cancelButton.layer.cornerRadius = self.view.frame.width / 18
+        cancelButton.userInteractionEnabled = true
+        cancelButton.backgroundColor = UIColor.redColor()
+        overlayView.addSubview(cancelButton)
+        overlayView.bringSubviewToFront(cancelButton)
+        let cancelRecognizer = UITapGestureRecognizer(target: self, action:Selector("tapCancel:"))
+        cancelRecognizer.delegate = self
+        cancelButton.addGestureRecognizer(cancelRecognizer)
+        
+        let changeCameraButton = UIView(frame: CGRectMake(self.view.frame.width / 9, self.view.frame.height - self.view.frame.width / 2.5, self.view.frame.width / 9, self.view.frame.width / 9))
+        changeCameraButton.layer.cornerRadius = self.view.frame.width / 18
+        changeCameraButton.userInteractionEnabled = true
+        changeCameraButton.backgroundColor = UIColor.grayColor()
+        overlayView.addSubview(changeCameraButton)
+        overlayView.bringSubviewToFront(changeCameraButton)
+        let changeCameraRecognizer = UITapGestureRecognizer(target: self, action:Selector("tapChangeCamera:"))
+        changeCameraRecognizer.delegate = self
+        changeCameraButton.addGestureRecognizer(changeCameraRecognizer)
+        
+        let flashButton = UIView(frame: CGRectMake(self.view.frame.width * 7 / 9, self.view.frame.height - self.view.frame.width / 2.5, self.view.frame.width / 9, self.view.frame.width / 9))
+        flashButton.layer.cornerRadius = self.view.frame.width / 18
+        flashButton.userInteractionEnabled = true
+        flashButton.backgroundColor = UIColor.yellowColor()
+        overlayView.addSubview(flashButton)
+        overlayView.bringSubviewToFront(flashButton)
+        let flashRecognizer = UITapGestureRecognizer(target: self, action:Selector("tapFlash:"))
+        flashRecognizer.delegate = self
+        flashButton.addGestureRecognizer(flashRecognizer)
+        
+        return overlayView
+    }
+    
+    func tapSnap(recognizer: UITapGestureRecognizer) {
+        picker.takePicture()
+    }
+    
+    func tapCancel(recognizer: UITapGestureRecognizer) {
+        self.picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func tapChangeCamera(recognizer: UITapGestureRecognizer) {
+        if (hasChangedCamera == nil){
+            picker.cameraDevice = .Front
+            hasChangedCamera = true
+            return
+        }
+        
+        if (hasChangedCamera == true){
+            picker.cameraDevice = .Rear
+            hasChangedCamera = false
+            return
+        }
+        
+        if (hasChangedCamera! == false){
+            picker.cameraDevice = .Front
+            hasChangedCamera = true
+            return
+            
+        }
+    }
+    
+    func tapFlash(recognizer: UITapGestureRecognizer) {
+        if (hasTurnedOnFlash == nil){
+            picker.cameraFlashMode = .On
+            hasTurnedOnFlash = false
+            return
+        }
+        
+        if (hasTurnedOnFlash == true){
+            picker.cameraFlashMode = .Off
+            hasTurnedOnFlash = false
+            return
+        }
+        
+        if (hasTurnedOnFlash == false){
+            picker.cameraFlashMode = .On
+            hasTurnedOnFlash = true
+            return
+        }
+    }
     
     func drawGridView(size: CGSize) -> UIImage {
         UIGraphicsBeginImageContext(size)
