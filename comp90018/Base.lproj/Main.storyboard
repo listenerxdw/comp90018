@@ -537,19 +537,66 @@
         <!--User Feed-->
         <scene sceneID="u1O-IJ-RCU">
             <objects>
-                <viewController title="User Feed" id="SO8-mQ-4Y1" sceneMemberID="viewController">
+                <viewController title="User Feed" id="SO8-mQ-4Y1" customClass="UserFeed" customModule="comp90018" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qiK-4h-mFm"/>
                         <viewControllerLayoutGuide type="bottom" id="w2m-nS-th0"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="aCa-Pj-r9r" customClass="UserFeed" customModule="comp90018" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="aCa-Pj-r9r">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cKR-nR-88S">
+                                <rect key="frame" x="87" y="272" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="vFx-tG-acG"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjR-HZ-qcE">
+                                <rect key="frame" x="34" y="106" width="46" height="30"/>
+                                <state key="normal" title="Send">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendChat:" destination="SO8-mQ-4Y1" eventType="touchUpInside" id="PJI-hb-BaU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jo-7Z-qiY">
+                                <rect key="frame" x="123" y="106" width="70" height="30"/>
+                                <state key="normal" title="Browse">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showBrowser:" destination="SO8-mQ-4Y1" eventType="touchUpInside" id="MPp-Zx-6EX"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTB-S6-oFn">
+                                <rect key="frame" x="16" y="507" width="343" height="103"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="aTB-S6-oFn" secondAttribute="centerY" constant="-225" id="3jZ-xj-NFK"/>
+                            <constraint firstItem="w2m-nS-th0" firstAttribute="top" secondItem="aTB-S6-oFn" secondAttribute="bottom" constant="8" symbolic="YES" id="BiO-zI-uRS"/>
+                            <constraint firstItem="cKR-nR-88S" firstAttribute="leading" secondItem="aCa-Pj-r9r" secondAttribute="leadingMargin" constant="71" id="N4O-UQ-shP"/>
+                            <constraint firstItem="aTB-S6-oFn" firstAttribute="width" secondItem="aCa-Pj-r9r" secondAttribute="width" constant="-32" id="aYH-Vj-lLr"/>
+                            <constraint firstItem="aTB-S6-oFn" firstAttribute="top" secondItem="cKR-nR-88S" secondAttribute="bottom" constant="35" id="had-mQ-iZA"/>
+                            <constraint firstItem="aTB-S6-oFn" firstAttribute="centerX" secondItem="cKR-nR-88S" secondAttribute="centerX" id="jSo-EM-kLb"/>
+                            <constraint firstItem="aTB-S6-oFn" firstAttribute="leading" secondItem="aCa-Pj-r9r" secondAttribute="leadingMargin" id="zHJ-VE-zPv"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="User Feed" image="cabnet-bar-icon" id="Ul8-xw-Yh9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="btnBrowse" destination="3jo-7Z-qiY" id="kqR-jt-Fik"/>
+                        <outlet property="btnSend" destination="jjR-HZ-qcE" id="51k-H1-Osu"/>
+                        <outlet property="ivTest" destination="cKR-nR-88S" id="C2Q-6e-mco"/>
+                        <outlet property="lblTest" destination="aTB-S6-oFn" id="hsr-Ty-V4F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nps-Jx-jin" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
