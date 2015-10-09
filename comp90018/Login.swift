@@ -35,6 +35,7 @@ class Login: UIViewController, UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     func webViewDidStartLoad(webView: UIWebView) {
+        webView.hidden=true
         start()
         let url = webView.request?.URL!.absoluteString
         if url!.lowercaseString.rangeOfString("backendlife") != nil{

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class CollectionViewCell: UICollectionViewCell {
     
@@ -14,6 +15,13 @@ class CollectionViewCell: UICollectionViewCell {
         super.init(coder: aDecoder)
     }
     var imageView: UIImageView!
+    
+    override func prepareForReuse() {
+        // prevent from seeing old photos when reusing old cells, so
+        // we first set its image to nil.
+        // Try to comment the following statement, and see the effect.
+        self.imageView.image = nil
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
