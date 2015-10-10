@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-
+import Alamofire
 class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -19,7 +19,6 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        println("3: tableview ok")
         self.tableView2.reloadData()
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -30,7 +29,8 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    { let cell = self.tableView2.dequeueReusableCellWithIdentifier("usercell") as! UITableViewCell
+    {
+        let cell = self.tableView2.dequeueReusableCellWithIdentifier("usercell") as! UITableViewCell
         var image = cell.viewWithTag(105) as? UIImageView
         var label = cell.viewWithTag(106) as? UILabel
         //label!.adjustsFontSizeToFitWidth = true
@@ -52,11 +52,8 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         return cell
     }
     
-    
-    
-    func getFollows(username:String,userid:String) -> [[String]] {
-        var friend = [[String]]()
-        friend = []
+    func getMyFollows(username:String,userid:String)->[[String]]{
+        var myFriend:[[String]]=[]
         let url = "https://api.instagram.com/v1/users/\(userid)/follows?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
@@ -65,52 +62,73 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         if json["data"].count>0 {
             for i in 0...(json["data"].count-1)
             {   var temp:[String] = []
-                temp.append("friend")
-                temp.append(username)
                 temp.append(json["data"][i]["username"].string!)
                 temp.append(json["data"][i]["id"].string!)
-                temp.append(json["data"][i]["profile_picture"].string!)
-                friend.append(temp)
+                myFriend.append(temp)
                 
-            } }
-        friend = sort(friend)
-        return friend
-    }
-    
-    func getUpload(userid:String) -> [[String]]{
-        var upload = [[String]]()
-        let url="https://api.instagram.com/v1/users/\(userid)/media/recent?count=10&access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
-        let requestURL = NSURL(string:url)
-        let request = NSURLRequest(URL: requestURL!)
-        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
-        let json = JSON(data: data!)
-        if json["data"].count>0
-        {   for i in 0...(json["data"].count-1)
-        {   var temp:[String] = []
-            temp.append("pic")
-            temp.append(json["data"][i]["user"]["username"].string!)
-            temp.append(json["data"][i]["images"]["thumbnail"]["url"].string!)
-            upload.append(temp)
-            
             }
         }
-        return upload
+        myFriend = sort(myFriend)
+        return myFriend
+        
+    }
+
+    
+    func getFollows(username:String,userid:String) {
+        var friend = [[String]]()
+        friend = []
+        let url = "https://api.instagram.com/v1/users/\(userid)/follows?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+        Alamofire.request(.GET,url).responseJSON{
+            (_,_,data,error) in
+            let json = JSON(data!)
+            if json["data"].count>0 {
+                for i in 0...(json["data"].count-1)
+                {   var temp:[String] = []
+                    temp.append("friend")
+                    temp.append(username)
+                    temp.append(json["data"][i]["username"].string!)
+                    temp.append(json["data"][i]["id"].string!)
+                    temp.append(json["data"][i]["profile_picture"].string!)
+                    friend.append(temp)
+                    
+                } }
+            self.ctrlsel = self.ctrlsel + friend
+            self.tempctr = self.tempctr + friend
+            self.tableView2.reloadData()
+        }
+    }
+    
+    func getUpload(userid:String){
+        var upload = [[String]]()
+        let url="https://api.instagram.com/v1/users/\(userid)/media/recent?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+        Alamofire.request(.GET,url).responseJSON{
+            (_,_,data,error) in
+            let json = JSON(data!)
+            if json["data"].count>0
+            {   for i in 0...(json["data"].count-1)
+            {   var temp:[String] = []
+                temp.append("pic")
+                temp.append(json["data"][i]["user"]["username"].string!)
+                temp.append(json["data"][i]["images"]["thumbnail"]["url"].string!)
+                upload.append(temp)
+                
+                }
+            }
+            self.ctrlsel = self.ctrlsel + upload
+            self.tempctr = self.tempctr + upload
+            self.tableView2.reloadData()
+        }
     }
     
     func getUserActivity() -> Void{
-        var userData:[[String]] = []
         self.follow = []
-        self.follow = getFollows("qijie19920618",userid: "self")
-        println("1: getFollows")
+        self.follow = getMyFollows("qijie19920618",userid: "self")
         for i in 0...self.follow.count-1 {
-            var id = self.follow[i][3]
-            var friendname = self.follow[i][2]
-            userData = userData + getUpload(id)
-            userData = userData + getFollows(friendname,userid: id)
+            var id = self.follow[i][1]
+            var friendname = self.follow[i][0]
+            getUpload(id)
+            getFollows(friendname,userid: id)
         }
-        println("2: userdata ok")
-        self.ctrlsel = userData
-        self.tempctr = userData
         
     }
     
@@ -122,7 +140,7 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
             for i in 1...target.count-1
             { for j in 0...temp.count-1
             {   checknum = j
-                if target[i][2]<temp[j][2]
+                if target[i][0]<temp[j][0]
                 {   temp.insert(target[i], atIndex: j)
                     break
                 }
@@ -139,8 +157,8 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     
     // 搜索代理UISearchBarDelegate方法，每次改变搜索内容时都会调用
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        // 没有搜索内容时显示全部组件
         if searchText == "" {
+            self.ctrlsel = self.tempctr
         }
         else {
             self.ctrlsel = []

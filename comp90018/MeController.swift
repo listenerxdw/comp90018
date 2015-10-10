@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import Alamofire
 class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate  {
     
     @IBOutlet weak var tableView: UITableView!
@@ -39,37 +40,39 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
     func getMeLike(){
         self.ctrlsel = []
         let url="https://api.instagram.com/v1/users/self/media/liked?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
-        let requestURL = NSURL(string:url)
-        let request = NSURLRequest(URL: requestURL!)
-        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
-        let json = JSON(data: data!)
-        for i in 0...(json["data"].count-1)
-        {   var name = json["data"][i]["user"]["username"].string!
-            var picture = json["data"][i]["images"]["thumbnail"]["url"].string!
-            self.ctrls.append("I liked \(name)'photo")
-            self.ctrls.append(picture)
-            self.ctrlsel.append(self.ctrls)
-            self.ctrls = []
-            
+        Alamofire.request(.GET,url).responseJSON{
+            (_,_,data,error) in
+            let json = JSON(data!)
+            for i in 0...(json["data"].count-1)
+            {   var name = json["data"][i]["user"]["username"].string!
+                var picture = json["data"][i]["images"]["thumbnail"]["url"].string!
+                self.ctrls.append("I liked \(name)'photo")
+                self.ctrls.append(picture)
+                self.ctrlsel.append(self.ctrls)
+                self.ctrls = []
+                
+            }
+            self.tableView.reloadData()
         }
-        self.ctrls = []
     }
     
     func getFollowedBy(){
         let url = "https://api.instagram.com/v1/users/self/followed-by?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
-        let requestURL = NSURL(string:url)
-        let request = NSURLRequest(URL: requestURL!)
-        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
-        let json = JSON(data: data!)
-        for i in 0...(json["data"].count-1)
-        {   var name = json["data"][i]["username"].string!
-            var picture = json["data"][i]["profile_picture"].string!
-            self.ctrls.append("\(name) followed me")
-            self.ctrls.append(picture)
-            self.ctrlsel.append(self.ctrls)
-            self.ctrls = []
+        Alamofire.request(.GET,url).responseJSON{
+            (_,_,data,error) in
+            let json = JSON(data!)
+            for i in 0...(json["data"].count-1)
+            {   var name = json["data"][i]["username"].string!
+                var picture = json["data"][i]["profile_picture"].string!
+                self.ctrls.append("\(name) followed me")
+                self.ctrls.append(picture)
+                self.ctrlsel.append(self.ctrls)
+                self.ctrls = []
+            }
+            
+            self.tableView.reloadData()
+            
         }
-        self.ctrls = []
         
     }
     

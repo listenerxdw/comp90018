@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import Alamofire
 class SearchUserController: UIViewController,UISearchBarDelegate,
 UITableViewDataSource,UITableViewDelegate{
     
@@ -81,33 +82,31 @@ UITableViewDataSource,UITableViewDelegate{
         var tempText:[String] = []
         var tempPic:[String] = []
         let url = "https://api.instagram.com/v1/users/search?q=\(searchtext)&access_token=\(token)"
-        let requestURL = NSURL(string:url)
-        let request = NSURLRequest(URL: requestURL!)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
-            {(response, data, error) in
-                let json = JSON(data: data!)
-                if json["data"].count>0
+        Alamofire.request(.GET,url).responseJSON{
+            (_,_,data,error) in
+            let json = JSON(data!)
+            if json["data"].count>0
+            {
+                for i in 0...(json["data"].count-1)
                 {
-                    for i in 0...(json["data"].count-1)
-                    {
-                        self.ctrls.append(json["data"][i]["username"].string!)
-                        self.picArray.append(json["data"][i]["profile_picture"].string!)
-                    }
+                    self.ctrls.append(json["data"][i]["username"].string!)
+                    self.picArray.append(json["data"][i]["profile_picture"].string!)
                 }
-                for ctrl in self.ctrls {
-                    tempText.append(ctrl)
-                }
-                for pic in self.picArray {
-                    tempPic.append(pic)
-                }
-                self.ctrlsel = tempText
-                self.picArray2 = tempPic
-                self.ctrls = []
-                self.picArray = []
-                if  sequence == self.searchSequence
-                {   self.tableView.reloadData()
-                    println("searchtext: \(searchtext)")}
-                
+            }
+            for ctrl in self.ctrls {
+                tempText.append(ctrl)
+            }
+            for pic in self.picArray {
+                tempPic.append(pic)
+            }
+            self.ctrlsel = tempText
+            self.picArray2 = tempPic
+            self.ctrls = []
+            self.picArray = []
+            if  sequence == self.searchSequence
+            {   self.tableView.reloadData()
+                println("searchtext: \(searchtext)")}
+            
         }
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-
+import Alamofire
 class SuggestionController: UIViewController, UITableViewDataSource {
     
     @IBOutlet weak var theTable: UITableView!
@@ -86,31 +86,29 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         var count = 0
         let url = myurl
         var temp:[String] = []
-        let requestURL = NSURL(string:url)
-        let request = NSURLRequest(URL: requestURL!)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
-            {(response, data, error) in
-                let json = JSON(data: data!)
-                if json["data"].count>0
+        Alamofire.request(.GET,url).responseJSON{
+            (_,_,data,error) in
+            let json = JSON(data!)
+            if json["data"].count>0
+            {
+                if json["data"].count < expectedNum
+                {count = json["data"].count} else {count = expectedNum}
+                for i in 0...count-1
                 {
-                    if json["data"].count < expectedNum
-                    {count = json["data"].count} else {count = expectedNum}
-                    for i in 0...count-1
-                    {
-                        var username = json["data"][i]["user"]["username"].string!
-                        if !self.existFollows(username) && !self.checkExist(username)
-                        { self.finalSugg.append(username)
-                            temp.append(username)
-                            temp.append(json["data"][i]["user"]["profile_picture"].string!)
-                            self.findProfile.append(temp)
-                            temp = []
-                        }
+                    var username = json["data"][i]["user"]["username"].string!
+                    if !self.existFollows(username) && !self.checkExist(username)
+                    { self.finalSugg.append(username)
+                        temp.append(username)
+                        temp.append(json["data"][i]["user"]["profile_picture"].string!)
+                        self.findProfile.append(temp)
+                        temp = []
                     }
                 }
-                println("step3: \(self.finalSugg.count)")
-                self.ctrlsel = self.finalSugg
-                //update the table
-                self.theTable.reloadData()
+            }
+            println("step3: \(self.finalSugg.count)")
+            self.ctrlsel = self.finalSugg
+            //update the table
+            self.theTable.reloadData()
         }
         
     }
