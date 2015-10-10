@@ -60,19 +60,16 @@ class SuggestionController: UIViewController, UITableViewDataSource {
      func goSuggestion() {
         self.finalSugg = []
         self.ctrlsel = []
-        getAllsubFriends()
+        getAllsubFriends("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
         getCommonFriends()
-        //lulucheck
-        println("step1: \(self.finalSugg.count)")
-        if self.finalSugg.count<20{
-            //推荐followed by
-            var expectNum = 20-self.finalSugg.count
-            getFollowedBy("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userId: "self",expectNum: expectNum)
-        }
-        println("step2: \(self.finalSugg.count)")
-        if self.finalSugg.count<20 {
-            //推荐tag,travell,sports
-            var expectNum = 20-self.finalSugg.count
+        println("step1 finish")
+        //get followed by
+        getFollowedBy("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userId: "self")
+        println("step2 finish")
+       ////推荐tag,travell,sports
+        println(self.finalSugg.count)
+        if self.finalSugg.count<10 {
+            var expectNum = 10-self.finalSugg.count
             getTag(expectNum,token: "1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
         }
         self.ctrlsel = self.finalSugg
@@ -123,7 +120,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         
     }
     
-    func getFollowedBy(token:String,userId:String,expectNum:Int)
+    func getFollowedBy(token:String,userId:String)
     {   var temp:[String] = []
         var count = 0
         let url = "https://api.instagram.com/v1/users/\(userId)/followed-by?access_token=\(token)"
@@ -131,10 +128,8 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         let request = NSURLRequest(URL: requestURL!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
         let json = JSON(data: data!)
-        if json["data"].count>expectNum
-        {count = expectNum}
-        else {count = json["data"].count}
-        for i in 0...count-1
+        if json["data"].count > 0 {
+        for i in 0...json["data"].count-1
         {   if !existFollows(json["data"][i]["username"].string!) && !checkExist(json["data"][i]["username"].string!)
         {
             self.finalSugg.append(json["data"][i]["username"].string!)
@@ -144,10 +139,11 @@ class SuggestionController: UIViewController, UITableViewDataSource {
             temp = []
             }
         }
+        }
     }
     
-    func getFollows() -> Void {
-        let url = "https://api.instagram.com/v1/users/self/follows?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+    func getMyFollows(token:String) -> Void {
+        let url = "https://api.instagram.com/v1/users/self/follows?access_token=\(token)"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
@@ -161,11 +157,10 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         
     }
     
-    func findFriend(potentialId:String) -> [String]{
-        // println(potentialId)
+    func findFriend(token:String,potentialId:String) -> [String]{
         var id:[String] = []
         var temp:[String] = []
-        let url = "https://api.instagram.com/v1/users/\(potentialId)/follows?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+        let url = "https://api.instagram.com/v1/users/\(potentialId)/follows?access_token=\(token)"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
@@ -183,16 +178,16 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         return id
     }
     
-    func getAllsubFriends(){
+    func getAllsubFriends(token:String){
         self.follow = []
         self.followId = []
         numberFollow = 0
         var subfollow:[String] = []
         var followArray = [[String]]()
-        getFollows()
+        getMyFollows(token)
         for var i=0; i<self.numberFollow; i++
         {
-            subfollow = findFriend(followId[i])
+            subfollow = findFriend(token,potentialId: followId[i])
             followArray.append(subfollow)
             
         }
@@ -206,7 +201,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         { for var j=i+1;j<allDataOfFollow.count;j++
         { count = count + checkTarget(allDataOfFollow[i][m],s: allDataOfFollow[j])
             }
-            if count >= 4 {
+            if count >= 3 {
                 if !checkExist(allDataOfFollow[i][m]) && !(allDataOfFollow[i][m] == "qijie19920618")
                     && !existFollows(self.allDataOfFollow[i][m]){
                         self.finalSugg.append(self.allDataOfFollow[i][m])}

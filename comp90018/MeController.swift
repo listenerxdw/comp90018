@@ -37,9 +37,9 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
         return cell
     }
     
-    func getMeLike(){
+    func getMeLike(token:String){
         self.ctrlsel = []
-        let url="https://api.instagram.com/v1/users/self/media/liked?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+        let url="https://api.instagram.com/v1/users/self/media/liked?access_token=\(token)"
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
@@ -56,8 +56,8 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
         }
     }
     
-    func getFollowedBy(){
-        let url = "https://api.instagram.com/v1/users/self/followed-by?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+    func getFollowedBy(token:String){
+        let url = "https://api.instagram.com/v1/users/self/followed-by?access_token=\(token)"
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
