@@ -44,9 +44,11 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         // the browser
         self.browser = MCNearbyServiceBrowser(peer: peerID,serviceType: serviceType)
         self.browser.delegate = self
+        //start browsing
+        self.browser.startBrowsingForPeers()
         
         // the advertiser
-        self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
+        self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: ["A":"A"], serviceType: serviceType)
         // start advertising
         self.assistant.startAdvertisingPeer()
     }

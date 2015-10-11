@@ -76,21 +76,21 @@ class UserTableViewCell: UITableViewCell {
             self.likeLabel.text? += "\(likers[3])"
         } else if numOfLike >= 2 && numOfLike <= 3 {
             for i in 0...numOfLike - 1 {
-                //            println(i)
+                //            //////println(i)
                 if let liker = self.user? ["likes"]["data"][i]["username"].string {
                     likers.append(liker)
 
                 }
             }
             for j in 0...numOfLike - 2 {
-//                println(j)
+//                ////println(j)
                 self.likeLabel.text? += "\(likers[j]), "
             }
             self.likeLabel.text? += "\(likers[numOfLike - 1])"
             
         } else if numOfLike == 1 {
             for i in 0...numOfLike - 1 {
-                //            println(i)
+                //            //println(i)
                 if let liker = self.user? ["likes"]["data"][i]["username"].string {
                     likers.append(liker)
                     
@@ -124,7 +124,7 @@ class UserTableViewCell: UITableViewCell {
             self.commentLabel.text? += "\(commentUsers[2]): \(comments[2])"
         } else if numOfComment == 2 {
             for i in 0...numOfComment {
-                //            println(i)
+                //            //println(i)
                 if let comment = self.user? ["comments"]["data"][i]["text"].string {
                     comments.append(comment)
                 }
@@ -136,7 +136,7 @@ class UserTableViewCell: UITableViewCell {
             self.commentLabel.text? += "\(commentUsers[1]): \(comments[1])\n"
         } else if numOfComment == 1 {
             for i in 0...numOfComment {
-                //            println(i)
+                //            //println(i)
                 if let comment = self.user? ["comments"]["data"][i]["text"].string {
                     comments.append(comment)
                 }
