@@ -244,7 +244,7 @@
         <!--Discover-->
         <scene sceneID="Jns-H2-Y2U">
             <objects>
-                <viewController title="Discover" id="GRc-RN-pK2" sceneMemberID="viewController">
+                <viewController title="Discover" id="GRc-RN-pK2" customClass="DiscoveryController" customModule="comp90018" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MDW-2Z-c5r"/>
                         <viewControllerLayoutGuide type="bottom" id="EnZ-aF-a07"/>
@@ -259,7 +259,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="S2o-Gm-OMT" kind="push" id="mbI-b3-iKj"/>
+                                    <segue destination="S2o-Gm-OMT" kind="push" identifier="gotoSuggestion" id="mbI-b3-iKj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBh-Xc-u22">
@@ -978,7 +978,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gr1-Ib-Iwq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-358.13333333333333" y="1766.0066666666667"/>
-            <point key="canvasLocation" x="402.5" y="-344.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CcQ-75-D59">
@@ -1277,7 +1276,13 @@
                             <constraint firstItem="pp9-Cx-hxL" firstAttribute="top" secondItem="t4A-rq-V4C" secondAttribute="bottom" id="XEJ-i5-Jzr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Suggestion" id="GxM-ou-UTB"/>
+                    <navigationItem key="navigationItem" title="Suggestion" id="GxM-ou-UTB">
+                        <barButtonItem key="rightBarButtonItem" title="more" id="rjb-rt-S5s">
+                            <connections>
+                                <action selector="getMore:" destination="S2o-Gm-OMT" id="y3f-uP-zd2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="theTable" destination="t4A-rq-V4C" id="fPY-9u-Pdt"/>
