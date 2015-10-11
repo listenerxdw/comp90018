@@ -25,6 +25,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     var postId: [String]? = []
     var timeStamp: [Int]? = []
     var images: [NSData]? = []
+    var peers: [MCPeerID]? = []
     
     @IBOutlet var tableView:UITableView!
     @IBOutlet weak var sortController: UISegmentedControl!
@@ -91,7 +92,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         self.browser.startBrowsingForPeers()
         
         // the advertiser
-        self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: ["A":"A"], serviceType: serviceType)
+        self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
         // start advertising
         self.assistant.startAdvertisingPeer()
         
@@ -247,7 +248,9 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
             println("Error sending data: \(error!.localizedDescription)")
         }
         println("SEND DATA")
-        self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable, error:&error)
+        println(peers?[0].displayName)
+        //var a : [AnyObject] = self.session.connectedPeers
+        self.session.sendData(data, toPeers: peers, withMode: MCSessionSendDataMode.Reliable, error:&error)
     }
     
     //update the news feed - UI
@@ -289,6 +292,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
         print("Found PeerID:")
         println(peerID)
+        peers?.append(peerID)
     }
     func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
         print("Lost PeerID:")
