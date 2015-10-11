@@ -13,7 +13,7 @@ import MultipeerConnectivity
 
 var accessToken = User.sharedInstance.token
 
-class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseViewControllerDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
+class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseViewControllerDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
     let serviceType = "COMP90018"
     var browser:MCNearbyServiceBrowser!
@@ -24,7 +24,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     var results: [JSON]? = []
     var postId: [String]? = []
     var timeStamp: [Int]? = []
-    var peers: [MCPeerID]? = []
     
     @IBOutlet var tableView:UITableView!
     @IBOutlet weak var sortController: UISegmentedControl!
@@ -94,6 +93,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
         // start advertising
         self.assistant.startAdvertisingPeer()
+        
         
         //set the table view
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -242,9 +242,9 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
             println("Error sending data: \(error!.localizedDescription)")
         }
         println("SEND DATA")
-        println(peers?[0].displayName)
-        //var a : [AnyObject] = self.session.connectedPeers
-        self.session.sendData(data, toPeers: peers, withMode: MCSessionSendDataMode.Reliable, error:&error)
+        var a : [AnyObject] = self.session.connectedPeers
+        println(a[0].displayName)
+        self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error:&error)
     }
     
     //update the news feed - UI
@@ -287,14 +287,17 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
         print("Found PeerID:")
         println(peerID)
-        peers?.append(peerID)
+        browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 0)
     }
     func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
         print("Lost PeerID:")
         println(peerID)
         del(peerID.displayName)
     }
-    
+    //advertiser delegate
+    func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!) {
+        invitationHandler(true,self.session)
+    }
     // session delegate's methods
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         println("R1")
