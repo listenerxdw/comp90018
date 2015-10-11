@@ -52,9 +52,9 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         return cell
     }
     
-    func getMyFollows(username:String,userid:String)->[[String]]{
+    func getMyFollows(token:String,username:String,userid:String)->[[String]]{
         var myFriend:[[String]]=[]
-        let url = "https://api.instagram.com/v1/users/\(userid)/follows?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+        let url = "https://api.instagram.com/v1/users/\(userid)/follows?access_token=\(token)"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
@@ -74,10 +74,10 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     }
 
     
-    func getFollows(username:String,userid:String) {
+    func getFollows(token:String,username:String,userid:String) {
         var friend = [[String]]()
         friend = []
-        let url = "https://api.instagram.com/v1/users/\(userid)/follows?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+        let url = "https://api.instagram.com/v1/users/\(userid)/follows?access_token=\(token)"
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
@@ -98,9 +98,9 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         }
     }
     
-    func getUpload(userid:String){
+    func getUpload(token:String,userid:String){
         var upload = [[String]]()
-        let url="https://api.instagram.com/v1/users/\(userid)/media/recent?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+        let url="https://api.instagram.com/v1/users/\(userid)/media/recent?access_token=\(token)"
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
@@ -122,12 +122,12 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     
     func getUserActivity() -> Void{
         self.follow = []
-        self.follow = getMyFollows("qijie19920618",userid: "self")
+        self.follow = getMyFollows("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",username: "qijie19920618",userid: "self")
         for i in 0...self.follow.count-1 {
             var id = self.follow[i][1]
             var friendname = self.follow[i][0]
-            getUpload(id)
-            getFollows(friendname,userid: id)
+            getUpload("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userid: id)
+            getFollows("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",username: friendname,userid: id)
         }
         
     }
