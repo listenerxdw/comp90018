@@ -30,10 +30,10 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.finalSugg = []
-        self.dataOfTableView = []
+        self.dataOfTableView = ["searching..."]
         //get all the users followed by the users that I follow
         getAllsubFriends("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
-        
+        self.theTable.reloadData()
     }
     
     //return number of rows for tableview
@@ -77,15 +77,15 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         //find the common friends of the users that I follow
         getCommonFriends()
         //get the users that follow me
-        if self.finalSugg.count<25 {
+        if self.finalSugg.count<15 {
             getFollowedBy("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userId: "self")
         }
         
         //if the number of suggested users are less than 10,then the users that liked
         //the post tagged as travel and sports will be suggested.
         println(self.finalSugg.count)
-        if self.finalSugg.count<25 {
-            var expectNum = 25-self.finalSugg.count
+        if self.finalSugg.count<15 {
+            var expectNum = 15-self.finalSugg.count
             getTag(expectNum,token: "1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
         }
         
@@ -211,18 +211,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     temp = []
                 }
             }
-            self.dataOfTableView = self.finalSugg
-            //update the table
-            self.theTable.reloadData()
-            
-        }
-    }
-    
-    func commonFriends(){
-        let url = "https://api.instagram.com/v1/users/self/media/liked?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
-                Alamofire.request(.GET,url).responseJSON {
-            (_,_,data,error) in
-            println("common back")
             var subfollow:[String] = []
             var followArray = [[String]]()
             for var i=0; i<self.numberFollow; i++ {
@@ -231,8 +219,8 @@ class SuggestionController: UIViewController, UITableViewDataSource {
             }
             self.allDataOfFollow = followArray
             self.goSuggestion()
+
         }
-        
     }
     
     //this function is to get all users followed by my friends
@@ -242,7 +230,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         numberFollow = 0
         getMyFollows(token)
         getLikedUser()
-        commonFriends()
     }
     //find out the users that appear more than 2 times of a list of users of my friends
     func getCommonFriends() -> Void {
