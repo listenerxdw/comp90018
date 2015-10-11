@@ -23,6 +23,8 @@
 		BDF2321C1BB8C9ED00B1D986 /* Libraries.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2321B1BB8C9ED00B1D986 /* Libraries.swift */; };
 		BDF232261BB8DF7800B1D986 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF232251BB8DF7800B1D986 /* Login.swift */; };
 		BDF232281BB8DF8900B1D986 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF232271BB8DF8900B1D986 /* Home.swift */; };
+		F7AD426D1BC69FCB0021A0EC /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD426C1BC69FCB0021A0EC /* UserTableViewCell.swift */; };
+		F7AD426F1BC69FF20021A0EC /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD426E1BC69FF20021A0EC /* UserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		BDF2321B1BB8C9ED00B1D986 /* Libraries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Libraries.swift; sourceTree = "<group>"; };
 		BDF232251BB8DF7800B1D986 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		BDF232271BB8DF8900B1D986 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		F7AD426C1BC69FCB0021A0EC /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		F7AD426E1BC69FF20021A0EC /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +158,8 @@
 		BD1247AA1B90083000C54C5D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F7AD426C1BC69FCB0021A0EC /* UserTableViewCell.swift */,
+				F7AD426E1BC69FF20021A0EC /* UserViewController.swift */,
 				BD1247AB1B90083000C54C5D /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -230,6 +236,7 @@
 				TargetAttributes = {
 					BD1247A61B90083000C54C5D = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = F5NBU4297C;
 					};
 					BD1247BB1B90083000C54C5D = {
 						CreatedOnToolsVersion = 6.4;
@@ -331,8 +338,10 @@
 			files = (
 				BDF232261BB8DF7800B1D986 /* Login.swift in Sources */,
 				BDE852471BBABFFF0098997E /* Profile.swift in Sources */,
+				F7AD426F1BC69FF20021A0EC /* UserViewController.swift in Sources */,
 				8886C2A21BC01B0F006D941A /* PhotoCropViewController.swift in Sources */,
 				BDF2321C1BB8C9ED00B1D986 /* Libraries.swift in Sources */,
+				F7AD426D1BC69FCB0021A0EC /* UserTableViewCell.swift in Sources */,
 				BDDCA0451BBC066600F2CA4C /* CollectionViewCell.swift in Sources */,
 				8886C2A41BC01B4B006D941A /* PhotoFilterViewController.swift in Sources */,
 				8886C2A01BC00403006D941A /* PhotoChooseViewController.swift in Sources */,
@@ -469,6 +478,7 @@
 			baseConfigurationReference = 912E151E5ED6857C50D269E7 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = comp90018/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -482,6 +492,7 @@
 			baseConfigurationReference = AA33BA24AAEA90351142F697 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = comp90018/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
