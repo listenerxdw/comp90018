@@ -10,8 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-//let parameter = ["access_token": "1929157665.5b9e1e6.3f2c4f742fab45d9b74d1f1b33271cf2"]
-//let accessToken = "1929157665.5b9e1e6.3f2c4f742fab45d9b74d1f1b33271cf2"
 var accessToken = User.sharedInstance.token
 
 class UserViewController: UIViewController, UITableViewDataSource {
@@ -22,15 +20,30 @@ class UserViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func sortBy(sender: UISegmentedControl) {
         if sortController.selectedSegmentIndex == 0 {
-            sortByTime(timeStamp!)
+            sortByTime()
             
         } else if sortController.selectedSegmentIndex == 1 {
             sortByLocation()
         }
     }
     
-    func sortByTime(timeStamp: [Int]){
-        
+    func sortByTime(){
+        /*let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
+        Alamofire.request(.GET, url).responseJSON { (request, response, json, error) in
+            if (json != nil){
+                var jsonObj = JSON(json!)
+                if let data = jsonObj["data"].arrayValue as [JSON]? {
+                    self.results = data
+                    let num = jsonObj["data"].count
+                    for i in 0...num {
+                        jsonObj["data"][i]
+                    }
+                    println(self.postId!)
+                    println(self.timeStamp!)
+                    self.tableView.reloadData()
+                }
+            }
+        }*/
     }
     
     func sortByLocation(){
