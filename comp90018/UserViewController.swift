@@ -38,8 +38,8 @@ class UserViewController: UIViewController, UITableViewDataSource {
                     for i in 0...num {
                         jsonObj["data"][i]
                     }
-                    println(self.postId!)
-                    println(self.timeStamp!)
+                    //println(self.postId!)
+                    //println(self.timeStamp!)
                     self.tableView.reloadData()
                 }
             }
@@ -91,8 +91,8 @@ class UserViewController: UIViewController, UITableViewDataSource {
                             self.timeStamp?.append(time)
                         }
                     }
-                    println(self.postId!)
-                    println(self.timeStamp!)
+                    //println(self.postId!)
+                    //println(self.timeStamp!)
                     self.tableView.reloadData()
                 }
             }
@@ -136,22 +136,22 @@ class UserViewController: UIViewController, UITableViewDataSource {
         
         Alamofire.request(.POST, url, parameters: parameter, encoding: .JSON).responseJSON { (request, response, json, error) in
             
-            //println(request)
-            //println("-----------------------------")
+            ////println(request)
+            ////println("-----------------------------")
             if json == nil {
-                println(error)
+                //println(error)
 
             } else {
                 if let data: AnyObject = json{
                     let error = JSON(data)
                     errorMsg = error.description
                 }
-                println("XXXX"+errorMsg)
-                println("YYYY")
-                println(json)
+                //println("XXXX"+errorMsg)
+                //println("YYYY")
+                //println(json)
             }
         }
-//        println(errorMsg)
+//        //println(errorMsg)
         var alert = UIAlertController(title: "Error", message: errorMsg, preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel){ (ACTION) -> Void in
@@ -191,19 +191,19 @@ class UserViewController: UIViewController, UITableViewDataSource {
         
         Alamofire.request(.POST, url, parameters: parameter, encoding: .JSON).responseJSON { (request, response, json, error) in
             if json == nil {
-                println(error)
+                //println(error)
                 
             } else {
                 if let data: AnyObject = json{
                     let error = JSON(data)
                     errorMsg = error.description
                 }
-                println(errorMsg)
+                //println(errorMsg)
                 
-                println(json)
+                //println(json)
             }
         }
-        //        println(errorMsg)
+        //        //println(errorMsg)
         
         
         
