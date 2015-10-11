@@ -27,7 +27,6 @@
 		BDE852471BBABFFF0098997E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE852461BBABFFF0098997E /* Profile.swift */; };
 		BDECD0F61BC7319100F0217E /* UserFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDECD0F51BC7319100F0217E /* UserFeed.swift */; };
 		BDF232261BB8DF7800B1D986 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF232251BB8DF7800B1D986 /* Login.swift */; };
-		BDF232281BB8DF8900B1D986 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF232271BB8DF8900B1D986 /* Home.swift */; };
 		F7AD426D1BC69FCB0021A0EC /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD426C1BC69FCB0021A0EC /* UserTableViewCell.swift */; };
 		F7AD426F1BC69FF20021A0EC /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD426E1BC69FF20021A0EC /* UserViewController.swift */; };
 /* End PBXBuildFile section */
@@ -118,7 +117,6 @@
 		BDE852461BBABFFF0098997E /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		BDECD0F51BC7319100F0217E /* UserFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFeed.swift; sourceTree = "<group>"; };
 		BDF232251BB8DF7800B1D986 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
-		BDF232271BB8DF8900B1D986 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		F7AD426C1BC69FCB0021A0EC /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		F7AD426E1BC69FF20021A0EC /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,6 +207,8 @@
 				AF36B0351BC8DE0700084A01 /* ActivityController.swift */,
 				AF36B0371BC8DE9000084A01 /* MeController.swift */,
 				AF36B0391BC8E0CB00084A01 /* UserController.swift */,
+				F7AD426C1BC69FCB0021A0EC /* UserTableViewCell.swift */,
+				F7AD426E1BC69FF20021A0EC /* UserViewController.swift */,
 				BD1247B31B90083000C54C5D /* Images.xcassets */,
 				BD1247B51B90083000C54C5D /* LaunchScreen.xib */,
 				BD1247AA1B90083000C54C5D /* Supporting Files */,
@@ -219,8 +219,6 @@
 		BD1247AA1B90083000C54C5D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F7AD426C1BC69FCB0021A0EC /* UserTableViewCell.swift */,
-				F7AD426E1BC69FF20021A0EC /* UserViewController.swift */,
 				BD1247AB1B90083000C54C5D /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -437,9 +435,11 @@
 			files = (
 				BDF232261BB8DF7800B1D986 /* Login.swift in Sources */,
 				BDE852471BBABFFF0098997E /* Profile.swift in Sources */,
+				AF36B03A1BC8E0CB00084A01 /* UserController.swift in Sources */,
+				AF36B0361BC8DE0700084A01 /* ActivityController.swift in Sources */,
 				F7AD426F1BC69FF20021A0EC /* UserViewController.swift in Sources */,
 				8886C2A21BC01B0F006D941A /* PhotoCropViewController.swift in Sources */,
-				BDF2321C1BB8C9ED00B1D986 /* Libraries.swift in Sources */,
+				BDECD0F61BC7319100F0217E /* UserFeed.swift in Sources */,
 				F7AD426D1BC69FCB0021A0EC /* UserTableViewCell.swift in Sources */,
 				BDDCA0451BBC066600F2CA4C /* CollectionViewCell.swift in Sources */,
 				AF36B0341BC8D2CE00084A01 /* SuggestionController.swift in Sources */,
