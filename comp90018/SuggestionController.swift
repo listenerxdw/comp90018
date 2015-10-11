@@ -39,6 +39,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         self.finalSugg = []
         self.dataOfTableView = ["searching..."]
+       
     }
     
     //return number of rows for tableview
@@ -127,7 +128,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         //find the common friends of the users that I follow
         getCommonFriends()
         //get the users that follow me
-        if self.finalSugg.count<25 {
+        if self.finalSugg.count<15 {
             
             getFollowedBy(access_token,userId: "self")
         }
@@ -135,8 +136,8 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         //if the number of suggested users are less than 10,then the users that liked
         //the post tagged as travel and sports will be suggested.
         println(self.finalSugg.count)
-        if self.finalSugg.count<25 {
-            var expectNum = 25-self.finalSugg.count
+        if self.finalSugg.count<15 {
+            var expectNum = 15-self.finalSugg.count
             getTag(expectNum,token: access_token)
         }
         
@@ -225,7 +226,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         let request = NSURLRequest(URL: requestURL!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
         let json = JSON(data: data!)
-        if json["data"].count > 0 {
+        if json["data"].count > 0 && json["data"].count<50{
             for i in 0...json["data"].count-1 {
                 if !existFollows(json["data"][i]["username"].string!) && !checkExist(json["data"][i]["username"].string!) {
                     self.finalSugg.append(json["data"][i]["username"].string!)
@@ -291,6 +292,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
             (_,_,data,error) in
             println("like back")
             let json = JSON(data!)
+            if json["data"].count > 0 {
             for i in 0...json["data"].count-1 {
                 var username = json["data"][i]["user"]["username"].string!
                 if !self.existFollows(username) && !self.checkExist(username){
@@ -304,7 +306,9 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     temp = []
                     temp2 = []
                 }
+                }
             }
+            if userId.count>0 {
             for i in 0...userId.count-1 {
                 var id = userId[i][1]
                 var name = userId[i][0]
@@ -326,6 +330,8 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 }
             }
         }
+        }
+        
     }
     
     func commonFriends(){
