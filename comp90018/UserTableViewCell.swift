@@ -37,13 +37,10 @@ class UserTableViewCell: UITableViewCell {
             let ppString = self.user?["profpict"]
             let pp = NSURL(string: ppString!.stringValue)
             profileImage.hnk_setImageFromURL(pp!)
-            
-            //let x = JSONObjec
-            //let image = (x.objectForKey("image")) as! NSData
-            //userImageView.image = UIImage(data: image)
-            //println("__")
-            //println(image)
-            
+            let imageString = self.user?["image"].string
+            let decodedData = NSData(base64EncodedString: imageString!, options: NSDataBase64DecodingOptions(rawValue: 0))
+            var decodedimage = UIImage(data: decodedData!)
+            userImageView.image = decodedimage
             postLabel.text = self.user?["username"].string
             likeLabel.hidden=true
             topicLabel.hidden=true

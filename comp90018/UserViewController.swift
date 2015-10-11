@@ -24,7 +24,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     var results: [JSON]? = []
     var postId: [String]? = []
     var timeStamp: [Int]? = []
-    var images: [NSData]? = []
     var peers: [MCPeerID]? = []
     
     @IBOutlet var tableView:UITableView!
@@ -142,11 +141,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         
         cell.toComment.tag = indexPath.row
         cell.toComment.addTarget(self, action: "comment:", forControlEvents: .TouchUpInside)
-        
-        if indexPath.row < (images?.count)! {
-            let image = (images?[indexPath.row])
-            cell.userImageView.image = UIImage(data : image!)
-        }
         return cell
     }
     
@@ -259,12 +253,13 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         let dictionary:NSDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data)! as! NSDictionary
         //update the news feed
         let img = (dictionary.objectForKey("image")) as! NSData
-        images?.insert(img, atIndex: 0)
+        let imgString = img.base64EncodedStringWithOptions(.allZeros)
         let username = dictionary.objectForKey("username") as! String
         let profpict = dictionary.objectForKey("profpict") as! String
         let jsonObject : JSON  =
         [
         "username": username,
+        "image":imgString,
         "type": "swipe",
         "profpict": profpict,
         "id": name
