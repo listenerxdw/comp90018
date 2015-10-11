@@ -32,7 +32,8 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         self.finalSugg = []
         self.dataOfTableView = ["searching..."]
         //get all the users followed by the users that I follow
-        getAllsubFriends("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
+        var access_token = User.sharedInstance.token
+        getAllsubFriends(access_token)
         self.theTable.reloadData()
     }
     
@@ -77,16 +78,18 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         //find the common friends of the users that I follow
         getCommonFriends()
         //get the users that follow me
-        if self.finalSugg.count<15 {
-            getFollowedBy("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userId: "self")
+        if self.finalSugg.count<20 {
+            var access_token = User.sharedInstance.token
+            getFollowedBy(access_token,userId: "self")
         }
         
         //if the number of suggested users are less than 10,then the users that liked
         //the post tagged as travel and sports will be suggested.
         println(self.finalSugg.count)
-        if self.finalSugg.count<15 {
-            var expectNum = 15-self.finalSugg.count
-            getTag(expectNum,token: "1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
+        if self.finalSugg.count<20 {
+            var expectNum = 20-self.finalSugg.count
+            var access_token = User.sharedInstance.token
+            getTag(expectNum,token: access_token)
         }
         
         self.dataOfTableView = self.finalSugg
@@ -196,7 +199,8 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     //this function is to find the users whose I liked the photos of but not my friend yet.
     func getLikedUser(){
         var temp:[String] = []
-        let url = "https://api.instagram.com/v1/users/self/media/liked?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
+        var access_token = User.sharedInstance.token
+        let url = "https://api.instagram.com/v1/users/self/media/liked?access_token=\(access_token)"
         Alamofire.request(.GET,url).responseJSON {
             (_,_,data,error) in
             println("like back")
@@ -211,10 +215,13 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     temp = []
                 }
             }
+            self.dataOfTableView = self.finalSugg
+            self.theTable.reloadData()
+            
             var subfollow:[String] = []
             var followArray = [[String]]()
             for var i=0; i<self.numberFollow; i++ {
-                subfollow = self.findFriend("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",potentialId: self.followId[i])
+                subfollow = self.findFriend(access_token,potentialId: self.followId[i])
                 followArray.append(subfollow)
             }
             self.allDataOfFollow = followArray
@@ -233,6 +240,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     }
     //find out the users that appear more than 2 times of a list of users of my friends
     func getCommonFriends() -> Void {
+        var selfusername = User.sharedInstance.username
         var count = 1
         for var i=0; i<allDataOfFollow.count-1;i++ {
             for var m=0;m<allDataOfFollow[i].count;m++ {
@@ -240,7 +248,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     count = count + checkTarget(allDataOfFollow[i][m],friendList: allDataOfFollow[j])
                 }
                 if count >= 3 {
-                    if !checkExist(allDataOfFollow[i][m]) && !(allDataOfFollow[i][m] == "qijie19920618")
+                    if !checkExist(allDataOfFollow[i][m]) && !(allDataOfFollow[i][m] == selfusername)
                         && !existFollows(self.allDataOfFollow[i][m]){
                             self.finalSugg.append(self.allDataOfFollow[i][m])}
                 }

@@ -122,12 +122,13 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     
     func getUserActivity() -> Void{
         self.follow = []
-        self.follow = getMyFollows("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",username: "qijie19920618",userid: "self")
+        var access_token = User.sharedInstance.token
+        self.follow = getMyFollows(access_token,username: "qijie19920618",userid: "self")
         for i in 0...self.follow.count-1 {
             var id = self.follow[i][1]
             var friendname = self.follow[i][0]
-            getUpload("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userid: id)
-            getFollows("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",username: friendname,userid: id)
+            getUpload(access_token,userid: id)
+            getFollows(access_token,username: friendname,userid: id)
         }
         
     }
