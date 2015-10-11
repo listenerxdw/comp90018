@@ -246,6 +246,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         if error != nil {
             println("Error sending data: \(error!.localizedDescription)")
         }
+        println("SEND DATA")
         self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable, error:&error)
     }
     
@@ -297,6 +298,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     
     // session delegate's methods
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
+        println("R1")
         // when receiving a data
         dispatch_async(dispatch_get_main_queue(), {
             println("RECEIVED THE DATA FROM:" + peerID.displayName)
@@ -305,16 +307,16 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     }
     
     func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
-        
+        println("R2")
     }
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
-        
+        println("R3")
     }
     
     
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
-        
+        println("R4")
     }
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
