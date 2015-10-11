@@ -9,7 +9,15 @@
 import UIKit
 import MultipeerConnectivity
 
-class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+//delegate protocol to communicate with userFeed
+protocol PhotoChooseViewControllerDelegate {
+    func update(data: NSData, name:String)
+    func del(name:String)
+}
+
+class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIGestureRecognizerDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
+    
+    var delegate: PhotoChooseViewControllerDelegate?
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -17,8 +25,13 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
     let x = User.sharedInstance
     var picker = UIImagePickerController()
     var didLoadImage: Bool!
+    var browser:MCNearbyServiceBrowser!
+    var assistant:MCNearbyServiceAdvertiser!
+    var session: MCSession!
+    var peerID: MCPeerID!
     var hasChangedCamera: Bool?
     var hasTurnedOnFlash: Bool?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
