@@ -200,7 +200,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     }
                 }
             }
-            println("step3: \(self.finalSugg.count)")
             self.dataOfTableView = self.finalSugg
             //update the table
             self.theTable.reloadData()
