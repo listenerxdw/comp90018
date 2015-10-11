@@ -26,19 +26,20 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     var finalSugg:[String] = []
     //store the username and its corresponding url of profile picture
     var findProfile:[[String]] = []
+    var swipeNum = 0
+
+    @IBAction func getMore(sender: AnyObject) {
+        commonFriends()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.finalSugg = []
         self.dataOfTableView = ["searching..."]
-        //get all the users followed by the users that I follow
-        getAllsubFriends("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
-        self.theTable.reloadData()
     }
     
     //return number of rows for tableview
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println("update了~~~\(self.dataOfTableView.count)")
         return self.dataOfTableView.count
     }
     //show data in tableview
@@ -77,21 +78,22 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         //find the common friends of the users that I follow
         getCommonFriends()
         //get the users that follow me
-        if self.finalSugg.count<15 {
+        if self.finalSugg.count<25 {
             getFollowedBy("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userId: "self")
         }
         
         //if the number of suggested users are less than 10,then the users that liked
         //the post tagged as travel and sports will be suggested.
         println(self.finalSugg.count)
-        if self.finalSugg.count<15 {
-            var expectNum = 15-self.finalSugg.count
+        if self.finalSugg.count<25 {
+            var expectNum = 25-self.finalSugg.count
             getTag(expectNum,token: "1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
         }
         
         self.dataOfTableView = self.finalSugg
         //update the table
         self.theTable.reloadData()
+        println("over")
     }
     //find the users that liked the post tagged as travel and sports
     func travellAndsports(myurl:String,expected:Int) {
@@ -211,26 +213,27 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     temp = []
                 }
             }
-            var subfollow:[String] = []
-            var followArray = [[String]]()
-            for var i=0; i<self.numberFollow; i++ {
-                subfollow = self.findFriend("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",potentialId: self.followId[i])
-                followArray.append(subfollow)
-            }
-            self.allDataOfFollow = followArray
-            self.goSuggestion()
-
+            self.dataOfTableView = self.finalSugg
+            //update the table
+            self.theTable.reloadData()
+            
         }
     }
     
-    //this function is to get all users followed by my friends
-    func getAllsubFriends(token:String){
-        self.follow = []
-        self.followId = []
-        numberFollow = 0
-        getMyFollows(token)
-        getLikedUser()
+    func commonFriends(){
+        var subfollow:[String] = []
+        var followArray = [[String]]()
+        for var i=0; i<self.numberFollow; i++ {
+            subfollow = self.findFriend("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",potentialId: self.followId[i])
+            followArray.append(subfollow)
+        }
+        self.allDataOfFollow = followArray
+        self.goSuggestion()
+        
     }
+    
+    //this function is to get all users followed by my friends
+    
     //find out the users that appear more than 2 times of a list of users of my friends
     func getCommonFriends() -> Void {
         var count = 1
