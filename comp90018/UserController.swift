@@ -121,9 +121,10 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     }
     
     func getUserActivity() -> Void{
+        var myname = User.sharedInstance.username
         self.follow = []
         var access_token = User.sharedInstance.token
-        self.follow = getMyFollows(access_token,username: "qijie19920618",userid: "self")
+        self.follow = getMyFollows(access_token,username: myname,userid: "self")
         for i in 0...self.follow.count-1 {
             var id = self.follow[i][1]
             var friendname = self.follow[i][0]
