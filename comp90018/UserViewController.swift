@@ -91,9 +91,9 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         
         // the advertiser
         self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
+        self.assistant.delegate=self
         // start advertising
         self.assistant.startAdvertisingPeer()
-        
         
         //set the table view
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -229,9 +229,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
             }
         }
         //        //println(errorMsg)
-        
-        
-        
     }
     
     //sending data function to be triggered outside by Photo
@@ -242,9 +239,9 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
             println("Error sending data: \(error!.localizedDescription)")
         }
         println("SEND DATA")
-        var a : [AnyObject] = self.session.connectedPeers
-        println(a[0].displayName)
-        self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error:&error)
+        //var a : [AnyObject] = self.session.connectedPeers
+        //println(a[0].displayName)
+        self.session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error:&error)
     }
     
     //update the news feed - UI
@@ -266,10 +263,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         ]
         results?.insert(jsonObject, atIndex: 0)
         self.tableView.reloadData()
-        //self.ivTest.image = img
-        //self.lblTest.text = username
-        
-        //self.results?.append(<#newElement: T#>)
     }
     
     func del(name:String){
@@ -296,11 +289,12 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     }
     //advertiser delegate
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!) {
+        print("RECEIVED FROM:")
+        println(peerID)
         invitationHandler(true,self.session)
     }
     // session delegate's methods
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        println("R1")
         // when receiving a data
         dispatch_async(dispatch_get_main_queue(), {
             println("RECEIVED THE DATA FROM:" + peerID.displayName)
@@ -309,16 +303,16 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     }
     
     func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
-        println("R2")
+
     }
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
-        println("R3")
+
     }
     
     
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
-        println("R4")
+
     }
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
