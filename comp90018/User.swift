@@ -56,5 +56,4 @@ class User {
             nm.hidden = false
         }
     }
-
 }
