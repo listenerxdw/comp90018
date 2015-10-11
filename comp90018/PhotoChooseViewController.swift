@@ -11,49 +11,24 @@ import MultipeerConnectivity
 
 //delegate protocol to communicate with userFeed
 protocol PhotoChooseViewControllerDelegate {
-    func update(data: NSData, name:String)
-    func del(name:String)
+    func sendData(data: NSData)
 }
 
-class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIGestureRecognizerDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
-    
+class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIGestureRecognizerDelegate {
     var delegate: PhotoChooseViewControllerDelegate?
     
     @IBOutlet weak var imageView: UIImageView!
-    
-    let serviceType = "COMP90018"
     let x = User.sharedInstance
     var picker = UIImagePickerController()
     var didLoadImage: Bool!
-    var browser:MCNearbyServiceBrowser!
-    var assistant:MCNearbyServiceAdvertiser!
-    var session: MCSession!
-    var peerID: MCPeerID!
-    var hasChangedCamera: Bool?
-    var hasTurnedOnFlash: Bool?
-    
+    var hasChangedCamera: Bool!
+    var hasTurnedOnFlash: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         didLoadImage = false
         imageView.image = UIImage(named: "add-picture")
         picker.delegate = self
-        
-        // the session
-        self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
-        self.session = MCSession(peer: peerID)
-        self.session.delegate = self
-        
-        // the browser
-        self.browser = MCNearbyServiceBrowser(peer: peerID,serviceType: serviceType)
-        self.browser.delegate = self
-        //start browsing
-        self.browser.startBrowsingForPeers()
-        
-        // the advertiser
-        self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: ["A":"A"], serviceType: serviceType)
-        // start advertising
-        self.assistant.startAdvertisingPeer()
     }
     
     override func didReceiveMemoryWarning() {
@@ -236,55 +211,12 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
                 var imageData: NSData = UIImagePNGRepresentation(self.imageView.image)
                 var dict : [String:AnyObject] = ["username":self.x.username, "profpict":self.x.profPict, "image":imageData]
                 let data : NSData = NSKeyedArchiver.archivedDataWithRootObject(dict)
-                //send to peers and error checking
-                var error: NSError?
-                if error != nil {
-                    println("Error sending data: \(error!.localizedDescription)")
-                }
-                self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable, error: &error)
+                //send to peers
+                self.delegate?.sendData(data)
                 //go back to home
-                self.delegate?.update(data,name: self.peerID.displayName)
                 self.tabBarController?.selectedIndex = 0
             }))
             presentViewController(refreshAlert, animated: true, completion: nil)
         }
-    }
-    
-    //browser delegate
-    func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
-        print("Found PeerID:")
-        println(peerID)
-    }
-    func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
-        print("Lost PeerID:")
-        println(peerID)
-        self.delegate?.del(peerID.displayName)
-    }
-    
-    // session delegate's methods
-    func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        // when receiving a data
-        dispatch_async(dispatch_get_main_queue(), {
-            self.tabBarController?.selectedIndex = 0
-            println("RECEIVED THE DATA FROM:" + peerID.displayName)
-            self.delegate?.update(data,name: peerID.displayName)
-        })
-    }
-    
-    func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
-        
-    }
-    
-    func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
-        
-    }
-    
-    
-    func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
-        
-    }
-    
-    func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
-        
     }
 }

@@ -9,12 +9,23 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import MultipeerConnectivity
 
 var accessToken = User.sharedInstance.token
 
-class UserViewController: UIViewController, UITableViewDataSource {
+class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseViewControllerDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
+    
+    let serviceType = "COMP90018"
+    var browser:MCNearbyServiceBrowser!
+    var assistant:MCNearbyServiceAdvertiser!
+    var session: MCSession!
+    var peerID: MCPeerID!
     var parameter = ["access_token": accessToken]
     var results: [JSON]? = []
+    var postId: [String]? = []
+    var timeStamp: [Int]? = []
+    var images: [NSData]? = []
+    
     @IBOutlet var tableView:UITableView!
     @IBOutlet weak var sortController: UISegmentedControl!
     
@@ -65,15 +76,30 @@ class UserViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //get the destination view controller to connect the delegate so it can communicate
+        var destinationViewController = ((tabBarController!.viewControllers)![2] as! UINavigationController).topViewController as! PhotoChooseViewController
+        destinationViewController.delegate = self
+        // the session
+        self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
+        self.session = MCSession(peer: peerID)
+        self.session.delegate = self
+        
+        // the browser
+        self.browser = MCNearbyServiceBrowser(peer: peerID,serviceType: serviceType)
+        self.browser.delegate = self
+        //start browsing
+        self.browser.startBrowsingForPeers()
+        
+        // the advertiser
+        self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: ["A":"A"], serviceType: serviceType)
+        // start advertising
+        self.assistant.startAdvertisingPeer()
+        
+        //set the table view
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         self.loadUserPost()
     }
-    
-    var postId: [String]? = []
-    var timeStamp: [Int]? = []
-
-
     
     func loadUserPost(){
         let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
@@ -116,6 +142,10 @@ class UserViewController: UIViewController, UITableViewDataSource {
         cell.toComment.tag = indexPath.row
         cell.toComment.addTarget(self, action: "comment:", forControlEvents: .TouchUpInside)
         
+        if indexPath.row < (images?.count)! {
+            let image = (images?[indexPath.row])
+            cell.userImageView.image = UIImage(data : image!)
+        }
         return cell
     }
     
@@ -206,6 +236,90 @@ class UserViewController: UIViewController, UITableViewDataSource {
         //        //println(errorMsg)
         
         
+        
+    }
+    
+    //sending data function to be triggered outside by Photo
+    func sendData(data: NSData){
+        update(data,name: "test")
+        var error: NSError?
+        if error != nil {
+            println("Error sending data: \(error!.localizedDescription)")
+        }
+        println("SEND DATA")
+        self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable, error:&error)
+    }
+    
+    //update the news feed - UI
+    func update(data:NSData,name:String){
+        //convert back to NSDictionary
+        let dictionary:NSDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data)! as! NSDictionary
+        //update the news feed
+        let img = (dictionary.objectForKey("image")) as! NSData
+        images?.insert(img, atIndex: 0)
+        let username = dictionary.objectForKey("username") as! String
+        let profpict = dictionary.objectForKey("profpict") as! String
+        let jsonObject : JSON  =
+        [
+        "username": username,
+        "type": "swipe",
+        "profpict": profpict,
+        "id": name
+        ]
+        results?.insert(jsonObject, atIndex: 0)
+        self.tableView.reloadData()
+        //self.ivTest.image = img
+        //self.lblTest.text = username
+        
+        //self.results?.append(<#newElement: T#>)
+    }
+    
+    func del(name:String){
+        var total = (results?.count)! - 1
+        for var index = 0; index < total; ++index {
+            if(results?[index]["id"].string == name){
+                results?.removeAtIndex(index)
+                total -= 1
+                index -= 1
+            }
+        }
+        self.tableView.reloadData()
+    }
+    //browser delegate
+    func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
+        print("Found PeerID:")
+        println(peerID)
+    }
+    func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
+        print("Lost PeerID:")
+        println(peerID)
+        del(peerID.displayName)
+    }
+    
+    // session delegate's methods
+    func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
+        println("R1")
+        // when receiving a data
+        dispatch_async(dispatch_get_main_queue(), {
+            println("RECEIVED THE DATA FROM:" + peerID.displayName)
+            self.update(data,name: peerID.displayName)
+        })
+    }
+    
+    func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
+        println("R2")
+    }
+    
+    func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
+        println("R3")
+    }
+    
+    
+    func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
+        println("R4")
+    }
+    
+    func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
         
     }
 

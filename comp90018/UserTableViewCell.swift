@@ -32,6 +32,28 @@ class UserTableViewCell: UITableViewCell {
     
     
     func setupUser() {
+        //if the data is swiping data
+        if(self.user?["type"].string == "swipe"){
+            let ppString = self.user?["profpict"]
+            let pp = NSURL(string: ppString!.stringValue)
+            profileImage.hnk_setImageFromURL(pp!)
+            
+            //let x = JSONObjec
+            //let image = (x.objectForKey("image")) as! NSData
+            //userImageView.image = UIImage(data: image)
+            //println("__")
+            //println(image)
+            
+            postLabel.text = self.user?["username"].string
+            likeLabel.hidden=true
+            topicLabel.hidden=true
+            timeLabel.hidden=true
+            commentLabel.hidden=true
+            toLike.hidden=true
+            toComment.hidden=true
+        }
+        //the data is from instagram api
+        else{
         //Display the User Name
         self.postLabel.text = self.user?["caption"]["from"]["username"].string
     
@@ -146,6 +168,7 @@ class UserTableViewCell: UITableViewCell {
             }
             self.commentLabel.text? += "\(commentUsers[0]): \(comments[0])\n"
             
+        }
         }
      
     }

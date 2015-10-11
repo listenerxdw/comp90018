@@ -26,20 +26,20 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     var finalSugg:[String] = []
     //store the username and its corresponding url of profile picture
     var findProfile:[[String]] = []
+    var swipeNum = 0
+
+    @IBAction func getMore(sender: AnyObject) {
+        commonFriends()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.finalSugg = []
         self.dataOfTableView = ["searching..."]
-        //get all the users followed by the users that I follow
-        var access_token = User.sharedInstance.token
-        getAllsubFriends(access_token)
-        self.theTable.reloadData()
     }
     
     //return number of rows for tableview
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println("update了~~~\(self.dataOfTableView.count)")
         return self.dataOfTableView.count
     }
     //show data in tableview
@@ -78,23 +78,22 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         //find the common friends of the users that I follow
         getCommonFriends()
         //get the users that follow me
-        if self.finalSugg.count<20 {
-            var access_token = User.sharedInstance.token
-            getFollowedBy(access_token,userId: "self")
+        if self.finalSugg.count<25 {
+            getFollowedBy("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userId: "self")
         }
         
         //if the number of suggested users are less than 10,then the users that liked
         //the post tagged as travel and sports will be suggested.
         println(self.finalSugg.count)
-        if self.finalSugg.count<20 {
-            var expectNum = 20-self.finalSugg.count
-            var access_token = User.sharedInstance.token
-            getTag(expectNum,token: access_token)
+        if self.finalSugg.count<25 {
+            var expectNum = 25-self.finalSugg.count
+            getTag(expectNum,token: "1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200")
         }
         
         self.dataOfTableView = self.finalSugg
         //update the table
         self.theTable.reloadData()
+        println("over")
     }
     //find the users that liked the post tagged as travel and sports
     func travellAndsports(myurl:String,expected:Int) {
@@ -199,8 +198,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     //this function is to find the users whose I liked the photos of but not my friend yet.
     func getLikedUser(){
         var temp:[String] = []
-        var access_token = User.sharedInstance.token
-        let url = "https://api.instagram.com/v1/users/self/media/liked?access_token=\(access_token)"
+        let url = "https://api.instagram.com/v1/users/self/media/liked?access_token=1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200"
         Alamofire.request(.GET,url).responseJSON {
             (_,_,data,error) in
             println("like back")
@@ -216,31 +214,28 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 }
             }
             self.dataOfTableView = self.finalSugg
+            //update the table
             self.theTable.reloadData()
             
-            var subfollow:[String] = []
-            var followArray = [[String]]()
-            for var i=0; i<self.numberFollow; i++ {
-                subfollow = self.findFriend(access_token,potentialId: self.followId[i])
-                followArray.append(subfollow)
-            }
-            self.allDataOfFollow = followArray
-            self.goSuggestion()
-
         }
     }
     
-    //this function is to get all users followed by my friends
-    func getAllsubFriends(token:String){
-        self.follow = []
-        self.followId = []
-        numberFollow = 0
-        getMyFollows(token)
-        getLikedUser()
+    func commonFriends(){
+        var subfollow:[String] = []
+        var followArray = [[String]]()
+        for var i=0; i<self.numberFollow; i++ {
+            subfollow = self.findFriend("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",potentialId: self.followId[i])
+            followArray.append(subfollow)
+        }
+        self.allDataOfFollow = followArray
+        self.goSuggestion()
+        
     }
+    
+    //this function is to get all users followed by my friends
+    
     //find out the users that appear more than 2 times of a list of users of my friends
     func getCommonFriends() -> Void {
-        var selfusername = User.sharedInstance.username
         var count = 1
         for var i=0; i<allDataOfFollow.count-1;i++ {
             for var m=0;m<allDataOfFollow[i].count;m++ {
@@ -248,7 +243,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     count = count + checkTarget(allDataOfFollow[i][m],friendList: allDataOfFollow[j])
                 }
                 if count >= 3 {
-                    if !checkExist(allDataOfFollow[i][m]) && !(allDataOfFollow[i][m] == selfusername)
+                    if !checkExist(allDataOfFollow[i][m]) && !(allDataOfFollow[i][m] == "qijie19920618")
                         && !existFollows(self.allDataOfFollow[i][m]){
                             self.finalSugg.append(self.allDataOfFollow[i][m])}
                 }
