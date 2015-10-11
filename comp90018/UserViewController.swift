@@ -242,8 +242,8 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
             println("Error sending data: \(error!.localizedDescription)")
         }
         println("SEND DATA")
-        var a : [AnyObject] = self.session.connectedPeers
-        println(a[0].displayName)
+        //var a : [AnyObject] = self.session.connectedPeers
+        //println(a[0].displayName)
         self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error:&error)
     }
     
