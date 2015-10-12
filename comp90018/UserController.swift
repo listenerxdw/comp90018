@@ -67,8 +67,9 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
                 myFriend.append(temp)
                 
             }
+            myFriend = sort(myFriend)
         }
-        myFriend = sort(myFriend)
+        
         return myFriend
         
     }
@@ -125,13 +126,14 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         self.follow = []
         var access_token = User.sharedInstance.token
         self.follow = getMyFollows(access_token,username: myname,userid: "self")
+        if self.follow.count>0 {
         for i in 0...self.follow.count-1 {
             var id = self.follow[i][1]
             var friendname = self.follow[i][0]
             getUpload(access_token,userid: id)
             getFollows(access_token,username: friendname,userid: id)
         }
-        
+        }
     }
     
     func sort(target:[[String]])-> [[String]]{
@@ -139,21 +141,21 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         var temp:[[String]] = []
         if target.count>0 {
             temp.append(target[0])
-            for i in 1...target.count-1
-            { for j in 0...temp.count-1
-            {   checknum = j
-                if target[i][0]<temp[j][0]
-                {   temp.insert(target[i], atIndex: j)
+            if target.count>1 {
+            for i in 1...target.count-1 {
+                for j in 0...temp.count-1 {
+                checknum = j
+                if target[i][0]<temp[j][0] {
+                temp.insert(target[i], atIndex: j)
                     break
                 }
                 }
-                if checknum == temp.count-1
-                {
+                if checknum == temp.count-1 {
                     temp.append(target[i])
                 }
             }
         }
-        
+        }
         return temp
     }
     
