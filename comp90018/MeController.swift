@@ -43,6 +43,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
+            if json["data"].count>0 {
             for i in 0...(json["data"].count-1)
             {   var name = json["data"][i]["user"]["username"].string!
                 var picture = json["data"][i]["images"]["thumbnail"]["url"].string!
@@ -53,6 +54,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
                 
             }
             self.tableView.reloadData()
+            }
         }
     }
     
@@ -61,6 +63,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
+            if json["data"].count>0 {
             for i in 0...(json["data"].count-1)
             {   var name = json["data"][i]["username"].string!
                 var picture = json["data"][i]["profile_picture"].string!
@@ -71,6 +74,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
             }
             
             self.tableView.reloadData()
+            }
             
         }
         

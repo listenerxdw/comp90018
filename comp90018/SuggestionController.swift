@@ -135,12 +135,13 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         
         //if the number of suggested users are less than 10,then the users that liked
         //the post tagged as travel and sports will be suggested.
-        println(self.finalSugg.count)
+     
         if self.finalSugg.count<15 {
             var expectNum = 15-self.finalSugg.count
             getTag(expectNum,token: access_token)
         }
         
+        if self.finalSugg.count>0 {
         for m in 0...self.finalSugg.count-1 {
             var temp3:[String] = []
             var name = self.finalSugg[m]
@@ -163,10 +164,10 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 }
             }
         }
+        }
         self.dataOfTableView = self.finalSugg
         //update the table
         self.theTable.reloadData()
-        println("over")
     }
     //find the users that liked the post tagged as travel and sports
     func travellAndsports(myurl:String,expected:Int) {
@@ -201,9 +202,35 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     }
                 }
             }
-            self.dataOfTableView = self.finalSugg
-            //update the table
-            self.theTable.reloadData()
+            if self.finalSugg.count>0 {
+                for m in 0...self.finalSugg.count-1 {
+                    var temp3:[String] = []
+                    var name = self.finalSugg[m]
+                    var id = self.findId(self.finalSugg[m])
+                    if id != "wrong" {
+                        println(id)
+                        var url = "https://api.instagram.com/v1/users/\(id)/media/recent?count=3&access_token=\(self.access_token)"
+                        Alamofire.request(.GET,url).responseJSON {
+                            (_,_,data,error) in
+                            let json = JSON(data!)
+                            temp3.append(name)
+                            if json["data"].count > 0 {
+                                println("in")
+                                for j in 0...json["data"].count-1 {
+                                    temp3.append(json["data"][j]["images"]["thumbnail"]["url"].string!)
+                                }
+                                self.userUpload.append(temp3)
+                                
+                            }
+                            temp3 = []
+                            self.dataOfTableView = self.finalSugg
+                            self.theTable.reloadData()
+                        }
+                    }
+                }
+            }
+            println("done")
+
         }
         
     }
@@ -309,6 +336,13 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 }
                 }
             }
+            if self.finalSugg.count > 0{
+                self.dataOfTableView = self.finalSugg
+            }
+            else {
+                self.dataOfTableView = ["finish"]
+            }
+            self.theTable.reloadData()
             if userId.count>0 {
             for i in 0...userId.count-1 {
                 var id = userId[i][1]
