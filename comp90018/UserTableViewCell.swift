@@ -135,14 +135,15 @@ class UserTableViewCell: UITableViewCell {
             self.showConmments(3)
         }
     }
-    
+
+}
     var comments: [String] = []
     var commentUsers: [String] = []
     
     func getComments(numOfComment: Int) {
         comments = []
         commentUsers = []
-
+        
         for i in 0...numOfComment - 1 {
             //            println(i)
             if let comment = self.user? ["comments"]["data"][i]["text"].string {
@@ -159,5 +160,5 @@ class UserTableViewCell: UITableViewCell {
             self.commentLabel.text? += "\(commentUsers[numOfComment - 1 - i]): \(comments[numOfComment - 1 - i])\n"
         }
     }
-
 }
+

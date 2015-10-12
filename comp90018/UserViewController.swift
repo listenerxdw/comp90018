@@ -9,11 +9,18 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import MultipeerConnectivity
 import CoreLocation
 
 var accessToken = User.sharedInstance.token
 
-class UserViewController: UIViewController, UITableViewDataSource, CLLocationManagerDelegate {
+class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseViewControllerDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate, CLLocationManagerDelegate {
+    
+    let serviceType = "COMP90018"
+    var browser:MCNearbyServiceBrowser!
+    var assistant:MCNearbyServiceAdvertiser!
+    var session: MCSession!
+    var peerID: MCPeerID!
     var parameter = ["access_token": accessToken]
     var results: [JSON]? = []
     var postId: [String]? = []
@@ -60,6 +67,9 @@ class UserViewController: UIViewController, UITableViewDataSource, CLLocationMan
                             self.tableView.reloadData()
                         }
                     }
+                    //println(self.postId!)
+                    //println(self.timeStamp!)
+                    self.tableView.reloadData()
                 }
     
             }
@@ -226,6 +236,9 @@ class UserViewController: UIViewController, UITableViewDataSource, CLLocationMan
         let url = "https://api.instagram.com/v1/media/\(currentPostId)/likes"
         var errorMsg: String = ""
         Alamofire.request(.POST, url, parameters: parameter, encoding: .JSON).responseJSON { (request, response, json, error) in
+            
+            ////println(request)
+            ////println("-----------------------------")
             if json == nil {
                 println(error)
                 
@@ -295,6 +308,95 @@ class UserViewController: UIViewController, UITableViewDataSource, CLLocationMan
                 //println(json)
             }
         }
+        //        //println(errorMsg)
+    }
+    
+    //sending data function to be triggered outside by Photo
+    func sendData(data: NSData){
+        update(data,name: "test")
+        var error: NSError?
+        if error != nil {
+            println("Error sending data: \(error!.localizedDescription)")
+        }
+        println("SEND DATA")
+        //var a : [AnyObject] = self.session.connectedPeers
+        //println(a[0].displayName)
+        self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error:&error)
+    }
+    
+    //update the news feed - UI
+    func update(data:NSData,name:String){
+        //convert back to NSDictionary
+        let dictionary:NSDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data)! as! NSDictionary
+        //update the news feed
+        let img = (dictionary.objectForKey("image")) as! NSData
+        let imgString = img.base64EncodedStringWithOptions(.allZeros)
+        let username = dictionary.objectForKey("username") as! String
+        let profpict = dictionary.objectForKey("profpict") as! String
+        let jsonObject : JSON  =
+        [
+        "username": username,
+        "image":imgString,
+        "type": "swipe",
+        "profpict": profpict,
+        "id": name
+        ]
+        results?.insert(jsonObject, atIndex: 0)
+        self.tableView.reloadData()
+    }
+    
+    func del(name:String){
+        var total = (results?.count)! - 1
+        for var index = 0; index < total; ++index {
+            if(results?[index]["id"].string == name){
+                results?.removeAtIndex(index)
+                total -= 1
+                index -= 1
+            }
+        }
+        self.tableView.reloadData()
+    }
+    //browser delegate
+    func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
+        print("Found PeerID:")
+        println(peerID)
+        browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 0)
+    }
+    func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
+        print("Lost PeerID:")
+        println(peerID)
+        del(peerID.displayName)
+    }
+    //advertiser delegate
+    func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!) {
+        print("RECEIVED FROM:")
+        println(peerID)
+        invitationHandler(true,self.session)
+    }
+    // session delegate's methods
+    func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
+        // when receiving a data
+        dispatch_async(dispatch_get_main_queue(), {
+            println("RECEIVED THE DATA FROM:" + peerID.displayName)
+            self.update(data,name: peerID.displayName)
+        })
+    }
+    
+    func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
+
+    }
+    
+    func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
+
+    }
+    
+    
+    func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
+
+    }
+    
+    func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
+        
     }
 
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
@@ -315,6 +417,5 @@ class UserViewController: UIViewController, UITableViewDataSource, CLLocationMan
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
