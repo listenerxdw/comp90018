@@ -37,8 +37,9 @@ class UserTableViewCell: UITableViewCell {
     
         var date = self.user?["created_time"].string
         var dateString = NSString(string: date!)
+//        let index: String.Index = advance(dateString.startIndex, 18)
  
-        self.timeLabel.text = NSDate(timeIntervalSince1970: dateString.doubleValue).description
+        self.timeLabel.text = (NSDate(timeIntervalSince1970: dateString.doubleValue).description as NSString).substringToIndex(19)
         
         
         //Display the image
@@ -57,9 +58,8 @@ class UserTableViewCell: UITableViewCell {
         self.topicLabel.text = self.user?["caption"]["text"].string
 
         
-        //Display the first 3 people who like the post
-        var numOfLike = (self.user?["likes"]["count"].int)!
-        
+        //Display the most recent people who like the post
+        var numOfLike = (self.user?["likes"]["data"].count)!
         var likers: [String] = []
         
         self.likeLabel.text = ""
@@ -99,55 +99,42 @@ class UserTableViewCell: UITableViewCell {
             self.likeLabel.text? += "\(likers[0])"
 
         }
-    
         
         //Display the first 3 comments
-        var numOfComment = (self.user?["comments"]["count"].int)!
-        
-        var comments: [String] = []
-        var commentUsers: [String] = []
-        
+        var numOfComment = (self.user?["comments"]["data"].count)!
         self.commentLabel.text = ""
         
-        if numOfComment >= 3 {
-            for i in 0...2 {
-                if let comment = self.user? ["comments"]["data"][i]["text"].string {
-                    comments.append(comment)
-                }
-                if let commentUser = self.user? ["comments"]["data"][i]["from"]["username"].string {
-                    commentUsers.append(commentUser)
-                }
-            }
-            for j in 0...1 {
-                self.commentLabel.text? += "\(commentUsers[j]): \(comments[j])\n"
-            }
-            self.commentLabel.text? += "\(commentUsers[2]): \(comments[2])"
-        } else if numOfComment == 2 {
-            for i in 0...numOfComment {
-                //            println(i)
-                if let comment = self.user? ["comments"]["data"][i]["text"].string {
-                    comments.append(comment)
-                }
-                if let commentUser = self.user? ["comments"]["data"][i]["from"]["username"].string {
-                    commentUsers.append(commentUser)
-                }
-            }
-            self.commentLabel.text? += "\(commentUsers[0]): \(comments[0])\n"
-            self.commentLabel.text? += "\(commentUsers[1]): \(comments[1])\n"
-        } else if numOfComment == 1 {
-            for i in 0...numOfComment {
-                //            println(i)
-                if let comment = self.user? ["comments"]["data"][i]["text"].string {
-                    comments.append(comment)
-                }
-                if let commentUser = self.user? ["comments"]["data"][i]["from"]["username"].string {
-                    commentUsers.append(commentUser)
-                }
-            }
-            self.commentLabel.text? += "\(commentUsers[0]): \(comments[0])\n"
-            
+        if numOfComment >= 1 && numOfComment <= 3 {
+            self.getComments(numOfComment)
+            self.showConmments(numOfComment)
+        } else if numOfComment > 3 {
+            self.getComments(3)
+            self.showConmments(3)
         }
-     
+    }
+    
+    var comments: [String] = []
+    var commentUsers: [String] = []
+    
+    func getComments(numOfComment: Int) {
+        comments = []
+        commentUsers = []
+
+        for i in 0...numOfComment - 1 {
+            //            println(i)
+            if let comment = self.user? ["comments"]["data"][i]["text"].string {
+                comments.append(comment)
+            }
+            if let commentUser = self.user? ["comments"]["data"][i]["from"]["username"].string {
+                commentUsers.append(commentUser)
+            }
+        }
+    }
+    
+    func showConmments(numOfComment: Int) {
+        for i in 0...numOfComment - 1 {
+            self.commentLabel.text? += "\(commentUsers[numOfComment - 1 - i]): \(comments[numOfComment - 1 - i])\n"
+        }
     }
 
 }
