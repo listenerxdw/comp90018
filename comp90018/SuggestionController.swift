@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Haneke
 class SuggestionController: UIViewController, UITableViewDataSource {
     
     @IBOutlet weak var theTable: UITableView!
@@ -58,8 +59,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         //if the corresponding url of profile picture exists
         if profilePic != "wrong" {
             var url = NSURL(string: profilePic)
-            var data = NSData(contentsOfURL: url!)
-            image!.image = UIImage(data: data!)
+            image!.hnk_setImageFromURL(url!)
         }
         var upload = findUpload(theText)
         if upload.count>0 {
@@ -67,8 +67,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 var picUrl = upload[i]
                 var picture = cell.viewWithTag(i) as? UIImageView
                 var url = NSURL(string: picUrl)
-                var data = NSData(contentsOfURL: url!)
-                picture!.image = UIImage(data: data!)
+                picture!.hnk_setImageFromURL(url!)
             }
             if upload.count == 2 {
                 var empty2 = cell.viewWithTag(2) as? UIImageView

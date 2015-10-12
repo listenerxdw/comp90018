@@ -183,9 +183,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lblName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQc-lQ-uCB">
-                                <rect key="frame" x="61" y="214" width="252" height="21"/>
+                                <rect key="frame" x="61" y="214" width="252" height="52"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="qgI-QG-Cc4"/>
+                                    <constraint firstAttribute="height" constant="52" id="z79-8h-Zn1"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -208,18 +208,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="HQc-lQ-uCB" firstAttribute="centerX" secondItem="w5X-tk-QHN" secondAttribute="centerX" id="7SH-Gv-5uR"/>
+                            <constraint firstItem="w5X-tk-QHN" firstAttribute="top" secondItem="HQc-lQ-uCB" secondAttribute="bottom" constant="8" symbolic="YES" id="6Lp-si-Sr5"/>
                             <constraint firstItem="Wwb-9C-k6J" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="38" id="B8G-wx-eaZ"/>
-                            <constraint firstItem="w5X-tk-QHN" firstAttribute="top" secondItem="HQc-lQ-uCB" secondAttribute="bottom" constant="39" id="HSX-Qn-yUT"/>
-                            <constraint firstItem="HQc-lQ-uCB" firstAttribute="centerX" secondItem="Wwb-9C-k6J" secondAttribute="centerX" id="PTL-k9-RIB"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Zmw-6i-qzL" secondAttribute="bottom" constant="195" id="Qfd-VW-Bdg"/>
                             <constraint firstItem="w5X-tk-QHN" firstAttribute="centerY" secondItem="Zmw-6i-qzL" secondAttribute="centerY" id="Tfb-hZ-vbr"/>
+                            <constraint firstItem="HQc-lQ-uCB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="45" id="WaD-zz-ua6"/>
                             <constraint firstItem="Wwb-9C-k6J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="96" id="aBg-EP-h58"/>
                             <constraint firstItem="w5X-tk-QHN" firstAttribute="centerX" secondItem="Zmw-6i-qzL" secondAttribute="centerX" id="aOd-56-xed"/>
                             <constraint firstItem="w5X-tk-QHN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dpI-yL-mxE"/>
                             <constraint firstItem="Zmw-6i-qzL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="7" id="ifh-Jb-lvU"/>
+                            <constraint firstItem="HQc-lQ-uCB" firstAttribute="centerX" secondItem="Wwb-9C-k6J" secondAttribute="centerX" id="k7i-iF-FME"/>
+                            <constraint firstItem="HQc-lQ-uCB" firstAttribute="centerX" secondItem="w5X-tk-QHN" secondAttribute="centerX" id="nag-dQ-rjc"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="w5X-tk-QHN" secondAttribute="bottom" constant="273" id="oDB-kH-CUY"/>
-                            <constraint firstItem="HQc-lQ-uCB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="45" id="wPq-eQ-X40"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="w5X-tk-QHN" secondAttribute="bottom" constant="246" id="zLw-sB-rPn"/>
                         </constraints>
                         <variation key="default">
@@ -239,7 +239,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-669.60000000000002" y="666.92666666666662"/>
+            <point key="canvasLocation" x="-670.5" y="666.5"/>
         </scene>
         <!--Discover-->
         <scene sceneID="Jns-H2-Y2U">

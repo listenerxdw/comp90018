@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import Haneke
 class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate  {
     
     @IBOutlet weak var tableView: UITableView!
@@ -30,8 +31,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
         var theText = self.ctrlsel[indexPath.row][0]
         label!.text = theText
         var url = NSURL(string: self.ctrlsel[indexPath.row][1])
-        var data = NSData(contentsOfURL: url!)
-        image!.image = UIImage(data: data!)
+        image!.hnk_setImageFromURL(url!)
         //self.ctrlsel = []
         
         return cell

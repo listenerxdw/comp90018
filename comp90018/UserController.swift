@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import Haneke
 class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -39,15 +40,13 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         { var theText = "\(self.ctrlsel[indexPath.row][1]) uploaded a photo"
             label!.text = theText
             var url = NSURL(string: self.ctrlsel[indexPath.row][2])
-            var data = NSData(contentsOfURL: url!)
-            image!.image = UIImage(data: data!)
+            image!.hnk_setImageFromURL(url!)
         }
         else if check == "friend" {
             var theText = "\(self.ctrlsel[indexPath.row][1]) followed \(self.ctrlsel[indexPath.row][2])"
             label!.text = theText
             var url = NSURL(string: self.ctrlsel[indexPath.row][4])
-            var data = NSData(contentsOfURL: url!)
-            image!.image = UIImage(data: data!)
+            image!.hnk_setImageFromURL(url!)
         }
         return cell
     }
