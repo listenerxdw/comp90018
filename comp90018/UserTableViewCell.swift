@@ -34,14 +34,18 @@ class UserTableViewCell: UITableViewCell {
     func setupUser() {
         //if the data is swiping data
         if(self.user?["type"].string == "swipe"){
+            //get the profpict
             let ppString = self.user?["profpict"]
             let pp = NSURL(string: ppString!.stringValue)
             profileImage.hnk_setImageFromURL(pp!)
+            //get the imageString and decode it into NSData
             let imageString = self.user?["image"].string
             let decodedData = NSData(base64EncodedString: imageString!, options: NSDataBase64DecodingOptions(rawValue: 0))
             var decodedimage = UIImage(data: decodedData!)
             userImageView.image = decodedimage
+            //get the username
             postLabel.text = self.user?["username"].string
+            //disable unused view
             likeLabel.hidden=true
             topicLabel.hidden=true
             timeLabel.hidden=true

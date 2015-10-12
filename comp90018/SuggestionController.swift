@@ -244,7 +244,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     }
     //this function is to find all the users that I follow
     func getMyFollows(token:String) -> Void {
-        let url = "https://api.instagram.com/v1/users/self/follows?access_token=\(token)"
+        let url = "https://api.instagram.com/v1/users/self/follows?access_token=\(token)&count=\(User.sharedInstance.following)"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
@@ -254,6 +254,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
             self.followId.append(json["data"][i]["id"].string!)
         }
         //number of friends
+       
         numberFollow = self.follow.count
     }
     //this function is to find all the users that followed by my friends
