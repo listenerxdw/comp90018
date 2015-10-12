@@ -85,8 +85,8 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         
         flashButton.frame = CGRectMake(self.view.frame.width * 8 / 9 - 48, self.view.frame.height - self.view.frame.width / 2.5, 48, 48)
         flashButton.userInteractionEnabled = true
-        let flash_off: UIImage! = UIImage(named: "flash_off")
-        flashButton.backgroundColor = UIColor(patternImage: flash_off)
+        let flash_auto: UIImage! = UIImage(named: "flash_auto")
+        flashButton.backgroundColor = UIColor(patternImage: flash_auto)
         overlayView.addSubview(flashButton)
         overlayView.bringSubviewToFront(flashButton)
         let flashRecognizer = UITapGestureRecognizer(target: self, action:Selector("tapFlash:"))
@@ -127,7 +127,7 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
     
     func tapFlash(recognizer: UITapGestureRecognizer) {
         if (hasTurnedOnFlash == nil){
-            picker.cameraFlashMode = .Off
+            picker.cameraFlashMode = .Auto
             hasTurnedOnFlash = false
             return
         }
