@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import Haneke
 class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate  {
     
     @IBOutlet weak var tableView: UITableView!
@@ -30,8 +31,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
         var theText = self.ctrlsel[indexPath.row][0]
         label!.text = theText
         var url = NSURL(string: self.ctrlsel[indexPath.row][1])
-        var data = NSData(contentsOfURL: url!)
-        image!.image = UIImage(data: data!)
+        image!.hnk_setImageFromURL(url!)
         //self.ctrlsel = []
         
         return cell
@@ -43,6 +43,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
+            if json["data"].count>0 {
             for i in 0...(json["data"].count-1)
             {   var name = json["data"][i]["user"]["username"].string!
                 var picture = json["data"][i]["images"]["thumbnail"]["url"].string!
@@ -53,6 +54,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
                 
             }
             self.tableView.reloadData()
+            }
         }
     }
     
@@ -61,6 +63,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
+            if json["data"].count>0 {
             for i in 0...(json["data"].count-1)
             {   var name = json["data"][i]["username"].string!
                 var picture = json["data"][i]["profile_picture"].string!
@@ -71,6 +74,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
             }
             
             self.tableView.reloadData()
+            }
             
         }
         

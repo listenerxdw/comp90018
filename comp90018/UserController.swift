@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import Haneke
 class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -39,15 +40,13 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         { var theText = "\(self.ctrlsel[indexPath.row][1]) uploaded a photo"
             label!.text = theText
             var url = NSURL(string: self.ctrlsel[indexPath.row][2])
-            var data = NSData(contentsOfURL: url!)
-            image!.image = UIImage(data: data!)
+            image!.hnk_setImageFromURL(url!)
         }
         else if check == "friend" {
             var theText = "\(self.ctrlsel[indexPath.row][1]) followed \(self.ctrlsel[indexPath.row][2])"
             label!.text = theText
             var url = NSURL(string: self.ctrlsel[indexPath.row][4])
-            var data = NSData(contentsOfURL: url!)
-            image!.image = UIImage(data: data!)
+            image!.hnk_setImageFromURL(url!)
         }
         return cell
     }
@@ -67,8 +66,9 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
                 myFriend.append(temp)
                 
             }
+            myFriend = sort(myFriend)
         }
-        myFriend = sort(myFriend)
+        
         return myFriend
         
     }
@@ -121,15 +121,18 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     }
     
     func getUserActivity() -> Void{
+        var myname = User.sharedInstance.username
         self.follow = []
-        self.follow = getMyFollows("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",username: "qijie19920618",userid: "self")
+        var access_token = User.sharedInstance.token
+        self.follow = getMyFollows(access_token,username: myname,userid: "self")
+        if self.follow.count>0 {
         for i in 0...self.follow.count-1 {
             var id = self.follow[i][1]
             var friendname = self.follow[i][0]
-            getUpload("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",userid: id)
-            getFollows("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200",username: friendname,userid: id)
+            getUpload(access_token,userid: id)
+            getFollows(access_token,username: friendname,userid: id)
         }
-        
+        }
     }
     
     func sort(target:[[String]])-> [[String]]{
@@ -137,21 +140,21 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         var temp:[[String]] = []
         if target.count>0 {
             temp.append(target[0])
-            for i in 1...target.count-1
-            { for j in 0...temp.count-1
-            {   checknum = j
-                if target[i][0]<temp[j][0]
-                {   temp.insert(target[i], atIndex: j)
+            if target.count>1 {
+            for i in 1...target.count-1 {
+                for j in 0...temp.count-1 {
+                checknum = j
+                if target[i][0]<temp[j][0] {
+                temp.insert(target[i], atIndex: j)
                     break
                 }
                 }
-                if checknum == temp.count-1
-                {
+                if checknum == temp.count-1 {
                     temp.append(target[i])
                 }
             }
         }
-        
+        }
         return temp
     }
     

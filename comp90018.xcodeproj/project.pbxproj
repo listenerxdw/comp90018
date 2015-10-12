@@ -17,6 +17,7 @@
 		AF36B0361BC8DE0700084A01 /* ActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36B0351BC8DE0700084A01 /* ActivityController.swift */; };
 		AF36B0381BC8DE9000084A01 /* MeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36B0371BC8DE9000084A01 /* MeController.swift */; };
 		AF36B03A1BC8E0CB00084A01 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36B0391BC8E0CB00084A01 /* UserController.swift */; };
+		AF36B0801BCA596800084A01 /* DiscoveryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36B07F1BCA596800084A01 /* DiscoveryController.swift */; };
 		BD1247AD1B90083000C54C5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1247AC1B90083000C54C5D /* AppDelegate.swift */; };
 		BD1247B21B90083000C54C5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD1247B01B90083000C54C5D /* Main.storyboard */; };
 		BD1247B41B90083000C54C5D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD1247B31B90083000C54C5D /* Images.xcassets */; };
@@ -25,7 +26,6 @@
 		BD6895271BB91A6F006E9D71 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6895261BB91A6F006E9D71 /* User.swift */; };
 		BDDCA0451BBC066600F2CA4C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDCA0441BBC066600F2CA4C /* CollectionViewCell.swift */; };
 		BDE852471BBABFFF0098997E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE852461BBABFFF0098997E /* Profile.swift */; };
-		BDECD0F61BC7319100F0217E /* UserFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDECD0F51BC7319100F0217E /* UserFeed.swift */; };
 		BDF232261BB8DF7800B1D986 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF232251BB8DF7800B1D986 /* Login.swift */; };
 		F78409901BCBABD600947992 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F784098F1BCBABD600947992 /* CoreLocation.framework */; };
 		F78409921BCBADE700947992 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F78409911BCBADE700947992 /* CoreLocation.framework */; };
@@ -105,6 +105,7 @@
 		AF36B0371BC8DE9000084A01 /* MeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeController.swift; sourceTree = "<group>"; };
 		AF36B0391BC8E0CB00084A01 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		AF36B0561BC90A6B00084A01 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-master/Alamofire.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		AF36B07F1BCA596800084A01 /* DiscoveryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryController.swift; sourceTree = "<group>"; };
 		BD1247A71B90083000C54C5D /* comp90018.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = comp90018.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD1247AB1B90083000C54C5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD1247AC1B90083000C54C5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,7 +118,6 @@
 		BD6895261BB91A6F006E9D71 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BDDCA0441BBC066600F2CA4C /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		BDE852461BBABFFF0098997E /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		BDECD0F51BC7319100F0217E /* UserFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFeed.swift; sourceTree = "<group>"; };
 		BDF232251BB8DF7800B1D986 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		F784098F1BCBABD600947992 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F78409911BCBADE700947992 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreLocation.framework; sourceTree = "<group>"; };
@@ -201,7 +201,6 @@
 			children = (
 				BD1247AC1B90083000C54C5D /* AppDelegate.swift */,
 				BD6895261BB91A6F006E9D71 /* User.swift */,
-				BDECD0F51BC7319100F0217E /* UserFeed.swift */,
 				BDF232251BB8DF7800B1D986 /* Login.swift */,
 				BDE852461BBABFFF0098997E /* Profile.swift */,
 				BDDCA0441BBC066600F2CA4C /* CollectionViewCell.swift */,
@@ -210,6 +209,7 @@
 				8886C2A11BC01B0F006D941A /* PhotoCropViewController.swift */,
 				8886C2A31BC01B4B006D941A /* PhotoFilterViewController.swift */,
 				8886C2A51BC01B8C006D941A /* PhotoAdjustAndPostViewController.swift */,
+				AF36B07F1BCA596800084A01 /* DiscoveryController.swift */,
 				AF36B0311BC8C82A00084A01 /* SearchUserController.swift */,
 				AF36B0331BC8D2CE00084A01 /* SuggestionController.swift */,
 				AF36B0351BC8DE0700084A01 /* ActivityController.swift */,
@@ -447,12 +447,12 @@
 				AF36B0361BC8DE0700084A01 /* ActivityController.swift in Sources */,
 				F7AD426F1BC69FF20021A0EC /* UserViewController.swift in Sources */,
 				8886C2A21BC01B0F006D941A /* PhotoCropViewController.swift in Sources */,
-				BDECD0F61BC7319100F0217E /* UserFeed.swift in Sources */,
 				F7AD426D1BC69FCB0021A0EC /* UserTableViewCell.swift in Sources */,
 				BDDCA0451BBC066600F2CA4C /* CollectionViewCell.swift in Sources */,
 				AF36B0341BC8D2CE00084A01 /* SuggestionController.swift in Sources */,
 				AF36B0321BC8C82A00084A01 /* SearchUserController.swift in Sources */,
 				AF36B0381BC8DE9000084A01 /* MeController.swift in Sources */,
+				AF36B0801BCA596800084A01 /* DiscoveryController.swift in Sources */,
 				8886C2A41BC01B4B006D941A /* PhotoFilterViewController.swift in Sources */,
 				8886C2A01BC00403006D941A /* PhotoChooseViewController.swift in Sources */,
 				BD6895271BB91A6F006E9D71 /* User.swift in Sources */,

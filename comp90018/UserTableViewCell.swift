@@ -32,6 +32,29 @@ class UserTableViewCell: UITableViewCell {
     
     
     func setupUser() {
+        //if the data is swiping data
+        if(self.user?["type"].string == "swipe"){
+            //get the profpict
+            let ppString = self.user?["profpict"]
+            let pp = NSURL(string: ppString!.stringValue)
+            profileImage.hnk_setImageFromURL(pp!)
+            //get the imageString and decode it into NSData
+            let imageString = self.user?["image"].string
+            let decodedData = NSData(base64EncodedString: imageString!, options: NSDataBase64DecodingOptions(rawValue: 0))
+            var decodedimage = UIImage(data: decodedData!)
+            userImageView.image = decodedimage
+            //get the username
+            postLabel.text = self.user?["username"].string
+            //disable unused view
+            likeLabel.hidden=true
+            topicLabel.hidden=true
+            timeLabel.hidden=true
+            commentLabel.hidden=true
+            toLike.hidden=true
+            toComment.hidden=true
+        }
+        //the data is from instagram api
+        else{
         //Display the User Name
         self.postLabel.text = self.user?["caption"]["from"]["username"].string
     
@@ -76,21 +99,21 @@ class UserTableViewCell: UITableViewCell {
             self.likeLabel.text? += "\(likers[3])"
         } else if numOfLike >= 2 && numOfLike <= 3 {
             for i in 0...numOfLike - 1 {
-                //            println(i)
+                //            //////println(i)
                 if let liker = self.user? ["likes"]["data"][i]["username"].string {
                     likers.append(liker)
 
                 }
             }
             for j in 0...numOfLike - 2 {
-//                println(j)
+//                ////println(j)
                 self.likeLabel.text? += "\(likers[j]), "
             }
             self.likeLabel.text? += "\(likers[numOfLike - 1])"
             
         } else if numOfLike == 1 {
             for i in 0...numOfLike - 1 {
-                //            println(i)
+                //            //println(i)
                 if let liker = self.user? ["likes"]["data"][i]["username"].string {
                     likers.append(liker)
                     

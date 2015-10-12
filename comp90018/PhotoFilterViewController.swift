@@ -91,8 +91,7 @@ class PhotoFilterViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if(segue.identifier == "pushToPost") {
-            let navController = segue.destinationViewController as! UINavigationController
-            let postController = navController.topViewController as! PhotoAdjustAndPostViewController
+            let postController = segue.destinationViewController as! PhotoAdjustAndPostViewController
             postController.image = imageView.image
         }
     }

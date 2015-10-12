@@ -143,6 +143,27 @@ class UserViewController: UIViewController, UITableViewDataSource, CLLocationMan
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //get the destination view controller to connect the delegate so it can communicate
+        var destinationViewController = ((tabBarController!.viewControllers)![2] as! UINavigationController).topViewController as! PhotoChooseViewController
+        destinationViewController.delegate = self
+        // the session
+        self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
+        self.session = MCSession(peer: peerID)
+        self.session.delegate = self
+        
+        // the browser
+        self.browser = MCNearbyServiceBrowser(peer: peerID,serviceType: serviceType)
+        self.browser.delegate = self
+        //start browsing
+        self.browser.startBrowsingForPeers()
+        
+        // the advertiser
+        self.assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
+        self.assistant.delegate=self
+        // start advertising
+        self.assistant.startAdvertisingPeer()
+        
+        //set the table view
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         self.loadUserPost()
@@ -187,7 +208,6 @@ class UserViewController: UIViewController, UITableViewDataSource, CLLocationMan
         
         cell.toComment.tag = indexPath.row
         cell.toComment.addTarget(self, action: "comment:", forControlEvents: .TouchUpInside)
-        
         return cell
     }
     
@@ -257,7 +277,7 @@ class UserViewController: UIViewController, UITableViewDataSource, CLLocationMan
         
         Alamofire.request(.POST, url, parameters: parameter, encoding: .JSON).responseJSON { (request, response, json, error) in
             if json == nil {
-                println(error)
+                //println(error)
                 
             } else {
                 if let data: AnyObject = json{
@@ -272,7 +292,7 @@ class UserViewController: UIViewController, UITableViewDataSource, CLLocationMan
                 self.presentViewController(alert, animated: true, completion: nil)
                 println(errorMsg)
                 
-                println(json)
+                //println(json)
             }
         }
     }

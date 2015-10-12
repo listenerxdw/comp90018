@@ -92,8 +92,7 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if(segue.identifier == "pushToFilter") {
-            let navController = segue.destinationViewController as! UINavigationController
-            let filterController = navController.topViewController as! PhotoFilterViewController
+            let filterController = segue.destinationViewController as! PhotoFilterViewController
             let imageToSend = crop()
             filterController.image = imageToSend
         }

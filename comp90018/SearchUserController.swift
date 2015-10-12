@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import Haneke
+
 class SearchUserController: UIViewController,UISearchBarDelegate,
 UITableViewDataSource,UITableViewDelegate{
     
@@ -47,8 +49,8 @@ UITableViewDataSource,UITableViewDelegate{
             label!.text = theText
             var url = NSURL(string: self.picOfTableView[indexPath.row])
             if self.picOfTableView[0] != "" {
-                var data = NSData(contentsOfURL: url!)
-                image!.image = UIImage(data: data!)}
+                 image!.hnk_setImageFromURL(url!)
+            }
         }
         return cell
     }
@@ -70,7 +72,8 @@ UITableViewDataSource,UITableViewDelegate{
             self.picOfTableView = []
         }
         else {
-            getUserdata("1457552126.085bfe1.d38c9ac13cf14ca7a1bc3ce9b7bfa200", searchtext: searchText,sequence: self.searchSequence)
+            var access_token = User.sharedInstance.token
+            getUserdata(access_token, searchtext: searchText,sequence: self.searchSequence)
         }
         
         
