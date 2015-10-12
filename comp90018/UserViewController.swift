@@ -241,7 +241,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         println("SEND DATA")
         //var a : [AnyObject] = self.session.connectedPeers
         //println(a[0].displayName)
-        self.session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error:&error)
+        self.session.sendData(data, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error:&error)
     }
     
     //update the news feed - UI
