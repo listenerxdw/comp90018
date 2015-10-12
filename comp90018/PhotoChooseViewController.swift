@@ -185,8 +185,7 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (didLoadImage == true) {
             if(segue.identifier == "pushToCrop") {
-                let navController = segue.destinationViewController as! UINavigationController
-                let cropController = navController.topViewController as! PhotoCropViewController
+                let cropController = segue.destinationViewController as! PhotoCropViewController
                 cropController.image = imageView.image
             }
         } else {
