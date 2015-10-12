@@ -51,7 +51,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
                 var rawData = data.rawData(options: nil, error: &error)
                 if let jsonDic = NSJSONSerialization.JSONObjectWithData(rawData!, options: nil, error: &error) as? NSDictionary{
                     if let unsortedEvents = jsonDic["data"] as? NSArray {
-                        let descriptor = NSSortDescriptor(key: "created_time", ascending: true, selector: "caseInsensitiveCompare:")
+                        let descriptor = NSSortDescriptor(key: "created_time", ascending: false, selector: "caseInsensitiveCompare:")
                         var num = unsortedEvents.count
                         for i in 0...num - 1 {
                             self.results?[i] = JSON(unsortedEvents.sortedArrayUsingDescriptors([descriptor])[i])
