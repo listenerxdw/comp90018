@@ -56,7 +56,7 @@ class UserTableViewCell: UITableViewCell {
         //the data is from instagram api
         else{
         //Display the User Name
-        self.postLabel.text = self.user?["caption"]["from"]["username"].string
+        self.postLabel.text = self.user?["user"]["username"].string
     
         var date = self.user?["created_time"].string
         var dateString = NSString(string: date!)
