@@ -208,7 +208,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     var name = self.finalSugg[m]
                     var id = self.findId(self.finalSugg[m])
                     if id != "wrong" {
-                        println(id)
                         var url = "https://api.instagram.com/v1/users/\(id)/media/recent?count=3&access_token=\(self.access_token)"
                         Alamofire.request(.GET,url).responseJSON {
                             (_,_,data,error) in
@@ -229,7 +228,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     }
                 }
             }
-            println("done")
 
         }
         
@@ -271,7 +269,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     }
     //this function is to find all the users that I follow
     func getMyFollows(token:String) -> Void {
-        let url = "https://api.instagram.com/v1/users/self/follows?access_token=\(token)&count=\(User.sharedInstance.following)"
+        let url = "https://api.instagram.com/v1/users/self/follows?access_token=\(token)"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
@@ -405,6 +403,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     //check if the user has already been my friends
     func existFollows(username:String) -> Bool {
         for i in 0...self.follow.count-1 {
+            println(self.follow[i])
             if username == self.follow[i] {
                 return true
             }
