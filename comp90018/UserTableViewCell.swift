@@ -72,7 +72,7 @@ class UserTableViewCell: UITableViewCell {
         }
         
         //Display the profile image
-        if let urlString = self.user?["caption"]["from"]["profile_picture"]{
+        if let urlString = self.user?["user"]["profile_picture"]{
             let url = NSURL(string: urlString.stringValue)
             self.profileImage.hnk_setImageFromURL(url!)
         }
