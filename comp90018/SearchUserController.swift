@@ -75,8 +75,7 @@ UITableViewDataSource,UITableViewDelegate{
             var access_token = User.sharedInstance.token
             getUserdata(access_token, searchtext: searchText,sequence: self.searchSequence)
         }
-        
-        
+    
     }
     
     override func didReceiveMemoryWarning() {
@@ -88,11 +87,10 @@ UITableViewDataSource,UITableViewDelegate{
         var tempText:[String] = []
         var tempPic:[String] = []
         let url = "https://api.instagram.com/v1/users/search?q=\(searchtext)&access_token=\(token)"
-        //use asychronous request
-        Alamofire.request(.GET,url).responseJSON{
+        Alamofire.request(.GET,url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
-            if json["data"].count>0 {
+                if json["data"].count>0 {
                 for i in 0...(json["data"].count-1) {
                     tempText.append(json["data"][i]["username"].string!)
                     tempPic.append(json["data"][i]["profile_picture"].string!)
@@ -105,7 +103,7 @@ UITableViewDataSource,UITableViewDelegate{
                 self.tableView.reloadData()
                 println("searchtext: \(searchtext)")
             }
-            
         }
+        println("back")
     }
 }
