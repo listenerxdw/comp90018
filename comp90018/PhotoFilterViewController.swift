@@ -2,7 +2,7 @@
 //  PhotoFilterViewController.swift
 //  comp90018
 //
-//  Created by imac on 4/10/2015.
+//  Created by Huabin Liu on 4/10/2015.
 //  Copyright (c) 2015 Huabin Liu. All rights reserved.
 //
 
@@ -41,12 +41,14 @@ class PhotoFilterViewController: UIViewController, UIGestureRecognizerDelegate {
         super.didReceiveMemoryWarning()
     }
     
+    // initiate all five image views shown on screen
     func loadFilterViews(image: UIImage) {
         originalView.contentMode = .ScaleAspectFit
         originalView.image = image
         
         let originalImage = CIImage(CGImage: image.CGImage)
         
+        // process the image to black and white
         var filter = CIFilter(name: "CIPhotoEffectTonal")
         filter.setDefaults()
         filter.setValue(originalImage, forKey: kCIInputImageKey)
@@ -56,6 +58,7 @@ class PhotoFilterViewController: UIViewController, UIGestureRecognizerDelegate {
         
         filter1View.image = newImage
         
+        // process the image to emphasize cold colors
         filter = CIFilter(name: "CIPhotoEffectProcess")
         filter.setDefaults()
         filter.setValue(originalImage, forKey: kCIInputImageKey)
@@ -64,6 +67,7 @@ class PhotoFilterViewController: UIViewController, UIGestureRecognizerDelegate {
         newImage = UIImage(CGImage: cgimg)
         filter2View.image = newImage
         
+        // process the image to emphasize warm colors
         filter = CIFilter(name: "CIPhotoEffectTransfer")
         filter.setDefaults()
         filter.setValue(originalImage, forKey: kCIInputImageKey)
@@ -73,22 +77,27 @@ class PhotoFilterViewController: UIViewController, UIGestureRecognizerDelegate {
         filter3View.image = newImage
     }
     
+    // show the original image on the main view once tapped
     func pickOriginalView() {
         imageView.image = originalView.image
     }
     
+    // show the black-and-white image on the main view once tapped
     func pickFilter1View() {
         imageView.image = filter1View.image
     }
     
+    // show the cold colored image on the main view once tapped
     func pickFilter2View() {
         imageView.image = filter2View.image
     }
     
+    // show the warm colored image o the main view once tapped
     func pickFilter3View() {
         imageView.image = filter3View.image
     }
     
+    // navigate to post view, and send the current image in main view to it
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if(segue.identifier == "pushToPost") {
             let postController = segue.destinationViewController as! PhotoAdjustAndPostViewController
