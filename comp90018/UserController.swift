@@ -77,6 +77,7 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
     //this function is used to find all followings of my followings
     func getFollows(token:String,username:String,userid:String) {
         var friend = [[String]]()
+        var count = 0
         friend = []
         //send asychronous request to API
         let url = "https://api.instagram.com/v1/users/\(userid)/follows?access_token=\(token)"
@@ -84,7 +85,13 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
             (_,_,data,error) in
             let json = JSON(data!)
             if json["data"].count>0 {
-                for i in 0...(json["data"].count-1) {
+                if json["data"].count > 30 {
+                    count = 30
+                }
+                else {
+                    count = json["data"].count
+                }
+                for i in 0...(count-1) {
                     var temp:[String] = []
                     temp.append("friend")
                     temp.append(username)
@@ -92,6 +99,7 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
                     temp.append(json["data"][i]["id"].string!)
                     temp.append(json["data"][i]["profile_picture"].string!)
                     friend.append(temp)
+                    
                 }
             }
             self.dataOfTableView = self.dataOfTableView + friend
