@@ -64,7 +64,6 @@ UITableViewDataSource,UITableViewDelegate{
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         //record the number of changes of search text
         self.searchSequence = self.searchSequence + 1
-        println("input:\(searchText)")
         //if search text is empty, show nothing at the first time,
         //next time if it is empty, show the last data
         if searchText == "" {
@@ -101,9 +100,7 @@ UITableViewDataSource,UITableViewDelegate{
             //only reload the data that is correspond with the current search text
             if  sequence == self.searchSequence {
                 self.tableView.reloadData()
-                println("searchtext: \(searchtext)")
             }
         }
-        println("back")
     }
 }
