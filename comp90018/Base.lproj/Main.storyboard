@@ -6,13 +6,11 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Profile-->
         <scene sceneID="15T-5Q-ZGQ">
             <objects>
                 <navigationController id="I6e-LS-P8t" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" selectedImage="file-bar-icon" systemItem="contacts" id="xZJ-dv-gTB">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Profile" image="user_32px_1190704_easyicon.net" id="xZJ-dv-gTB"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GmY-0q-35W">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -881,7 +879,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Vv3-1b-7d2" secondAttribute="trailing" constant="-16" id="dvK-g8-aMv"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="User Feed" image="Home_24px_1154185_easyicon.net" id="Ul8-xw-Yh9"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="User Feed" image="Home_32px_1154185_easyicon.net" id="Ul8-xw-Yh9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -897,7 +895,7 @@
         <scene sceneID="jOl-XY-y0n">
             <objects>
                 <navigationController title="PhotoNav" automaticallyAdjustsScrollViewInsets="NO" id="yE2-oS-59q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="Photo" image="camera-bar-icon" id="EgV-oG-bSB"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Photo" image="Photo_Camera_32px_1161589_easyicon.net" id="EgV-oG-bSB"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WFr-kb-jfG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1209,11 +1207,11 @@
             </objects>
             <point key="canvasLocation" x="2545.5" y="1555.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Search-->
         <scene sceneID="n8j-WP-Y7x">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CqP-5W-iAu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" selectedImage="cabnet-bar-icon" systemItem="search" id="BUT-DB-voF"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="Search_32.187408491947px_1181298_easyicon.net" id="BUT-DB-voF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Tzk-P3-pRK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1228,11 +1226,11 @@
             </objects>
             <point key="canvasLocation" x="922.5" y="1167.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Activity-->
         <scene sceneID="7Za-ic-ehA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CZG-bW-e4W" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" selectedImage="chat-bar-icon" systemItem="recents" id="XVP-L6-3jr"/>
+                    <tabBarItem key="tabBarItem" title="Activity" image="love_msg_48px_1171654_easyicon.net-1" id="XVP-L6-3jr"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="j6Z-Ui-EF2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1367,11 +1365,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Home_24px_1154185_easyicon.net" width="24" height="24"/>
-        <image name="cabnet-bar-icon" width="30" height="30"/>
-        <image name="camera-bar-icon" width="30" height="30"/>
-        <image name="chat-bar-icon" width="30" height="30"/>
-        <image name="file-bar-icon" width="30" height="30"/>
+        <image name="Home_32px_1154185_easyicon.net" width="32" height="32"/>
+        <image name="Photo_Camera_32px_1161589_easyicon.net" width="32" height="32"/>
+        <image name="Search_32.187408491947px_1181298_easyicon.net" width="32" height="31"/>
+        <image name="love_msg_48px_1171654_easyicon.net-1" width="48" height="48"/>
+        <image name="user_32px_1190704_easyicon.net" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
