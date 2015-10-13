@@ -19,6 +19,7 @@ class ProfileOthers: UIViewController,UICollectionViewDelegateFlowLayout,UIColle
     @IBOutlet weak var lblNoImage: UILabel!
     
     //global var
+    var getid:String?
     var userid = ""
     var moreButton: UIBarButtonItem!
     var gallery: UICollectionView!
@@ -43,7 +44,7 @@ class ProfileOthers: UIViewController,UICollectionViewDelegateFlowLayout,UIColle
         self.navigationItem.leftBarButtonItem = newBackButton;
         
         self.navigationItem.hidesBackButton = true
-        moreButton = UIBarButtonItem(title: "More..", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
+        moreButton = UIBarButtonItem(title: "More..", style: UIBarButtonItemStyle.Bordered, target: self, action: "loadMore:")
         self.navigationItem.rightBarButtonItem = moreButton;
         
         //Fetch Gallery
@@ -69,7 +70,7 @@ class ProfileOthers: UIViewController,UICollectionViewDelegateFlowLayout,UIColle
                 layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
                 layout.itemSize = CGSize(width: 110, height: 100)
                 //create gallery and assign the datasource and delegate then add it to the view
-                self.gallery = UICollectionView(frame: CGRectMake(0, 265, 375, 410), collectionViewLayout: layout)
+                self.gallery = UICollectionView(frame: CGRectMake(0, 265, 375, 350), collectionViewLayout: layout)
                 self.gallery!.dataSource = self
                 self.gallery!.delegate = self
                 self.gallery!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "CollectionViewCell")
