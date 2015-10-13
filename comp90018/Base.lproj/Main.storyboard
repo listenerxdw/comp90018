@@ -128,7 +128,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qgo-bA-w2g">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="MCc-3S-3lK">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="MCc-3S-3lK">
                             <connections>
                                 <action selector="cancelButton:" destination="80Z-bL-h94" id="bU5-Qo-R6L"/>
                             </connections>
