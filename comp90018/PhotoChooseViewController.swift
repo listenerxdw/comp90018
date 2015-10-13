@@ -2,8 +2,8 @@
 //  PhotoChooseViewController.swift
 //  comp90018
 //
-//  Created by imac on 3/10/2015.
-//  Copyright (c) 2015 Huabin Liu. All rights reserved.
+//  Created by Huabin Liu on 3/10/2015.
+//  Copyright (c) 2015 Huabin Liu, Pramudita. All rights reserved.
 //
 
 import UIKit
@@ -27,7 +27,9 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // initiate the flag for check whether there was an image loaded
         didLoadImage = false
+        // initiate a default image to be shown
         imageView.image = UIImage(named: "add-picture")
         picker.delegate = self
     }
@@ -36,23 +38,29 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         super.didReceiveMemoryWarning()
     }
     
+    // choose image from camera
     @IBAction func chooseFromCamera(sender: UIButton) {
         picker.sourceType = .Camera
         
+        // overlay a customerized control view of camera
         picker.showsCameraControls = false
         picker.cameraOverlayView = buildOverlayView()
         
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    // draw the new constomerized control view
     func buildOverlayView() -> UIView {
+        // set the view size same with screen
         let overlayView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
         
+        // add grid view on top of camera view
         let gridView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height * 0.75))
         let size = gridView.frame.size
         gridView.image = drawGridView(size)
         overlayView.addSubview(gridView)
         
+        // add photo capture button
         let snapButton = UIView(frame: CGRectMake((self.view.frame.width - 96) / 2 , self.view.frame.height - 106, 96, 96))
         snapButton.userInteractionEnabled = true
         let capture: UIImage! = UIImage(named: "capture")
@@ -63,6 +71,7 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         recognizer.delegate = self
         snapButton.addGestureRecognizer(recognizer)
         
+        // add exit button
         let cancelButton = UIView(frame: CGRectMake(self.view.frame.width / 9, self.view.frame.height - self.view.frame.width / 5, 48, 48))
         let cancel: UIImage! = UIImage(named: "cancel")
         cancelButton.userInteractionEnabled = true
@@ -73,6 +82,7 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         cancelRecognizer.delegate = self
         cancelButton.addGestureRecognizer(cancelRecognizer)
         
+        // add switch camera button
         let changeCameraButton = UIView(frame: CGRectMake(self.view.frame.width / 9, self.view.frame.height - self.view.frame.width / 2.5, 48, 48))
         changeCameraButton.userInteractionEnabled = true
         let switch_camera: UIImage! = UIImage(named: "switch_camera")
@@ -83,6 +93,7 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         changeCameraRecognizer.delegate = self
         changeCameraButton.addGestureRecognizer(changeCameraRecognizer)
         
+        // add flash contol button
         flashButton.frame = CGRectMake(self.view.frame.width * 8 / 9 - 48, self.view.frame.height - self.view.frame.width / 2.5, 48, 48)
         flashButton.userInteractionEnabled = true
         let flash_auto: UIImage! = UIImage(named: "flash_auto")
@@ -96,15 +107,19 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         return overlayView
     }
     
+    // take a photo once camera capture button is tapped
     func tapSnap(recognizer: UITapGestureRecognizer) {
         picker.takePicture()
     }
     
+    // exit camera once cancel button is tapped
     func tapCancel(recognizer: UITapGestureRecognizer) {
         self.picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // change camera once switch button is tapped
     func tapChangeCamera(recognizer: UITapGestureRecognizer) {
+        // default is using front camera
         if (hasChangedCamera == nil){
             picker.cameraDevice = .Front
             hasChangedCamera = true
@@ -125,7 +140,9 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
+    // change flash mode once conctrol button is tapped
     func tapFlash(recognizer: UITapGestureRecognizer) {
+        // default is using auto mode
         if (hasTurnedOnFlash == nil){
             picker.cameraFlashMode = .Auto
             hasTurnedOnFlash = false
@@ -149,13 +166,16 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
+    // draw a grid view
     func drawGridView(size: CGSize) -> UIImage {
         UIGraphicsBeginImageContext(size)
         let context = UIGraphicsGetCurrentContext()
         
+        // set line param
         CGContextSetStrokeColorWithColor(context, UIColor.grayColor().CGColor)
         CGContextSetLineWidth(context, 1)
         
+        // four lines to draw
         CGContextBeginPath(context)
         CGContextMoveToPoint(context, size.width / 3, 0)
         CGContextAddLineToPoint(context, size.width / 3, size.height)
@@ -172,21 +192,25 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         return image
     }
     
+    // choose image from photo library
     @IBAction func chooseFromLibrary(sender: UIButton) {
         picker.sourceType = .PhotoLibrary
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    // once image chosen, display it to the screen
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         didLoadImage = true
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // once the chosen methos is cancelled
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // navigate to the crop view, and send the image shown on current screen to it
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (didLoadImage == true) {
             if(segue.identifier == "pushToCrop") {
@@ -194,6 +218,7 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
                 cropController.image = imageView.image
             }
         } else {
+            // alert and refuse to navigate if the user do not load any image
             let alert = UIAlertController(title: "No Image Choosen", message: "Please choose an image first!", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)

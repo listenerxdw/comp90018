@@ -2,7 +2,7 @@
 //  SuggestionController.swift
 //  comp90018
 //
-//  Created by 璐璐 on 10/10/2015.
+//  Created by Yiming Chen on 10/10/2015.
 //  Copyright (c) 2015 Pramudita. All rights reserved.
 //
 
@@ -314,6 +314,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     temp2.append(json["data"][i]["user"]["id"].string!)
                     userId.append(temp2)
                     self.findProfile.append(temp)
+                    self.userAndId.append(temp2)
                     temp = []
                     temp2 = []
                 }
@@ -412,6 +413,18 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         }
         return 0
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var m = sender as? UITableViewCell
+        var row = theTable.indexPathForCell(m!)
+        if segue.identifier == "gotoProfile"
+        {   var vc = segue.destinationViewController as? ProfileOthers
+            var theText = self.dataOfTableView[row!.row]
+            var id = self.findId(theText)
+            vc!.getid = id
+        }
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -1,64 +1,54 @@
 //
-//  Profile.swift
+//  ProfileOthers.swift
 //  comp90018
 //
-//  Created by Pramudita on 29/09/2015.
-//  Copyright © 2015 Pramudita. All rights reserved.
-// asdadsadsa
+//  Created by Pramudita on 13/10/2015.
+//  Copyright (c) 2015 Pramudita. All rights reserved.
+//
 
 import UIKit
 import SwiftyJSON
 
-class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource{
-    //UI var
-    @IBOutlet weak var lblUsername: UILabel!
+class ProfileOthers: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource {
+    //var
     @IBOutlet weak var lblPost: UILabel!
+    @IBOutlet weak var lblUsername: UILabel!
     @IBOutlet weak var lblBio: UILabel!
-    @IBOutlet weak var lblFollowing: UILabel!
     @IBOutlet weak var lblFollower: UILabel!
+    @IBOutlet weak var lblFollowing: UILabel!
     @IBOutlet weak var lblNoImage: UILabel!
     
     //global var
-    var x = User.sharedInstance
+    var getid:String?
+    var userid = ""
+    var moreButton: UIBarButtonItem!
     var gallery: UICollectionView!
-    var moreButton : UIBarButtonItem!
     var ivProfPict: UIImageView!
     var json: [JSON] = []
     var nextUrl: String = ""
     
-    //logout button to clear cookies and exit from app
-    @IBAction func cancelButton(sender: UIBarButtonItem) {
-        var refreshAlert = UIAlertController(title: "Logout & Exit", message: "Do you really want to logout and exit?", preferredStyle: UIAlertControllerStyle.Alert)
-        //if cancel do nothing
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
-        }))
-        
-        //if okay
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!)
-            in
-            //clear cookies
-            NSURLCache.sharedURLCache().removeAllCachedResponses()
-            if let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
-                for cookie in cookies {
-                    NSHTTPCookieStorage.sharedHTTPCookieStorage().deleteCookie(cookie as! NSHTTPCookie)
-                }
-            }
-            exit(0)
-        }))
-        presentViewController(refreshAlert, animated: true, completion: nil)
+    //back button
+    func back(sender: UIBarButtonItem) {
+        // Perform your custom actions
+        // ...
+        // Go back to the previous ViewController
+        self.navigationController?.popViewControllerAnimated(true)
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        refresh() //get user details and show it
-        //add button load more
+        self.userid = getid!
+        self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
+        self.navigationItem.leftBarButtonItem = newBackButton;
+        
         self.navigationItem.hidesBackButton = true
         moreButton = UIBarButtonItem(title: "More..", style: UIBarButtonItemStyle.Bordered, target: self, action: "loadMore:")
         self.navigationItem.rightBarButtonItem = moreButton;
         
         //Fetch Gallery
-        let url = "https://api.instagram.com/v1/users/self/media/recent?access_token=\(x.token)&count=30"
+        let url = "https://api.instagram.com/v1/users/\(userid)/media/recent?access_token=\(User.sharedInstance.token)&count=30"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
@@ -86,11 +76,13 @@ class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionV
                 self.gallery!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "CollectionViewCell")
                 self.gallery!.backgroundColor = UIColor.whiteColor()
                 self.view.addSubview(self.gallery!)
+                self.refresh() //get user details and show it
             }else{
                 self.lblNoImage.hidden = false
             }
         }
         //End of fetching
+        
     }
     
     //function to loadmore images
@@ -111,9 +103,9 @@ class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionV
             }
             self.gallery.reloadData()
         }
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -122,16 +114,22 @@ class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionV
     //function to populate the datils of user
     func refresh(){
         lblNoImage.hidden = true
-        lblPost.text = String(x.post)
-        lblFollowing.text = String(x.following)
-        lblFollower.text = String(x.follower)
-        lblBio.text = x.bio
-        lblUsername.text = x.username
-        let url = NSURL(string: x.profPict)
-        let data = NSData(contentsOfURL: url!)
-        ivProfPict = UIImageView(frame: CGRectMake(10, 70, 130, 120)); // set as you want
-        ivProfPict.image = UIImage(data: data!)
-        self.view.addSubview(ivProfPict);
+        let urlx = "https://api.instagram.com/v1/users/\(userid)?access_token=\(User.sharedInstance.token)"
+        let requestURL = NSURL(string:urlx)
+        let request = NSURLRequest(URL: requestURL!)
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            let json = JSON(data: data!)
+            self.lblUsername.text = json["data"]["username"].string!
+            self.lblPost.text = String(json["data"]["counts"]["media"].intValue)
+            self.lblFollower.text = String(json["data"]["counts"]["followed_by"].intValue)
+            self.lblFollowing.text = String(json["data"]["counts"]["follows"].intValue)
+            self.lblBio.text = json["data"]["bio"].string!
+            let url = NSURL(string: json["data"]["profile_picture"].string!)
+            let data = NSData(contentsOfURL: url!)
+            self.ivProfPict = UIImageView(frame: CGRectMake(10, 70, 130, 120)); // set as you want
+            self.ivProfPict.image = UIImage(data: data!)
+            self.view.addSubview(self.ivProfPict);
+        }
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

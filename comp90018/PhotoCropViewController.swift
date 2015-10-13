@@ -2,7 +2,7 @@
 //  PhotoCropViewController.swift
 //  comp90018
 //
-//  Created by imac on 4/10/2015.
+//  Created by Huabin Liu on 4/10/2015.
 //  Copyright (c) 2015 Huabin Liu. All rights reserved.
 //
 
@@ -19,10 +19,12 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         scrollView.delegate = self
         
+        // initiate image view
         imageView.image = image
         imageView.frame = CGRectMake(0, 0, image!.size.width, image!.size.height / 2)
         imageView.contentMode = UIViewContentMode.Center
         
+        // add image view to scroll view as a sub view and set it params
         scrollView.addSubview(imageView)
         scrollView.contentSize = image!.size
         
@@ -38,30 +40,33 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
         centerScrollViewContents()
     }
     
+    // recenterize image that shown on screen
     func centerScrollViewContents() {
         let boundsSize = scrollView.bounds.size
         var contentsFrame = imageView.frame
         
+        // for width
         if contentsFrame.size.width < boundsSize.width {
             contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2
         } else {
             contentsFrame.origin.x = 0
         }
         
+        // for height
         if contentsFrame.size.height < boundsSize.height {
-            
             contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2 - self.navigationController!.navigationBar.frame.size.height - UIApplication.sharedApplication().statusBarFrame.size.height
         } else {
             contentsFrame.origin.y = -self.navigationController!.navigationBar.frame.size.height - UIApplication.sharedApplication().statusBarFrame.size.height
         }
-        
         imageView.frame = contentsFrame
     }
-    
+
+    // call to recentrize image once it zoomed
     func scrollViewDidZoom(scrollView: UIScrollView) {
         centerScrollViewContents()
     }
     
+    // get the target to be zoomed in scroll view
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
     }
@@ -70,12 +75,14 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
         super.didReceiveMemoryWarning()
         
     }
-
+    
+    // crop the image shown on scrren and save it to photo library
     @IBAction func cropAndSave(sender: UIButton) {
         let imageToSave = crop()
         UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
     }
     
+    // crop the image shown on scrren
     func crop() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, UIScreen.mainScreen().scale)
         let offset = scrollView.contentOffset
@@ -90,6 +97,7 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
         return imageToCrop
     }
     
+    // navigate to filter view, crop the current image shown on screen and send it
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if(segue.identifier == "pushToFilter") {
             let filterController = segue.destinationViewController as! PhotoFilterViewController

@@ -2,8 +2,8 @@
 //  PhotoAdjustAndPostViewController.swift
 //  comp90018
 //
-//  Created by imac on 4/10/2015.
-//  Copyright (c) 2015 Pramudita. All rights reserved.
+//  Created by Huabin Liu on 4/10/2015.
+//  Copyright (c) 2015 Huabin Liu. All rights reserved.
 //
 
 import Foundation
@@ -24,8 +24,10 @@ class PhotoAdjustAndPostViewController: UIViewController, UIDocumentInteractionC
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // initiate image view
         imageView.image = image
         originalImage = CIImage(CGImage: imageView.image!.CGImage)
+        // initiate filter for brightness and constrast
         filter.setDefaults()
         filter.setValue(originalImage, forKey: kCIInputImageKey)
     }
@@ -34,6 +36,7 @@ class PhotoAdjustAndPostViewController: UIViewController, UIDocumentInteractionC
         super.didReceiveMemoryWarning()
     }
 
+    // reset the brightness value and show result image on screen
     @IBAction func brightnessChanged(sender: UISlider) {
         let sliderValue = sender.value
         filter.setValue(sliderValue, forKey: kCIInputBrightnessKey)
@@ -43,6 +46,7 @@ class PhotoAdjustAndPostViewController: UIViewController, UIDocumentInteractionC
         imageView.image = newImage
     }
  
+    // reset the contrast value and show result image on screen
     @IBAction func contrastChanged(sender: UISlider) {
         let sliderValue = sender.value
         filter.setValue(sliderValue, forKey: kCIInputContrastKey)
@@ -52,8 +56,10 @@ class PhotoAdjustAndPostViewController: UIViewController, UIDocumentInteractionC
         imageView.image = newImage
     }
     
+    // post the image to actual instageram
     @IBAction func post(sender: UIButton) {
         let instagramUrl = NSURL(string: "instagram://app")
+        // could successfully open the url
         if(UIApplication.sharedApplication().canOpenURL(instagramUrl!)){
             let imageData = UIImageJPEGRepresentation(imageView.image, 100)
             let captionString = "Your Caption"
@@ -61,7 +67,9 @@ class PhotoAdjustAndPostViewController: UIViewController, UIDocumentInteractionC
             
             if(!imageData.writeToFile(writePath, atomically: true)){
                 return
-            } else{
+            }
+            // image can be upload
+            else {
                 let fileURL = NSURL(fileURLWithPath: writePath)
                 self.documentController = UIDocumentInteractionController(URL: fileURL!)
                 self.documentController.delegate = self
@@ -69,7 +77,10 @@ class PhotoAdjustAndPostViewController: UIViewController, UIDocumentInteractionC
                 self.documentController.annotation =  NSDictionary(object: captionString, forKey: "InstagramCaption")
                 self.documentController.presentOpenInMenuFromRect(self.view.frame, inView: self.view, animated: true)
             }
-        } else {
+        }
+        // open failed
+        else {
+            // show the alert to user
             let alert = UIAlertController(title: "Post Failed", message: "Please install instagram app first.", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)

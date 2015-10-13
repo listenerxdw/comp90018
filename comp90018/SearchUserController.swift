@@ -2,7 +2,7 @@
 //  SearchUserController.swift
 //  comp90018
 //
-//  Created by 璐璐 on 10/10/2015.
+//  Created by Yiming Chen on 10/10/2015.
 //  Copyright (c) 2015 Pramudita. All rights reserved.
 //
 
@@ -22,6 +22,7 @@ UITableViewDataSource,UITableViewDelegate{
     //show profile picture in table view
     var picOfTableView:[String] = []
     //record number of times that search text changed
+    var id:[String] = []
     var searchSequence = 0
     //user's access_token
     var access_token = User.sharedInstance.token
@@ -83,9 +84,23 @@ UITableViewDataSource,UITableViewDelegate{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var m = sender as? UITableViewCell
+        var row = tableView.indexPathForCell(m!)
+        if segue.identifier == "gotoprofile"
+        {   var vc = segue.destinationViewController as? ProfileOthers
+            var theid = self.id[row!.row]
+            var id = theid
+            vc!.getid = id
+        }
+    }
+
+    
     //get the result of searching the target text from instagram API
     func getUserdata(token:String,searchtext:String,sequence:Int) -> Void{
         var tempText:[String] = []
+        var tempId:[String] = []
         var tempPic:[String] = []
         let url = "https://api.instagram.com/v1/users/search?q=\(searchtext)&access_token=\(token)"
         //asychronous request to API and characters like space are allowed in UPL request
@@ -95,11 +110,13 @@ UITableViewDataSource,UITableViewDelegate{
                 if json["data"].count>0 {
                 for i in 0...(json["data"].count-1) {
                     tempText.append(json["data"][i]["username"].string!)
+                    tempId.append(json["data"][i]["id"].string!)
                     tempPic.append(json["data"][i]["profile_picture"].string!)
                 }
             }
             self.dataOfTableView = tempText
             self.picOfTableView = tempPic
+            self.id = tempId
             //only reload the data that is correspond with the current search text
             if  sequence == self.searchSequence {
                 self.tableView.reloadData()
