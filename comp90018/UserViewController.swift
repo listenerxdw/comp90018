@@ -22,6 +22,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     var session: MCSession!
     var peerID: MCPeerID!
     var parameter = ["access_token": accessToken]
+    var nextUrl: String = ""
     var results: [JSON]? = []
     var postId: [String]? = []
     var latitude: Double = -37.8
@@ -67,11 +68,16 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
                 var jsonObj = JSON(json!)
                 if let data = jsonObj["data"].arrayValue as [JSON]? {
                     self.results = data
+                    if let next_url = jsonObj["pagination"]["next_url"].string {
+                        self.nextUrl = next_url
+                    }
                     let num = jsonObj["data"].count
                     self.postId = []
-                    for i in 0...num - 1 {
-                        if let id = self.results?[i]["id"].string as String? {
-                            self.postId?.append(id)
+                    if num >= 1 {
+                        for i in 0...num - 1 {
+                            if let id = self.results?[i]["id"].string as String? {
+                                self.postId?.append(id)
+                            }
                         }
                     }
 //                    println(self.postId!)
@@ -82,6 +88,35 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
             }
         }
     }
+    
+    func loadMore(){
+        Alamofire.request(.GET, self.nextUrl).responseJSON{ (request, response, json, error) in
+            if (json != nil){
+                var jsonObj = JSON(json!)
+                if let data = jsonObj["data"].arrayValue as [JSON]? {
+                    let numOfCurr = self.results?.count
+
+                    self.results?.extend(data)
+                    if let next_url = jsonObj["pagination"]["next_url"].string {
+                        self.nextUrl = next_url
+                    }
+                    let numOfMore = jsonObj["data"].count
+//                    self.postId = []
+                    if numOfMore >= 1 {
+                        for i in numOfCurr!...numOfCurr! + numOfMore - 1 {
+                            if let id = self.results?[i]["id"].string as String? {
+                                self.postId?.append(id)
+                            }
+                        }
+                    }
+                }
+                dispatch_async(dispatch_get_main_queue()){ () -> Void in
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
     
     // MARK: - Table view data source
     
@@ -100,6 +135,11 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         
         cell.toComment.tag = indexPath.row
         cell.toComment.addTarget(self, action: "comment:", forControlEvents: .TouchUpInside)
+        
+        if indexPath.row >= (self.results?.count)! - 1{
+            loadMore()
+        }
+        
         return cell
     }
     
@@ -115,15 +155,19 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     
     //To sort loaded posts by time
     func sortByTime(){
+        self.loadUserPost()
+        /*
         let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
         Alamofire.request(.GET, url).responseJSON { (request, response, json, error) in
             if (json != nil){
                 var error: NSError?
                 var data = JSON(json!)
+                
                 var rawData = data.rawData(options: nil, error: &error)
                 if let jsonDic = NSJSONSerialization.JSONObjectWithData(rawData!, options: nil, error: &error) as? NSDictionary{
                     //store data into NSArray
-                    if let unsortedEvents = jsonDic["data"] as? NSArray {
+                    if let unsortedEvents = self.results as? NSArray{
+//                    if let unsortedEvents = jsonDic["data"] as? NSArray {
                         //sort the NSArray
                         let descriptor = NSSortDescriptor(key: "created_time", ascending: false, selector: "caseInsensitiveCompare:")
                         var num = unsortedEvents.count
@@ -145,7 +189,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
                 }
                 
             }
-        }
+        }*/
     }
     
     //get the latitude of target location
@@ -188,8 +232,38 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         self.locationManager.startUpdatingLocation()
         println("start to record location...")
         
-        self.results? = []
-        let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
+        var tempResults: [JSON] = []
+        tempResults = self.results!
+        var num = self.results?.count
+//        self.results? = []
+        var dist = 0.0
+        var temp = 0
+        var tempArray: [Int] = []
+        //every iteration, find the ith small distance from data and then appent it to result array
+        for i in 0...num! - 1 {
+            dist = 100000000.0
+            temp = i
+            for j in 0...num! - 1 {
+                if !contains(tempArray, j){
+                    if self.distance(self.getTargetLatitude(tempResults, index: j), targetLongitude: self.getTargetLongitude(tempResults, index: j)) < dist {
+                        dist = self.distance(self.getTargetLatitude(tempResults, index: j), targetLongitude: self.getTargetLongitude(tempResults, index: j))
+                        temp = j
+                    }
+                }
+            }
+            tempArray.append(temp)
+            self.results?[i] = tempResults[temp]
+        }
+        self.postId = []
+        for i in 0...num! - 1 {
+            if let id = self.results?[i]["id"].string as String? {
+                self.postId?.append(id)
+            }
+        }
+        dispatch_async(dispatch_get_main_queue()){ () -> Void in
+            self.tableView.reloadData()
+        }
+        /*let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
         Alamofire.request(.GET, url).responseJSON { (request, response, json, error) in
             if (json != nil){
                 var jsonObj = JSON(json!)
@@ -224,7 +298,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
                     self.tableView.reloadData()
                 }
             }
-        }
+        }*/
     }
     
     //get the current location
@@ -291,6 +365,9 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
             var commentStr = comment?.text
             self.sendComment(currentPostId!, content: commentStr!)
         }
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel){ (ACTION) -> Void in
+            }
+        )
         alert.addAction(sendAction)
         self.presentViewController(alert, animated: true, completion: nil)
     }
