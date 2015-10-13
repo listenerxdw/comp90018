@@ -25,11 +25,10 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     var nextUrl: String = ""
     var results: [JSON]? = []
     var postId: [String]? = []
-    var latitude: Double = -37.8
-    var longitude: Double = 144.9
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
     var currentLocation = CLLocation(latitude: 0.0, longitude: 0.0)
     let locationManager = CLLocationManager()
-
     @IBOutlet var tableView:UITableView!
     @IBOutlet weak var sortController: UISegmentedControl!
     
@@ -59,6 +58,11 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         self.loadUserPost()
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        //        self.locationManager.distanceFilter = 10 // update when it exceeds a certain distance (meters)
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
     }
     
     func loadUserPost(){
@@ -129,7 +133,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         
         // Configure the cell...
         cell.user = self.results?[indexPath.row]
-        
+    
         cell.toLike.tag = indexPath.row
         cell.toLike.addTarget(self, action: "like:", forControlEvents: .TouchUpInside)
         
@@ -146,6 +150,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     // MARK: - Sort by time and location
 
     @IBAction func sortBy(sender: UISegmentedControl) {
+        println("-----------------------------------------COUNT:\(self.results?.count)")
         if sortController.selectedSegmentIndex == 0 {
             sortByTime()
         } else if sortController.selectedSegmentIndex == 1 {
@@ -155,7 +160,40 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     
     //To sort loaded posts by time
     func sortByTime(){
-        self.loadUserPost()
+        var tempResults: [JSON] = []
+        tempResults = self.results!
+        var num = self.results?.count
+        println("-----------------------------------------COUNT:\(num)")
+        var dist = 0
+        var temp = 0
+        var tempArray: [Int] = []
+        //every iteration, find the ith small distance from data and then appent it to result array
+        for i in 0...num! - 1 {
+            dist = 0
+            temp = i
+            for j in 0...num! - 1 {
+                if !contains(tempArray, j){
+                    let x = (tempResults[j]["created_time"].stringValue).toInt()
+                    if x > dist {
+                        dist = x!
+                        temp = j
+                    }
+                }
+            }
+            println("-------------------------------------------\(dist)")
+            tempArray.append(temp)
+            self.results?[i] = tempResults[temp]
+        }
+        self.postId = []
+        for i in 0...num! - 1 {
+            if let id = self.results?[i]["id"].string as String? {
+                self.postId?.append(id)
+            }
+        }
+        dispatch_async(dispatch_get_main_queue()){ () -> Void in
+            self.tableView.reloadData()
+        }
+
         /*
         let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
         Alamofire.request(.GET, url).responseJSON { (request, response, json, error) in
@@ -224,14 +262,44 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     
     //To sort loaded posts by time
     func sortByLocation(){
-        
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         //        self.locationManager.distanceFilter = 10 // update when it exceeds a certain distance (meters)
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
         println("start to record location...")
-        
+        println(self.latitude)
+        println(self.longitude)
+        var tempResults: [JSON] = []
+        tempResults = self.results!
+        var num = self.results?.count
+        var dist = 0.0
+        var temp = 0
+        var tempArray: [Int] = []
+        //every iteration, find the ith small distance from data and then appent it to result array
+        for i in 0...num! - 1 {
+            dist = 100000000.0
+            temp = i
+            for j in 0...num! - 1 {
+                if !contains(tempArray, j){
+                    if self.distance(self.getTargetLatitude(tempResults, index: j), targetLongitude: self.getTargetLongitude(tempResults, index: j)) < dist {
+                        dist = self.distance(self.getTargetLatitude(tempResults, index: j), targetLongitude: self.getTargetLongitude(tempResults, index: j))
+                        temp = j
+                    }
+                }
+            }
+            tempArray.append(temp)
+            self.results?[i] = tempResults[temp]
+        }
+        self.postId = []
+        for i in 0...num! - 1 {
+            if let id = self.results?[i]["id"].string as String? {
+                self.postId?.append(id)
+            }
+        }
+        dispatch_async(dispatch_get_main_queue()){ () -> Void in
+            self.tableView.reloadData()
+        }
+
+        /*
         var tempResults: [JSON] = []
         tempResults = self.results!
         var num = self.results?.count
@@ -263,6 +331,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         dispatch_async(dispatch_get_main_queue()){ () -> Void in
             self.tableView.reloadData()
         }
+*/
         /*let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
         Alamofire.request(.GET, url).responseJSON { (request, response, json, error) in
             if (json != nil){
@@ -306,8 +375,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         self.longitude = manager.location.coordinate.longitude
         self.latitude = manager.location.coordinate.latitude
         currentLocation = CLLocation(latitude: self.latitude, longitude: self.longitude)
-        println(self.latitude)
-        println(self.longitude)
         self.locationManager.stopUpdatingLocation()
         
     }
@@ -399,7 +466,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     
     //sending data function to be triggered outside by Photo
     func sendData(data: NSData){
-        update(data,name: "test")
+        update(data,name: peerID.displayName)
         var error: NSError?
         if error != nil {
             println("Error sending data: \(error!.localizedDescription)")
@@ -419,15 +486,27 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         let imgString = img.base64EncodedStringWithOptions(.allZeros)
         let username = dictionary.objectForKey("username") as! String
         let profpict = dictionary.objectForKey("profpict") as! String
+        let date = ((NSDate().timeIntervalSince1970).description as NSString).substringToIndex(10)
+        println("------------------------------------")
+        println(date)
         let jsonObject : JSON  =
         [
         "username": username,
         "image":imgString,
         "type": "swipe",
         "profpict": profpict,
-        "id": name
+        "id": name,
+        "created_time": date,
+        "location":  [
+            "latitude": self.latitude,
+            "name": "My Place",
+            "longitude": self.longitude,
+            "id": 0
+            ]
         ]
         results?.insert(jsonObject, atIndex: 0)
+        postId?.insert("", atIndex: 0)
+        println(postId)
         self.tableView.reloadData()
     }
     

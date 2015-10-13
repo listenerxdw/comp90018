@@ -49,13 +49,33 @@ class UserTableViewCell: UITableViewCell {
             //disable unused view
             likeLabel.hidden=true
             topicLabel.hidden=true
-            timeLabel.hidden=true
             commentLabel.hidden=true
             toLike.hidden=true
             toComment.hidden=true
+            
+            //Display the location
+            self.locationLabel.text = ""
+            if let location = self.user?["location"]["name"].string {
+                self.locationLabel.text = location
+            }
+            
+            //Display the time
+            var date = self.user?["created_time"].string
+            var dateString = NSString(string: date!)
+            println("----------------")
+            println(dateString)
+            self.timeLabel.text = (NSDate(timeIntervalSince1970: dateString.doubleValue).description as NSString).substringToIndex(19)
+            
+            
         }
         //the data is from instagram api
         else{
+            likeLabel.hidden=false
+            topicLabel.hidden=false
+            commentLabel.hidden=false
+            toLike.hidden=false
+            toComment.hidden=false
+            
             //Display the User Name
             self.postLabel.text = self.user?["user"]["username"].string
             
