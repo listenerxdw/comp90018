@@ -62,8 +62,6 @@ class UserTableViewCell: UITableViewCell {
             //Display the time
             var date = self.user?["created_time"].string
             var dateString = NSString(string: date!)
-            println("----------------")
-            println(dateString)
             self.timeLabel.text = (NSDate(timeIntervalSince1970: dateString.doubleValue).description as NSString).substringToIndex(19)
             
             

@@ -929,7 +929,7 @@
                                     <outlet property="delegate" destination="svC-an-yGy" id="GyX-xc-iKz"/>
                                 </connections>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="78" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="H5X-fM-msK">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="78" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="H5X-fM-msK">
                                 <rect key="frame" x="0.0" y="108" width="375" height="510"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -967,6 +967,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="H5X-fM-msK" firstAttribute="leading" secondItem="Ev5-gH-oXx" secondAttribute="leadingMargin" constant="-16" id="1vX-Fz-Xm3"/>
+                            <constraint firstItem="fNb-NB-arb" firstAttribute="top" secondItem="H5X-fM-msK" secondAttribute="bottom" id="Xf7-Sc-a2o"/>
+                            <constraint firstItem="H5X-fM-msK" firstAttribute="top" secondItem="nNc-AU-J4B" secondAttribute="bottom" constant="44" id="aAu-Ic-hh5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="H5X-fM-msK" secondAttribute="trailing" constant="-16" id="kFN-JC-bpN"/>
                             <constraint firstAttribute="centerX" secondItem="H5X-fM-msK" secondAttribute="centerX" id="rmQ-5j-wUq"/>
                         </constraints>
