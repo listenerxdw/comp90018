@@ -186,6 +186,11 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
         self.tableView2.reloadData()
     }
     
+    //click search then keyboard will disappear
+    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+        searchBar.resignFirstResponder()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
