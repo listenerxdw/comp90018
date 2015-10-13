@@ -1153,11 +1153,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Suggestion" id="GxM-ou-UTB">
-                        <barButtonItem key="leftBarButtonItem" title="Test" id="Ju6-G7-rB3">
-                            <connections>
-                                <segue destination="jSf-go-k16" kind="push" id="Jtu-XO-8WO"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="more" id="rjb-rt-S5s">
                             <connections>
                                 <action selector="getMore:" destination="S2o-Gm-OMT" id="y3f-uP-zd2"/>
