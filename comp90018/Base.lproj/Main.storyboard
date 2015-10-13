@@ -282,7 +282,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ski-iX-mPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1638.5" y="1167.5"/>
+            <point key="canvasLocation" x="1566.5" y="1167.5"/>
         </scene>
         <!--Search Users-->
         <scene sceneID="Zdu-ic-3L6">
@@ -608,7 +608,7 @@
                 <tapGestureRecognizer id="ZP7-1O-bnj"/>
                 <tapGestureRecognizer id="Hxy-Kz-1xs"/>
             </objects>
-            <point key="canvasLocation" x="1638.5" y="2295.5"/>
+            <point key="canvasLocation" x="1566.5" y="2303.5"/>
         </scene>
         <!--Post-->
         <scene sceneID="FcP-Np-WbP">
@@ -622,13 +622,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oQx-RA-SuD">
+                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oQx-RA-SuD">
                                 <rect key="frame" x="25" y="442" width="324" height="31"/>
                                 <connections>
                                     <action selector="brightnessChanged:" destination="aUw-m9-SoP" eventType="valueChanged" id="ckj-8x-VD1"/>
                                 </connections>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ram-G9-fdJ">
+                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ram-G9-fdJ">
                                 <rect key="frame" x="25" y="515" width="324" height="31"/>
                                 <connections>
                                     <action selector="contrastChanged:" destination="aUw-m9-SoP" eventType="valueChanged" id="MeJ-vD-ZMJ"/>
@@ -640,7 +640,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contrast" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcj-eT-lYC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Contrast" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcj-eT-lYC">
                                 <rect key="frame" x="16" y="480" width="83" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -692,7 +692,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbv-yo-iK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2193.5" y="2295.5"/>
+            <point key="canvasLocation" x="2193.5" y="2303.5"/>
         </scene>
         <!--User Feed-->
         <scene sceneID="u1O-IJ-RCU">
@@ -745,13 +745,13 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Cl-PR-exX">
-                                                    <rect key="frame" x="8" y="478" width="359" height="13.5"/>
+                                                    <rect key="frame" x="8" y="478" width="359" height="14"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Comments" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGz-Yg-Yd2">
-                                                    <rect key="frame" x="8" y="500" width="359" height="224.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" misplaced="YES" text="Comments" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGz-Yg-Yd2">
+                                                    <rect key="frame" x="8" y="500" width="359" height="225"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -766,7 +766,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B99-Mf-qD2">
-                                                    <rect key="frame" x="48" y="422" width="96" height="23.5"/>
+                                                    <rect key="frame" x="48" y="422" width="96" height="24"/>
                                                     <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="16"/>
                                                     <state key="normal" title="Comment">
                                                         <color key="titleColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -793,7 +793,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post by" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0g-Dv-8OJ">
-                                                    <rect key="frame" x="52" y="13" width="205" height="22.5"/>
+                                                    <rect key="frame" x="52" y="13" width="205" height="23"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="205" id="EPV-Z3-ENi"/>
                                                     </constraints>
@@ -1245,7 +1245,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sUT-ZK-Iz2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1638.5" y="2.5"/>
+            <point key="canvasLocation" x="1566.5" y="2.5"/>
         </scene>
         <!--ProfileOthers-->
         <scene sceneID="fTM-2o-jSk">
