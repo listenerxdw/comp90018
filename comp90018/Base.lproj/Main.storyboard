@@ -168,7 +168,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UpS-4D-EeP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="922.5" y="2.5"/>
+            <point key="canvasLocation" x="930.5" y="2.5"/>
         </scene>
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
@@ -881,7 +881,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Vv3-1b-7d2" secondAttribute="trailing" constant="-16" id="dvK-g8-aMv"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="User Feed" image="cabnet-bar-icon" id="Ul8-xw-Yh9"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="User Feed" image="Home_24px_1154185_easyicon.net" id="Ul8-xw-Yh9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -1367,6 +1367,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Home_24px_1154185_easyicon.net" width="24" height="24"/>
         <image name="cabnet-bar-icon" width="30" height="30"/>
         <image name="camera-bar-icon" width="30" height="30"/>
         <image name="chat-bar-icon" width="30" height="30"/>
