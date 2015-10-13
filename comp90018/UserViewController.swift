@@ -24,8 +24,8 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     var parameter = ["access_token": accessToken]
     var results: [JSON]? = []
     var postId: [String]? = []
-    var latitude: Double = 0.0
-    var longitude: Double = 0.0
+    var latitude: Double = -37.8
+    var longitude: Double = 144.9
     var currentLocation = CLLocation(latitude: 0.0, longitude: 0.0)
     let locationManager = CLLocationManager()
 
@@ -200,7 +200,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
                     var tempArray: [Int] = []
                     //every iteration, find the ith small distance from data and then appent it to result array
                     for i in 0...num - 1 {
-                        println(i)
                         dist = 100000000.0
                         temp = i
                         for j in 0...num - 1 {

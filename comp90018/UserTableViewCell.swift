@@ -12,12 +12,13 @@ import Haneke
 
 class UserTableViewCell: UITableViewCell {
     
-    @IBOutlet var postLabel:UILabel!
-    @IBOutlet var likeLabel:UILabel!
-    @IBOutlet var topicLabel:UILabel!
+    @IBOutlet weak var postLabel:UILabel!
+    @IBOutlet weak var likeLabel:UILabel!
+    @IBOutlet weak var topicLabel:UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet var commentLabel:UILabel!
-    @IBOutlet var userImageView:UIImageView!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var commentLabel:UILabel!
+    @IBOutlet weak var userImageView:UIImageView!
     @IBOutlet weak var profileImage: UIImageView!
 
     @IBOutlet weak var toLike: UIButton!
@@ -63,6 +64,12 @@ class UserTableViewCell: UITableViewCell {
             var dateString = NSString(string: date!)
             self.timeLabel.text = (NSDate(timeIntervalSince1970: dateString.doubleValue).description as NSString).substringToIndex(19)
             
+            //Display the location
+            self.locationLabel.text = ""
+            if let location = self.user?["location"]["name"].string {
+                self.locationLabel.text = location
+            }
+            
             //Display the image
             if let urlString = self.user?["images"]["standard_resolution"]["url"]{
                 let url = NSURL(string: urlString.stringValue)
@@ -76,7 +83,10 @@ class UserTableViewCell: UITableViewCell {
             }
             
             //Display the topic of the post
-            self.topicLabel.text = self.user?["caption"]["text"].string
+            self.topicLabel.text = ""
+            if let topic = self.user?["caption"]["text"].string {
+                self.topicLabel.text = topic
+            }
             
             //Display the most recent people who like the post
             var numOfLike = (self.user?["likes"]["data"].count)!
