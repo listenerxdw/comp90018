@@ -23,7 +23,8 @@ UITableViewDataSource,UITableViewDelegate{
     var picOfTableView:[String] = []
     //record number of times that search text changed
     var searchSequence = 0
-    
+    //user's access_token
+    var access_token = User.sharedInstance.token
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -41,6 +42,7 @@ UITableViewDataSource,UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //reuse cell
         let cell = self.tableView.dequeueReusableCellWithIdentifier("todoCell") as! UITableViewCell
+        //in storyboard, image view is tagged with 102,label is tagged with 101
         var image = cell.viewWithTag(102) as? UIImageView
         var label = cell.viewWithTag(101) as? UILabel
         
@@ -49,7 +51,7 @@ UITableViewDataSource,UITableViewDelegate{
             label!.text = theText
             var url = NSURL(string: self.picOfTableView[indexPath.row])
             if self.picOfTableView[0] != "" {
-                 image!.hnk_setImageFromURL(url!)
+            image!.hnk_setImageFromURL(url!)
             }
         }
         return cell
@@ -64,7 +66,6 @@ UITableViewDataSource,UITableViewDelegate{
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         //record the number of changes of search text
         self.searchSequence = self.searchSequence + 1
-        println("input:\(searchText)")
         //if search text is empty, show nothing at the first time,
         //next time if it is empty, show the last data
         if searchText == "" {
@@ -72,11 +73,10 @@ UITableViewDataSource,UITableViewDelegate{
             self.picOfTableView = []
         }
         else {
-            var access_token = User.sharedInstance.token
-            getUserdata(access_token, searchtext: searchText,sequence: self.searchSequence)
+            //make request for search text and get result back from API
+            getUserdata(self.access_token, searchtext: searchText,sequence: self.searchSequence)
         }
-        
-        
+    
     }
     
     override func didReceiveMemoryWarning() {
@@ -88,11 +88,11 @@ UITableViewDataSource,UITableViewDelegate{
         var tempText:[String] = []
         var tempPic:[String] = []
         let url = "https://api.instagram.com/v1/users/search?q=\(searchtext)&access_token=\(token)"
-        //use asychronous request
-        Alamofire.request(.GET,url).responseJSON{
+        //asychronous request to API and characters like space are allowed in UPL request
+        Alamofire.request(.GET,url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!).responseJSON{
             (_,_,data,error) in
             let json = JSON(data!)
-            if json["data"].count>0 {
+                if json["data"].count>0 {
                 for i in 0...(json["data"].count-1) {
                     tempText.append(json["data"][i]["username"].string!)
                     tempPic.append(json["data"][i]["profile_picture"].string!)
@@ -103,9 +103,7 @@ UITableViewDataSource,UITableViewDelegate{
             //only reload the data that is correspond with the current search text
             if  sequence == self.searchSequence {
                 self.tableView.reloadData()
-                println("searchtext: \(searchtext)")
             }
-            
         }
     }
 }

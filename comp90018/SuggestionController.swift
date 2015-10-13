@@ -27,9 +27,10 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     var finalSugg:[String] = []
     //store the username and its corresponding url of profile picture
     var findProfile:[[String]] = []
+    //store the username and its corresponding urls of photos in recent media
     var userUpload:[[String]] = []
-    var userandid:[[String]] = []
-    var swipeNum = 0
+    //store the username and its corresponding id
+    var userAndId:[[String]] = []
     var access_token = User.sharedInstance.token
 
     @IBAction func getMore(sender: AnyObject) {
@@ -51,6 +52,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //reuse cell
         let cell = self.theTable.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        //in storyboard image view is tagged with 90 and label is tagged with 101
         var label = cell.viewWithTag(101) as? UILabel
         var image = cell.viewWithTag(90) as? UIImageView
         var theText = self.dataOfTableView[indexPath.row]
@@ -61,6 +63,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
             var url = NSURL(string: profilePic)
             image!.hnk_setImageFromURL(url!)
         }
+        //find all urls of photos by user'username
         var upload = findUpload(theText)
         if upload.count>0 {
             for i in 1...upload.count-1 {
@@ -69,17 +72,20 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 var url = NSURL(string: picUrl)
                 picture!.hnk_setImageFromURL(url!)
             }
+            //if user only uploads one photo, other spaces for photos is empty
             if upload.count == 2 {
                 var empty2 = cell.viewWithTag(2) as? UIImageView
                 var empty3 = cell.viewWithTag(3) as? UIImageView
                 empty2!.image = UIImage(named: "10")
                 empty3!.image = UIImage(named: "10")
             }
+            //if user only uploads two photo, other spaces for photos is empty
             if upload.count == 3 {
                 var empty3 = cell.viewWithTag(3) as? UIImageView
                 empty3!.image = UIImage(named: "10")
             }
         } else {
+            //if user uploads no photo, all space for image is empty
             var empty1 = cell.viewWithTag(1) as? UIImageView
             var empty2 = cell.viewWithTag(2) as? UIImageView
             var empty3 = cell.viewWithTag(3) as? UIImageView
@@ -100,7 +106,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         }
         return "wrong"
     }
-    
+    //find the corresponding url of uploaded pictures according to the input username
     func findUpload(text:String) -> [String] {
         if userUpload.count>0 {
             for i in 0...userUpload.count-1 {
@@ -111,11 +117,12 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         }
         return []
     }
+    //find the corresponding id according to the input username
     func findId(username:String) -> String {
-        if userandid.count>0 {
-            for i in 0...userandid.count-1 {
-                if username == self.userandid[i][0] {
-                    return self.userandid[i][1]
+        if userAndId.count>0 {
+            for i in 0...userAndId.count-1 {
+                if username == self.userAndId[i][0] {
+                    return self.userAndId[i][1]
                 }
             }
         }
@@ -123,47 +130,21 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     }
 
     func goSuggestion() {
-        
         //find the common friends of the users that I follow
         getCommonFriends()
-        //get the users that follow me
+        //if the number of suggested users is less than 15 then go to get followers of the user
         if self.finalSugg.count<15 {
-            
             getFollowedBy(access_token,userId: "self")
         }
         
-        //if the number of suggested users are less than 10,then the users that liked
+        //if the number of suggested users are less than 15,then the users that liked
         //the post tagged as travel and sports will be suggested.
-     
         if self.finalSugg.count<15 {
             var expectNum = 15-self.finalSugg.count
             getTag(expectNum,token: access_token)
         }
-        
-        if self.finalSugg.count>0 {
-        for m in 0...self.finalSugg.count-1 {
-            var temp3:[String] = []
-            var name = self.finalSugg[m]
-            var id = findId(self.finalSugg[m])
-            if id != "wrong" {
-                var url = "https://api.instagram.com/v1/users/\(id)/media/recent?count=3&access_token=\(access_token)"
-                Alamofire.request(.GET,url).responseJSON {
-                    (_,_,data,error) in
-                    let json = JSON(data!)
-                    temp3.append(name)
-                    if json["data"].count > 0 {
-                        for j in 0...json["data"].count-1 {
-                            temp3.append(json["data"][j]["images"]["thumbnail"]["url"].string!)
-                        }
-                        self.userUpload.append(temp3)
-                    }
-                    temp3 = []
-                    self.dataOfTableView = self.finalSugg
-                    self.theTable.reloadData()
-                }
-            }
-        }
-        }
+        //show the uploaded pictures by url
+        self.showUploadPhotos()
         self.dataOfTableView = self.finalSugg
         //update the table
         self.theTable.reloadData()
@@ -176,6 +157,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         let url = myurl
         var temp:[String] = []
         var temp2:[String] = []
+        //send request to API to get users'information according to the posts with specific tags
         Alamofire.request(.GET,url).responseJSON {
             (_,_,data,error) in
             let json = JSON(data!)
@@ -195,41 +177,45 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                         temp2.append(username)
                         temp2.append(json["data"][i]["user"]["id"].string!)
                         self.findProfile.append(temp)
-                        self.userandid.append(temp2)
+                        self.userAndId.append(temp2)
                         temp = []
                         temp2 = []
                     }
                 }
             }
-            if self.finalSugg.count>0 {
-                for m in 0...self.finalSugg.count-1 {
-                    var temp3:[String] = []
-                    var name = self.finalSugg[m]
-                    var id = self.findId(self.finalSugg[m])
-                    if id != "wrong" {
-                        var url = "https://api.instagram.com/v1/users/\(id)/media/recent?count=3&access_token=\(self.access_token)"
-                        Alamofire.request(.GET,url).responseJSON {
-                            (_,_,data,error) in
-                            let json = JSON(data!)
-                            temp3.append(name)
-                            if json["data"].count > 0 {
-                                println("in")
-                                for j in 0...json["data"].count-1 {
-                                    temp3.append(json["data"][j]["images"]["thumbnail"]["url"].string!)
-                                }
-                                self.userUpload.append(temp3)
-                                
+            //when reply is back,show the uploaded photos
+            self.showUploadPhotos()
+        }
+        
+    }
+    //this function is used to show the uploaded photos in the table view
+    func showUploadPhotos() {
+        if self.finalSugg.count>0 {
+            for m in 0...self.finalSugg.count-1 {
+                var temp3:[String] = []
+                var name = self.finalSugg[m]
+                var id = self.findId(self.finalSugg[m])
+                if id != "wrong" {
+                    var url = "https://api.instagram.com/v1/users/\(id)/media/recent?count=3&access_token=\(self.access_token)"
+                    Alamofire.request(.GET,url).responseJSON {
+                        (_,_,data,error) in
+                        let json = JSON(data!)
+                        temp3.append(name)
+                        if json["data"].count > 0 {
+                            println("in")
+                            for j in 0...json["data"].count-1 {
+                                temp3.append(json["data"][j]["images"]["thumbnail"]["url"].string!)
                             }
-                            temp3 = []
-                            self.dataOfTableView = self.finalSugg
-                            self.theTable.reloadData()
+                            self.userUpload.append(temp3)
+                            
                         }
+                        temp3 = []
+                        self.dataOfTableView = self.finalSugg
+                        self.theTable.reloadData()
                     }
                 }
             }
-
         }
-        
     }
     //this function is to find expected number of users from tag travel and sports separately
     func getTag(expectNum:Int,token:String) {
@@ -250,6 +236,8 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         let request = NSURLRequest(URL: requestURL!)
         var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
         let json = JSON(data: data!)
+        //ignore the users that have too many followers, this user might be a star and suggest her/his 
+        //followers are meaningless sometimes
         if json["data"].count > 0 && json["data"].count<50{
             for i in 0...json["data"].count-1 {
                 if !existFollows(json["data"][i]["username"].string!) && !checkExist(json["data"][i]["username"].string!) {
@@ -259,7 +247,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                     temp2.append(json["data"][i]["username"].string!)
                     temp2.append(json["data"][i]["id"].string!)
                     findProfile.append(temp)
-                    self.userandid.append(temp2)
+                    self.userAndId.append(temp2)
                     temp = []
                     temp2 = []
                 }
@@ -278,7 +266,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
             self.followId.append(json["data"][i]["id"].string!)
         }
         //number of friends
-       
         numberFollow = self.follow.count
     }
     //this function is to find all the users that followed by my friends
@@ -299,7 +286,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 temp.append(json["data"][i]["profile_picture"].string!)
                 temp2.append(json["data"][i]["username"].string!)
                 temp2.append(json["data"][i]["id"].string!)
-                self.userandid.append(temp2)
+                self.userAndId.append(temp2)
                 findProfile.append(temp)
                 temp = []
                 temp2 = []
@@ -307,6 +294,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         }
         return id
     }
+    //this function is used to get the users that I liked their photos but I do not follow them yet
     func getLikedUser(){
         var temp:[String] = []
         var temp2:[String] = []
@@ -333,6 +321,7 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 }
                 }
             }
+            //when the reply is back, update the table view
             if self.finalSugg.count > 0{
                 self.dataOfTableView = self.finalSugg
             }
@@ -348,9 +337,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                 Alamofire.request(.GET,url).responseJSON {
                     (_,_,data,error) in
                     let json = JSON(data!)
-                    println("\(id)")
-                    println(i)
-                    println(name)
                     temp3.append(name)
                     for j in 0...json["data"].count-1 {
                         temp3.append(json["data"][j]["images"]["thumbnail"]["url"].string!)
@@ -365,8 +351,9 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         }
         
     }
-    
+    //this function is used to find common followings of my followings
     func commonFriends(){
+        //store followings of my followings
         var subfollow:[String] = []
         var followArray = [[String]]()
         for var i=0; i<self.numberFollow; i++ {
@@ -374,12 +361,10 @@ class SuggestionController: UIViewController, UITableViewDataSource {
             followArray.append(subfollow)
         }
         self.allDataOfFollow = followArray
+        //implement the algorithm to suggest users
         self.goSuggestion()
         
     }
-    
-    //this function is to get all users followed by my friends
-    
     //find out the users that appear more than 2 times of a list of users of my friends
     func getCommonFriends() -> Void {
         var myname = User.sharedInstance.username

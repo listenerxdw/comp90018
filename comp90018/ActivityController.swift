@@ -19,12 +19,14 @@ class ActivityController:  UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        //called when click friends activity button
         if segue.identifier == "gotofriend"
         {   var m = sender as? UITableViewCell
             var vc = segue.destinationViewController as? UserController
             vc!.getUserActivity()
             
         }
+        //called when click me activity button
         if segue.identifier == "gotome"{
             var m = sender as? UITableViewCell
             var vc = segue.destinationViewController as? MeController
