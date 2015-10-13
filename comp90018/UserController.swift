@@ -95,6 +95,7 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
                 }
             }
             self.dataOfTableView = self.dataOfTableView + friend
+            self.dataOfTableView = self.sort(self.dataOfTableView)
             self.tempctr = self.tempctr + friend
             self.tableView2.reloadData()
         }
@@ -117,6 +118,7 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
                 }
             }
             self.dataOfTableView = self.dataOfTableView + upload
+            self.dataOfTableView = self.sort(self.dataOfTableView)
             self.tempctr = self.tempctr + upload
             self.tableView2.reloadData()
         }
@@ -146,7 +148,7 @@ class UserController:  UIViewController,UITableViewDataSource,UITableViewDelegat
             for i in 1...target.count-1 {
                 for j in 0...temp.count-1 {
                 checknum = j
-                if target[i][0]<temp[j][0] {
+                if target[i][1]<temp[j][1] {
                 temp.insert(target[i], atIndex: j)
                     break
                 }
