@@ -10,7 +10,7 @@
         <scene sceneID="15T-5Q-ZGQ">
             <objects>
                 <navigationController id="I6e-LS-P8t" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="profile_24px_1155085_easyicon.net" id="xZJ-dv-gTB"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" id="xZJ-dv-gTB"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GmY-0q-35W">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -879,7 +879,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Vv3-1b-7d2" secondAttribute="trailing" constant="-16" id="dvK-g8-aMv"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="User Feed" image="Home_24px_1154185_easyicon.net (1)" id="Ul8-xw-Yh9"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="User Feed" image="Home" id="Ul8-xw-Yh9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -895,7 +895,7 @@
         <scene sceneID="jOl-XY-y0n">
             <objects>
                 <navigationController title="PhotoNav" automaticallyAdjustsScrollViewInsets="NO" id="yE2-oS-59q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="Photo" image="Photo_Camera_24px_1161589_easyicon.net" id="EgV-oG-bSB"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Photo" image="Photo_Camera" id="EgV-oG-bSB"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WFr-kb-jfG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1211,7 +1211,7 @@
         <scene sceneID="n8j-WP-Y7x">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CqP-5W-iAu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="Search_24px_1154210_easyicon.net" id="BUT-DB-voF"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="Search" id="BUT-DB-voF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Tzk-P3-pRK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1230,7 +1230,7 @@
         <scene sceneID="7Za-ic-ehA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CZG-bW-e4W" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Activity" image="heart_24px_1066119_easyicon.net" id="XVP-L6-3jr"/>
+                    <tabBarItem key="tabBarItem" title="Activity" image="heart" id="XVP-L6-3jr"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="j6Z-Ui-EF2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1365,11 +1365,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Home_24px_1154185_easyicon.net (1)" width="24" height="24"/>
-        <image name="Photo_Camera_24px_1161589_easyicon.net" width="24" height="24"/>
-        <image name="Search_24px_1154210_easyicon.net" width="24" height="24"/>
-        <image name="heart_24px_1066119_easyicon.net" width="24" height="24"/>
-        <image name="profile_24px_1155085_easyicon.net" width="24" height="24"/>
+        <image name="Home" width="24" height="24"/>
+        <image name="Photo_Camera" width="24" height="24"/>
+        <image name="Search" width="24" height="24"/>
+        <image name="heart" width="24" height="24"/>
+        <image name="profile" width="24" height="24"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

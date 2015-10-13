@@ -143,14 +143,12 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         if indexPath.row >= (self.results?.count)! - 1{
             loadMore()
         }
-        
         return cell
     }
     
     // MARK: - Sort by time and location
 
     @IBAction func sortBy(sender: UISegmentedControl) {
-        println("-----------------------------------------COUNT:\(self.results?.count)")
         if sortController.selectedSegmentIndex == 0 {
             sortByTime()
         } else if sortController.selectedSegmentIndex == 1 {
@@ -163,7 +161,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         var tempResults: [JSON] = []
         tempResults = self.results!
         var num = self.results?.count
-        println("-----------------------------------------COUNT:\(num)")
         var dist = 0
         var temp = 0
         var tempArray: [Int] = []
@@ -180,7 +177,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
                     }
                 }
             }
-            println("-------------------------------------------\(dist)")
             tempArray.append(temp)
             self.results?[i] = tempResults[temp]
         }
@@ -193,41 +189,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         dispatch_async(dispatch_get_main_queue()){ () -> Void in
             self.tableView.reloadData()
         }
-
-        /*
-        let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
-        Alamofire.request(.GET, url).responseJSON { (request, response, json, error) in
-            if (json != nil){
-                var error: NSError?
-                var data = JSON(json!)
-                
-                var rawData = data.rawData(options: nil, error: &error)
-                if let jsonDic = NSJSONSerialization.JSONObjectWithData(rawData!, options: nil, error: &error) as? NSDictionary{
-                    //store data into NSArray
-                    if let unsortedEvents = self.results as? NSArray{
-//                    if let unsortedEvents = jsonDic["data"] as? NSArray {
-                        //sort the NSArray
-                        let descriptor = NSSortDescriptor(key: "created_time", ascending: false, selector: "caseInsensitiveCompare:")
-                        var num = unsortedEvents.count
-                        
-                        for i in 0...num - 1 {
-                            self.results?[i] = JSON(unsortedEvents.sortedArrayUsingDescriptors([descriptor])[i])
-                        }
-                        self.postId = []
-                        for i in 0...num - 1 {
-                            if let id = self.results?[i]["id"].string as String? {
-                                self.postId?.append(id)
-                            }
-                        }
-                        dispatch_async(dispatch_get_main_queue()){ () -> Void in
-                            self.tableView.reloadData()
-                        }
-                    }
-                    self.tableView.reloadData()
-                }
-                
-            }
-        }*/
     }
     
     //get the latitude of target location
@@ -298,76 +259,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         dispatch_async(dispatch_get_main_queue()){ () -> Void in
             self.tableView.reloadData()
         }
-
-        /*
-        var tempResults: [JSON] = []
-        tempResults = self.results!
-        var num = self.results?.count
-//        self.results? = []
-        var dist = 0.0
-        var temp = 0
-        var tempArray: [Int] = []
-        //every iteration, find the ith small distance from data and then appent it to result array
-        for i in 0...num! - 1 {
-            dist = 100000000.0
-            temp = i
-            for j in 0...num! - 1 {
-                if !contains(tempArray, j){
-                    if self.distance(self.getTargetLatitude(tempResults, index: j), targetLongitude: self.getTargetLongitude(tempResults, index: j)) < dist {
-                        dist = self.distance(self.getTargetLatitude(tempResults, index: j), targetLongitude: self.getTargetLongitude(tempResults, index: j))
-                        temp = j
-                    }
-                }
-            }
-            tempArray.append(temp)
-            self.results?[i] = tempResults[temp]
-        }
-        self.postId = []
-        for i in 0...num! - 1 {
-            if let id = self.results?[i]["id"].string as String? {
-                self.postId?.append(id)
-            }
-        }
-        dispatch_async(dispatch_get_main_queue()){ () -> Void in
-            self.tableView.reloadData()
-        }
-*/
-        /*let url = "https://api.instagram.com/v1/users/self/feed?access_token=\(accessToken)"
-        Alamofire.request(.GET, url).responseJSON { (request, response, json, error) in
-            if (json != nil){
-                var jsonObj = JSON(json!)
-                if let data = jsonObj["data"].arrayValue as [JSON]? {
-                    var num = data.count
-                    var dist = 0.0
-                    var temp = 0
-                    var tempArray: [Int] = []
-                    //every iteration, find the ith small distance from data and then appent it to result array
-                    for i in 0...num - 1 {
-                        dist = 100000000.0
-                        temp = i
-                        for j in 0...num - 1 {
-                            if !contains(tempArray, j){
-                                if self.distance(self.getTargetLatitude(data, index: j), targetLongitude: self.getTargetLongitude(data, index: j)) < dist {
-                                    dist = self.distance(self.getTargetLatitude(data, index: j), targetLongitude: self.getTargetLongitude(data, index: j))
-                                    temp = j
-                                }
-                            }
-                        }
-                        tempArray.append(temp)
-                        self.results?.append(data[temp])
-                    }
-                    self.postId = []
-                    for i in 0...num - 1 {
-                        if let id = self.results?[i]["id"].string as String? {
-                            self.postId?.append(id)
-                        }
-                    }
-                }
-                dispatch_async(dispatch_get_main_queue()){ () -> Void in
-                    self.tableView.reloadData()
-                }
-            }
-        }*/
     }
     
     //get the current location
