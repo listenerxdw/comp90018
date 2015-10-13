@@ -202,7 +202,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
                         let json = JSON(data!)
                         temp3.append(name)
                         if json["data"].count > 0 {
-                            println("in")
                             for j in 0...json["data"].count-1 {
                                 temp3.append(json["data"][j]["images"]["thumbnail"]["url"].string!)
                             }
@@ -303,7 +302,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
         let url = "https://api.instagram.com/v1/users/self/media/liked?access_token=\(access_token)"
         Alamofire.request(.GET,url).responseJSON {
             (_,_,data,error) in
-            println("like back")
             let json = JSON(data!)
             if json["data"].count > 0 {
             for i in 0...json["data"].count-1 {
@@ -387,7 +385,6 @@ class SuggestionController: UIViewController, UITableViewDataSource {
     //check if the user has already been my friends
     func existFollows(username:String) -> Bool {
         for i in 0...self.follow.count-1 {
-            println(self.follow[i])
             if username == self.follow[i] {
                 return true
             }
