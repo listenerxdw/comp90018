@@ -21,10 +21,10 @@ class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionV
     //global var
     var x = User.sharedInstance
     var gallery: UICollectionView!
+    var moreButton : UIBarButtonItem!
     var ivProfPict: UIImageView!
-    var json: JSON!
+    var json: [JSON] = []
     var nextUrl: String = ""
-    var total: Int = 0
     
     //logout button to clear cookies and exit from app
     @IBAction func cancelButton(sender: UIBarButtonItem) {
@@ -52,22 +52,35 @@ class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         refresh() //get user details and show it
+        //add button load more
+        self.navigationItem.hidesBackButton = true
+        moreButton = UIBarButtonItem(title: "More..", style: UIBarButtonItemStyle.Bordered, target: self, action: "loadMore:")
+        self.navigationItem.rightBarButtonItem = moreButton;
+        
         //Fetch Gallery
-        let url = "https://api.instagram.com/v1/users/self/media/recent?access_token=\(x.token)&count=50"
+        let url = "https://api.instagram.com/v1/users/self/media/recent?access_token=\(x.token)&count=30"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            self.json = JSON(data: data!)
-            self.total = self.json["data"].count //get total photos
-            self.nextUrl = self.json["pagination"]["next_url"].stringValue //next url of next gallery
-            if(self.total>0){ //if there is at least one photo
+            let j = JSON(data: data!)
+            self.json = j["data"].arrayValue as [JSON]
+            //whether more should exist or not
+            if let x = j["pagination"]["next_url"].string { //next url of next gallery
+                self.nextUrl = x
+                //show the button
+                self.navigationItem.rightBarButtonItem = self.moreButton;
+            }else{ //hide the button
+                self.navigationItem.rightBarButtonItem = nil;
+                
+            }
+            if(self.json.count>0){ //if there is at least one photo
                 self.lblNoImage.hidden = true //remove the no image label
                 //create layout for gallery
                 let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
                 layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
                 layout.itemSize = CGSize(width: 110, height: 100)
                 //create gallery and assign the datasource and delegate then add it to the view
-                self.gallery = UICollectionView(frame: CGRectMake(0, 265, 375, 410), collectionViewLayout: layout)
+                self.gallery = UICollectionView(frame: CGRectMake(0, 265, 375, 350), collectionViewLayout: layout)
                 self.gallery!.dataSource = self
                 self.gallery!.delegate = self
                 self.gallery!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "CollectionViewCell")
@@ -78,7 +91,26 @@ class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionV
             }
         }
         //End of fetching
-        
+    }
+    
+    //function to loadmore images
+    func loadMore(sender:UIButton!){
+        let requestURL = NSURL(string:nextUrl)
+        let request = NSURLRequest(URL: requestURL!)
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            let j = JSON(data: data!)
+            self.json += j["data"].arrayValue as [JSON]
+            //whether more should exist or not
+            if let x = j["pagination"]["next_url"].string { //next url of next gallery
+                self.nextUrl = x
+                //show the button
+                self.navigationItem.rightBarButtonItem = self.moreButton;
+            }else{ //hide the button
+                self.navigationItem.rightBarButtonItem = nil;
+                
+            }
+            self.gallery.reloadData()
+        }
 
     }
 
@@ -107,7 +139,7 @@ class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionV
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return total
+        return json.count
     }
     
     //load an image of every cell
@@ -115,7 +147,7 @@ class Profile: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionV
         // Configure the cell...
         let idx = indexPath.row
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
-        let stringUrl = json["data",idx,"images","thumbnail","url"].stringValue
+        let stringUrl = json[idx]["images","thumbnail","url"].stringValue
         //let url = NSURL(string: json["data",idx,"images","thumbnail","url"].stringValue)
         //let data = NSData(contentsOfURL: url!)
         // cell.imageView?.image =  UIImage(data: data!)
