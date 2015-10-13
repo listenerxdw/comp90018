@@ -29,6 +29,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
     var longitude: Double = 0.0
     var currentLocation = CLLocation(latitude: 0.0, longitude: 0.0)
     let locationManager = CLLocationManager()
+    
     @IBOutlet var tableView:UITableView!
     @IBOutlet weak var sortController: UISegmentedControl!
     
@@ -353,7 +354,7 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         }
     }
     
-    // MARK: -
+    // MARK: - Send image via Bluetooth or Wifi
     
     //sending data function to be triggered outside by Photo
     func sendData(data: NSData){
@@ -378,8 +379,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         let username = dictionary.objectForKey("username") as! String
         let profpict = dictionary.objectForKey("profpict") as! String
         let date = ((NSDate().timeIntervalSince1970).description as NSString).substringToIndex(10)
-        println("------------------------------------")
-        println(date)
         let jsonObject : JSON  =
         [
         "username": username,
@@ -397,7 +396,6 @@ class UserViewController: UIViewController, UITableViewDataSource, PhotoChooseVi
         ]
         results?.insert(jsonObject, atIndex: 0)
         postId?.insert("", atIndex: 0)
-        println(postId)
         self.tableView.reloadData()
     }
     
