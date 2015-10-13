@@ -2,7 +2,7 @@
 //  DiscoveryController.swift
 //  comp90018
 //
-//  Created by 璐璐 on 11/10/2015.
+//  Created by Yiming Chen on 11/10/2015.
 //  Copyright (c) 2015 Pramudita. All rights reserved.
 //
 
