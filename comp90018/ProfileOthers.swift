@@ -76,10 +76,11 @@ class ProfileOthers: UIViewController,UICollectionViewDelegateFlowLayout,UIColle
                 self.gallery!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "CollectionViewCell")
                 self.gallery!.backgroundColor = UIColor.whiteColor()
                 self.view.addSubview(self.gallery!)
-                self.refresh() //get user details and show it
+                
             }else{
                 self.lblNoImage.hidden = false
             }
+            self.refresh() //get user details and show it
         }
         //End of fetching
         
