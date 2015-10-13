@@ -37,7 +37,7 @@ class ProfileOthers: UIViewController,UICollectionViewDelegateFlowLayout,UIColle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.userid = getid!
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
         self.navigationItem.leftBarButtonItem = newBackButton;
