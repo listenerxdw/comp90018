@@ -84,6 +84,19 @@ UITableViewDataSource,UITableViewDelegate{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var m = sender as? UITableViewCell
+        var row = tableView.indexPathForCell(m!)
+        if segue.identifier == "gotoprofile"
+        {   var vc = segue.destinationViewController as? ProfileOthers
+            var theid = self.id[row!.row]
+            var id = theid
+            vc!.getid = id
+        }
+    }
+
+    
     //get the result of searching the target text from instagram API
     func getUserdata(token:String,searchtext:String,sequence:Int) -> Void{
         var tempText:[String] = []

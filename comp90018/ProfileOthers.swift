@@ -19,7 +19,8 @@ class ProfileOthers: UIViewController,UICollectionViewDelegateFlowLayout,UIColle
     @IBOutlet weak var lblNoImage: UILabel!
     
     //global var
-    var userid = "1457552126"
+    var userid: String = ""
+    var getid:String?
     var gallery: UICollectionView!
     var ivProfPict: UIImageView!
     var json: JSON!
@@ -37,7 +38,7 @@ class ProfileOthers: UIViewController,UICollectionViewDelegateFlowLayout,UIColle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.userid = getid!
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
         self.navigationItem.leftBarButtonItem = newBackButton;
