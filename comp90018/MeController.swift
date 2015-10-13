@@ -13,32 +13,33 @@ import Haneke
 class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate  {
     
     @IBOutlet weak var tableView: UITableView!
-    var ctrlsel:[[String]] = []
+    //store the data that will be showed in table view
+    var dataOfTableView:[[String]] = []
     var ctrls:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {return self.ctrlsel.count}
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {   let cell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+    //return number of rows for tableview
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataOfTableView.count
+    }
+    //show data in tableview
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        //in storeyboard, label is tagged with 100 and image view is tagged with 10
         var label = cell.viewWithTag(100) as? UILabel
         var image = cell.viewWithTag(10) as? UIImageView
-        var theText = self.ctrlsel[indexPath.row][0]
+        var theText = self.dataOfTableView[indexPath.row][0]
         label!.text = theText
-        var url = NSURL(string: self.ctrlsel[indexPath.row][1])
+        var url = NSURL(string: self.dataOfTableView[indexPath.row][1])
         image!.hnk_setImageFromURL(url!)
-        //self.ctrlsel = []
-        
         return cell
     }
-    
+    //this function is used to get posts that I liked
     func getMeLike(token:String){
-        self.ctrlsel = []
+        self.dataOfTableView = []
         let url="https://api.instagram.com/v1/users/self/media/liked?access_token=\(token)"
         Alamofire.request(.GET,url).responseJSON{
             (_,_,data,error) in
@@ -49,15 +50,14 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
                 var picture = json["data"][i]["images"]["thumbnail"]["url"].string!
                 self.ctrls.append("I liked \(name)'photo")
                 self.ctrls.append(picture)
-                self.ctrlsel.append(self.ctrls)
+                self.dataOfTableView.append(self.ctrls)
                 self.ctrls = []
-                
             }
             self.tableView.reloadData()
             }
         }
     }
-    
+    //this function is used to get my followers
     func getFollowedBy(token:String){
         let url = "https://api.instagram.com/v1/users/self/followed-by?access_token=\(token)"
         Alamofire.request(.GET,url).responseJSON{
@@ -69,7 +69,7 @@ class MeController:  UIViewController,UITableViewDataSource,UITableViewDelegate 
                 var picture = json["data"][i]["profile_picture"].string!
                 self.ctrls.append("\(name) followed me")
                 self.ctrls.append(picture)
-                self.ctrlsel.append(self.ctrls)
+                self.dataOfTableView.append(self.ctrls)
                 self.ctrls = []
             }
             

@@ -21,6 +21,8 @@ class DiscoveryController: UIViewController {
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var access_token = User.sharedInstance.token
+        //click suggest button then functions getMyFollows and getLikedUser are called
+        //to get data from API
         if segue.identifier == "gotoSuggestion"
         {   var vc = segue.destinationViewController as? SuggestionController
             vc!.getMyFollows(access_token)
