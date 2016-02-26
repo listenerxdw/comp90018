@@ -205,7 +205,7 @@ class PhotoChooseViewController: UIViewController, UIImagePickerControllerDelega
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // once the chosen methos is cancelled
+    // once the chosen method is cancelled
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }

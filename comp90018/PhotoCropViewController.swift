@@ -76,13 +76,13 @@ class PhotoCropViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    // crop the image shown on scrren and save it to photo library
+    // crop the image shown on screen and save it to photo library
     @IBAction func cropAndSave(sender: UIButton) {
         let imageToSave = crop()
         UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
     }
     
-    // crop the image shown on scrren
+    // crop the image shown on screen
     func crop() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, UIScreen.mainScreen().scale)
         let offset = scrollView.contentOffset
